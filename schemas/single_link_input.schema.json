@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FDQ single-link input",
+  "type": "object",
+  "required": [
+    "link_id",
+    "length_mi",
+    "lanes",
+    "free_speed_mph",
+    "capacity_vehphpl",
+    "cutoff_speed_mph"
+  ],
+  "properties": {
+    "link_id": {
+      "type": [
+        "string",
+        "integer"
+      ]
+    },
+    "tmc_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "length_mi": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "lanes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "free_speed_mph": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "capacity_vehphpl": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "cutoff_speed_mph": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "backward_wave_speed_mph": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "exclusiveMinimum": 0
+    },
+    "jam_density_vehpmipl": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "exclusiveMinimum": 0
+    },
+    "period_volume_veh": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "source_label": {
+      "type": "string"
+    }
+  }
+}

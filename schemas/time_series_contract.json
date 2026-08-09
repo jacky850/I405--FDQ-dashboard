@@ -1,0 +1,34 @@
+{
+  "columns": [
+    {
+      "name": "time_hour",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "speed_mph",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "flow_vehph_total",
+      "type": "number",
+      "required": false
+    },
+    {
+      "name": "density_vehpmipl",
+      "type": "number",
+      "required": false
+    },
+    {
+      "name": "source_type",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "is_observed",
+      "type": "boolean",
+      "required": true
+    }
+  ]
+}

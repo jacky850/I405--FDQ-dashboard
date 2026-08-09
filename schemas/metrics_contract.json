@@ -1,0 +1,15 @@
+{
+  "required_metrics": [
+    "max_queue_veh",
+    "total_delay_veh_hour",
+    "residual_queue_veh",
+    "speed_rmse_mph",
+    "volume_closure_error_veh"
+  ],
+  "required_qc_gates": [
+    "queue_nonnegative",
+    "throughput_within_capacity",
+    "mass_balance",
+    "provenance_complete"
+  ]
+}
