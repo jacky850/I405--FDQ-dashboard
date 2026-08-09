@@ -1,0 +1,27 @@
+file_or_layer,field,unit,meaning
+raw_weekdays.csv,timestamp,datetime,raw observation timestamp
+raw_weekdays.csv,link_id,string,network/GMNS/TAPlite link identifier
+raw_weekdays.csv,tmc_id,string,TMC identifier
+raw_weekdays.csv,speed_mph,mph,observed or modeled speed with provenance
+raw_weekdays.csv,flow_vehph,veh/h,total-link observed flow when available
+average_weekday.csv,time_of_day,HH:MM,average weekday 5-minute clock time
+average_weekday.csv,speed_mph,mph,average weekday speed
+average_weekday.csv,flow_vehph,veh/h,average weekday observed total-link flow when available
+link_metadata.json,lanes,count,number of lanes
+link_metadata.json,length_mi,mile,link length
+link_metadata.json,free_speed_mph,mph,free-flow speed
+link_metadata.json,capacity_vehphpl,veh/h/lane,capacity per lane
+link_metadata.json,cutoff_speed_mph,mph,operational cutoff/critical speed
+reference_day.csv,flow_speed_only_vehph,veh/h,unanchored speed-to-volume reconstruction
+reference_day.csv,flow_ref_vehph,veh/h,final reconstructed flow after optional period-volume anchoring
+reference_day.csv,volume_anchor_factor,ratio,period scaling applied to speed-derived profile
+reference_day.csv,lambda_ref_vehph,veh/h,reference arrival proxy or observed arrival when available
+reference_day.csv,mu_ref_vehph,veh/h,reference service/throughput rate
+reference_day.csv,queue_start_veh,veh,residual queue at start of interval
+reference_day.csv,queue_end_veh,veh,residual queue at end of interval
+reference_day.csv,waiting_time_min,min,FIFO waiting time from cumulative curves
+reference_day.csv,travel_time_min,min,free-flow travel time plus waiting
+reference_day.csv,cumulative_arrivals_veh,veh,cumulative arrivals since start of reference day
+reference_day.csv,cumulative_departures_veh,veh,cumulative departures since start of reference day
+reference_day.csv,flow_ref_source,string,provenance of reconstructed flow
+reference_day.csv,lambda_ref_source,string,provenance of reference arrival

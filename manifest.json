@@ -1,0 +1,27 @@
+{
+  "package": "fdq_single_link_benchmark_v0_2",
+  "purpose": "Turnkey single-link FDQueue calibration/reference package for Jinxi refinement, Muhammad Stage-1 QA/QC, and OpenDTA interface testing",
+  "version": "0.2.0",
+  "time_step_minutes": 5,
+  "default_modeling_choices": {
+    "speed_volume": "S3 full-range, triangular congested-branch benchmark",
+    "mu": "constant within AM/MD/PM/NT period, post-t2 median by default",
+    "period_boundary": "queue is continuous; no reset",
+    "spillback": false,
+    "dynamic_fdq_mu": "Stage 2 optional hook"
+  },
+  "included_examples": [
+    "synthetic_full_day average-weekday calibration demo",
+    "NVTA I-66 EB link 26736 PM adapter",
+    "legacy v0.1 datasets retained for traceability",
+    "FDQ paper LA I-405 reference parameters"
+  ],
+  "primary_outputs": [
+    "reference_day.csv",
+    "mu_by_period.json",
+    "period_volume_closure.csv",
+    "metrics.json",
+    "opendta_link_reference.csv",
+    "vehicle_file_template.csv"
+  ]
+}
