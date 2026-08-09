@@ -1,0 +1,534 @@
+{
+  "input": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\fdq_single_link_benchmark_v0_2\\fdq_single_link_benchmark_v0_2\\data\\jinxi_i405_week_2025-06-16_to_22\\average_weekday_fdqbench.csv",
+  "fit_target": "direct speed-to-flow",
+  "links": [
+    {
+      "id": "L405S-001|1222782",
+      "linkId": "L405S-001",
+      "tmcId": "1222782",
+      "models": {
+        "NT1": {
+          "parameters": {
+            "free_speed_mph": 99.99999999999893,
+            "critical_density_vehpmipl": 14.626131567567384,
+            "m": 4.017124819604431
+          },
+          "fit": {
+            "success": true,
+            "cost": 1948.7055120349764,
+            "n": 72,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 35.44731433593678
+          },
+          "n": 72
+        },
+        "AM": {
+          "parameters": {
+            "free_speed_mph": 99.99980620896186,
+            "critical_density_vehpmipl": 24.88701588202182,
+            "m": 1.7893970889730213
+          },
+          "fit": {
+            "success": true,
+            "cost": 834.156484667121,
+            "n": 48,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 26.54724115115204
+          },
+          "n": 48
+        },
+        "MD": {
+          "parameters": {
+            "free_speed_mph": 73.66739447468333,
+            "critical_density_vehpmipl": 60.63051628019226,
+            "m": 1.621266656021129
+          },
+          "fit": {
+            "success": true,
+            "cost": 2751.9150921018067,
+            "n": 60,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 66.66878013239484
+          },
+          "n": 60
+        },
+        "PM": {
+          "parameters": {
+            "free_speed_mph": 99.99999999799485,
+            "critical_density_vehpmipl": 4.600230073682975,
+            "m": 7.999999999994022
+          },
+          "fit": {
+            "success": true,
+            "cost": 6538.099345229812,
+            "n": 48,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 158.99726591568816
+          },
+          "n": 48
+        },
+        "NT2": {
+          "parameters": {
+            "free_speed_mph": 69.60174628733652,
+            "critical_density_vehpmipl": 103.93223977341472,
+            "m": 1.5000000000000169
+          },
+          "fit": {
+            "success": true,
+            "cost": 12316.002689012668,
+            "n": 60,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 255.83740130006657
+          },
+          "n": 60
+        }
+      },
+      "overall": {
+        "mae": 428.15330171647827,
+        "rmse": 692.9452010778542,
+        "r2": 0.8474331180871894,
+        "bias": -35.02780856626786,
+        "observedMean": 3833.7166666666662,
+        "predictedMean": 3798.688858100399
+      },
+      "periodMetrics": {
+        "NT1": {
+          "mae": 140.0399952628763,
+          "rmse": 177.23657167968386,
+          "r2": 0.0004359340201984807,
+          "bias": -21.144544771416562,
+          "observedMean": 5144.866666666667,
+          "predictedMean": 5123.722121895251
+        },
+        "AM": {
+          "mae": 91.39454075646019,
+          "rmse": 132.7362057557602,
+          "r2": 0.06995598413729776,
+          "bias": 16.94777457736012,
+          "observedMean": 5415.549999999999,
+          "predictedMean": 5432.49777457736
+        },
+        "MD": {
+          "mae": 233.99913357098845,
+          "rmse": 333.34390066197426,
+          "r2": 0.860163267364186,
+          "bias": 52.58576229915755,
+          "observedMean": 4551.160000000001,
+          "predictedMean": 4603.745762299158
+        },
+        "PM": {
+          "mae": 685.9703270123752,
+          "rmse": 794.9863295784407,
+          "r2": 0.00692429970880637,
+          "bias": 16.042867034147438,
+          "observedMean": 1830.45,
+          "predictedMean": 1846.4928670341476
+        },
+        "NT2": {
+          "mae": 1031.1968261375875,
+          "rmse": 1279.187006500333,
+          "r2": 0.23667075333490273,
+          "bias": -221.7383029807494,
+          "observedMean": 1880.0400000000002,
+          "predictedMean": 1658.3016970192505
+        }
+      }
+    },
+    {
+      "id": "L405S-001|1223027",
+      "linkId": "L405S-001",
+      "tmcId": "1223027",
+      "models": {
+        "NT1": {
+          "parameters": {
+            "free_speed_mph": 99.99999998103047,
+            "critical_density_vehpmipl": 16.39942615840635,
+            "m": 7.720771062025112
+          },
+          "fit": {
+            "success": true,
+            "cost": 3003.437250938284,
+            "n": 72,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 55.29059972621729
+          },
+          "n": 72
+        },
+        "AM": {
+          "parameters": {
+            "free_speed_mph": 69.023633791087,
+            "critical_density_vehpmipl": 24.22408695532337,
+            "m": 7.999999999994688
+          },
+          "fit": {
+            "success": true,
+            "cost": 1679.480874329342,
+            "n": 48,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 49.98432142829114
+          },
+          "n": 48
+        },
+        "MD": {
+          "parameters": {
+            "free_speed_mph": 72.21534202944491,
+            "critical_density_vehpmipl": 49.448673562601016,
+            "m": 2.2680532019782893
+          },
+          "fit": {
+            "success": true,
+            "cost": 3750.228497548478,
+            "n": 60,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 93.78321456415108
+          },
+          "n": 60
+        },
+        "PM": {
+          "parameters": {
+            "free_speed_mph": 99.99999999876823,
+            "critical_density_vehpmipl": 5.210173040006999,
+            "m": 7.999999999998242
+          },
+          "fit": {
+            "success": true,
+            "cost": 7701.078945973063,
+            "n": 48,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 187.46272079781167
+          },
+          "n": 48
+        },
+        "NT2": {
+          "parameters": {
+            "free_speed_mph": 70.40754880319115,
+            "critical_density_vehpmipl": 73.16217113441772,
+            "m": 1.5000000000000167
+          },
+          "fit": {
+            "success": true,
+            "cost": 13442.503831590357,
+            "n": 60,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 317.84524225469244
+          },
+          "n": 60
+        }
+      },
+      "overall": {
+        "mae": 518.2487859954073,
+        "rmse": 864.8275150815342,
+        "r2": 0.863538369898214,
+        "bias": -102.10378518906812,
+        "observedMean": 4698.533333333334,
+        "predictedMean": 4596.429548144265
+      },
+      "periodMetrics": {
+        "NT1": {
+          "mae": 213.25431762769566,
+          "rmse": 276.45299863108636,
+          "r2": 0.053905508325438944,
+          "bias": -51.12883000672811,
+          "observedMean": 6382.7,
+          "predictedMean": 6331.571169993272
+        },
+        "AM": {
+          "mae": 179.63763647597307,
+          "rmse": 249.9216071414557,
+          "r2": 0.03425774383256264,
+          "bias": 32.03202329421847,
+          "observedMean": 6929.600000000001,
+          "predictedMean": 6961.632023294219
+        },
+        "MD": {
+          "mae": 317.20336523153713,
+          "rmse": 468.91607282075546,
+          "r2": 0.8693922050457155,
+          "bias": 109.9825390023989,
+          "observedMean": 5594.680000000002,
+          "predictedMean": 5704.662539002398
+        },
+        "PM": {
+          "mae": 807.1406915970598,
+          "rmse": 937.3136039890583,
+          "r2": -0.0008091331741710839,
+          "bias": 61.559944207378294,
+          "observedMean": 2035.8499999999997,
+          "predictedMean": 2097.4099442073784
+        },
+        "NT2": {
+          "mae": 1125.0629639347565,
+          "rmse": 1589.2262112734622,
+          "r2": 0.23427944496969533,
+          "bias": -613.5996859031296,
+          "observedMean": 2126.6799999999994,
+          "predictedMean": 1513.0803140968703
+        }
+      }
+    },
+    {
+      "id": "L405S-020|1201419",
+      "linkId": "L405S-020",
+      "tmcId": "1201419",
+      "models": {
+        "NT1": {
+          "parameters": {
+            "free_speed_mph": 69.47568064309237,
+            "critical_density_vehpmipl": 30.201436492546268,
+            "m": 3.1914810581685766
+          },
+          "fit": {
+            "success": true,
+            "cost": 3583.8009697729412,
+            "n": 72,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 63.82604082192048
+          },
+          "n": 72
+        },
+        "AM": {
+          "parameters": {
+            "free_speed_mph": 68.09452588905636,
+            "critical_density_vehpmipl": 22.279280837584874,
+            "m": 7.999999999999998
+          },
+          "fit": {
+            "success": true,
+            "cost": 2333.2832596798366,
+            "n": 48,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 68.10418311798104
+          },
+          "n": 48
+        },
+        "MD": {
+          "parameters": {
+            "free_speed_mph": 71.14931986344995,
+            "critical_density_vehpmipl": 31.725421581928728,
+            "m": 3.0986998178446896
+          },
+          "fit": {
+            "success": true,
+            "cost": 3499.770958256823,
+            "n": 60,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 78.25353276516569
+          },
+          "n": 60
+        },
+        "PM": {
+          "parameters": {
+            "free_speed_mph": 72.25713122731491,
+            "critical_density_vehpmipl": 49.493759011736415,
+            "m": 1.5000000000000087
+          },
+          "fit": {
+            "success": true,
+            "cost": 5302.494214553222,
+            "n": 48,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 131.97376985178653
+          },
+          "n": 48
+        },
+        "NT2": {
+          "parameters": {
+            "free_speed_mph": 71.2799113967986,
+            "critical_density_vehpmipl": 96.47675709040216,
+            "m": 1.5000000230715866
+          },
+          "fit": {
+            "success": true,
+            "cost": 14191.302950569614,
+            "n": 60,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 296.73937760166865
+          },
+          "n": 60
+        }
+      },
+      "overall": {
+        "mae": 608.0310869644932,
+        "rmse": 935.5904326027394,
+        "r2": 0.8783894205871716,
+        "bias": -72.48088398213525,
+        "observedMean": 5074.95,
+        "predictedMean": 5002.469116017866
+      },
+      "periodMetrics": {
+        "NT1": {
+          "mae": 304.38087930647106,
+          "rmse": 382.9562449315228,
+          "r2": 0.7717794866143172,
+          "bias": -39.512839288625656,
+          "observedMean": 7273.299999999999,
+          "predictedMean": 7233.787160711374
+        },
+        "AM": {
+          "mae": 297.2168715969426,
+          "rmse": 408.62509870788625,
+          "r2": 0.021767699958815556,
+          "bias": 59.839911355490564,
+          "observedMean": 7468.399999999999,
+          "predictedMean": 7528.23991135549
+        },
+        "MD": {
+          "mae": 355.69342230201454,
+          "rmse": 469.5211965909942,
+          "r2": 0.8479615684762648,
+          "bias": 58.31356146659032,
+          "observedMean": 5765.119999999999,
+          "predictedMean": 5823.433561466591
+        },
+        "PM": {
+          "mae": 668.5369409474038,
+          "rmse": 791.8426191107193,
+          "r2": 0.18755224866696774,
+          "bias": 34.49776370290535,
+          "observedMean": 1643.3000000000002,
+          "predictedMean": 1677.7977637029053
+        },
+        "NT2": {
+          "mae": 1424.9956899243107,
+          "rmse": 1780.4362656100118,
+          "r2": 0.37312846131006994,
+          "bias": -434.2765374812054,
+          "observedMean": 2577.3199999999997,
+          "predictedMean": 2143.0434625187945
+        }
+      }
+    },
+    {
+      "id": "L405S-061|1201350",
+      "linkId": "L405S-061",
+      "tmcId": "1201350",
+      "models": {
+        "NT1": {
+          "parameters": {
+            "free_speed_mph": 77.62498856858437,
+            "critical_density_vehpmipl": 49.7448871646989,
+            "m": 1.5000000000005709
+          },
+          "fit": {
+            "success": true,
+            "cost": 3733.0763219141077,
+            "n": 72,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 62.684722832418814
+          },
+          "n": 72
+        },
+        "AM": {
+          "parameters": {
+            "free_speed_mph": 68.52270700629815,
+            "critical_density_vehpmipl": 19.06874148864999,
+            "m": 7.999999999999985
+          },
+          "fit": {
+            "success": true,
+            "cost": 2078.015034728129,
+            "n": 48,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 54.766332060625835
+          },
+          "n": 48
+        },
+        "MD": {
+          "parameters": {
+            "free_speed_mph": 72.33274862689241,
+            "critical_density_vehpmipl": 18.37096200576848,
+            "m": 4.848881882726796
+          },
+          "fit": {
+            "success": true,
+            "cost": 4482.324071620212,
+            "n": 60,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 90.574047380241
+          },
+          "n": 60
+        },
+        "PM": {
+          "parameters": {
+            "free_speed_mph": 74.13264588404854,
+            "critical_density_vehpmipl": 36.64544086359832,
+            "m": 1.500000029789517
+          },
+          "fit": {
+            "success": true,
+            "cost": 5045.541476937555,
+            "n": 48,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 124.65253034129894
+          },
+          "n": 48
+        },
+        "NT2": {
+          "parameters": {
+            "free_speed_mph": 72.65291650157192,
+            "critical_density_vehpmipl": 74.15738241256845,
+            "m": 1.500000000017668
+          },
+          "fit": {
+            "success": true,
+            "cost": 6229.436375969259,
+            "n": 60,
+            "fit_target": "flow_from_speed_direct",
+            "flow_rmse_vehphpl": 147.91670415385948
+          },
+          "n": 60
+        }
+      },
+      "overall": {
+        "mae": 455.06858337151345,
+        "rmse": 610.092261609433,
+        "r2": 0.916787170308559,
+        "bias": -32.44833881002372,
+        "observedMean": 4003.283333333333,
+        "predictedMean": 3970.83499452331
+      },
+      "periodMetrics": {
+        "NT1": {
+          "mae": 316.7741118781866,
+          "rmse": 376.1083369945129,
+          "r2": 0.5456382886929465,
+          "bias": -18.867648518052192,
+          "observedMean": 5585.9,
+          "predictedMean": 5567.032351481948
+        },
+        "AM": {
+          "mae": 265.31836604549363,
+          "rmse": 328.597992363755,
+          "r2": 0.3793451468804866,
+          "bias": 13.810508029475594,
+          "observedMean": 6039.400000000001,
+          "predictedMean": 6053.210508029476
+        },
+        "MD": {
+          "mae": 453.91639808537434,
+          "rmse": 543.444284281446,
+          "r2": 0.6574873235080504,
+          "bias": 76.61673639143676,
+          "observedMean": 4732.4800000000005,
+          "predictedMean": 4809.096736391437
+        },
+        "PM": {
+          "mae": 636.6168174337967,
+          "rmse": 747.9151820477936,
+          "r2": 0.10060982958611087,
+          "bias": -9.882226310821997,
+          "observedMean": 1443.3999999999999,
+          "predictedMean": 1433.517773689178
+        },
+        "NT2": {
+          "mae": 628.7357210606336,
+          "rmse": 887.5002249231569,
+          "r2": 0.6994177188520079,
+          "bias": -212.87020983281084,
+          "observedMean": 1793.9599999999998,
+          "predictedMean": 1581.089790167189
+        }
+      }
+    }
+  ]
+}

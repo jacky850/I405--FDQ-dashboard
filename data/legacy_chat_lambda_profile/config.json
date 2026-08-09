@@ -1,0 +1,9 @@
+{
+  "case_id": "legacy_chat_lambda_profile",
+  "capacity_vehphpl": 1679.0,
+  "theta_demo": 12.09,
+  "dt_minutes": 5.0,
+  "dt_status": "chosen_for_current_5_minute_benchmark; archived conversation supplied rates by step but did not explicitly state interval",
+  "important_correction": "If lambda and mu are veh/h, the queue update is Q_next=max(0,Q+(lambda-mu)*Delta_t_hours), not Q+lambda-mu unless Delta_t=1 hour.",
+  "fdq_parameter_note": "The archived expression mu=1679-12.09*Q used 12.09 directly. In the FDQ paper, mu=Cap-theta*Q with theta=w_b/phi. Therefore 12.09 should not automatically be interpreted as theta unless the density-to-queue conversion phi makes the units consistent."
+}

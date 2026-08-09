@@ -1,0 +1,28 @@
+{
+  "speed_volume_raw": {
+    "n": 288,
+    "mae": 0.008620924381548612,
+    "rmse": 0.011723512254864994,
+    "mape_pct": 0.0013042156930722847,
+    "r2": 0.999999999064581,
+    "p90_abs_pct_error": 0.002973791307127696,
+    "p95_abs_pct_error": 0.0038590247852475276,
+    "max_abs_pct_error": 0.01151817469414947
+  },
+  "speed_volume_anchored": {
+    "n": 288,
+    "mae": 0.008228549392498508,
+    "rmse": 0.011347180924719712,
+    "mape_pct": 0.001164394165769494,
+    "r2": 0.9999999991236721,
+    "p90_abs_pct_error": 0.002563692542958814,
+    "p95_abs_pct_error": 0.003115769132039236,
+    "max_abs_pct_error": 0.010694955317238795
+  },
+  "queue_qaqc": {
+    "queue_nonnegative": true,
+    "cumulative_arrival_monotone": true,
+    "cumulative_departure_monotone": true,
+    "mass_balance_max_abs_veh": 2.467004378559068e-11
+  }
+}

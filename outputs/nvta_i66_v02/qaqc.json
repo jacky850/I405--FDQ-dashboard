@@ -1,0 +1,6 @@
+{
+  "queue_nonnegative": true,
+  "cumulative_arrival_monotone": true,
+  "cumulative_departure_monotone": true,
+  "mass_balance_max_abs_veh": 2.7284841053187847e-12
+}

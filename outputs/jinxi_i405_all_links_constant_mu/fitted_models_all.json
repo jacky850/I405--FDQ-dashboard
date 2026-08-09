@@ -1,0 +1,968 @@
+{
+  "L405S-001|1222782": {
+    "metadata": {
+      "link_id": "L405S-001",
+      "tmc_id": "1222782",
+      "lanes": 5.0,
+      "length_mi": 0.6052155412391632,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 42.72548317823909
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 70.4324276293561,
+          "critical_density_vehpmipl": 46.111946444845074,
+          "m": 2.039099100849314
+        },
+        "fit": {
+          "success": true,
+          "cost": 41214.92524930426,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 198.2824136132724
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 63.11233357298184,
+          "capacity_vehphpl": 1214.6770636798985,
+          "cutoff_speed_mph": 63.11233357298184,
+          "backward_wave_speed_mph": 4.0089308665322,
+          "jam_density_vehpmipl": 322.2390397395895
+        },
+        "fit": {
+          "success": true,
+          "cost": 7189.787139710087,
+          "n": 288,
+          "flow_rmse_vehphpl": 31.238789179287288
+        }
+      }
+    }
+  },
+  "L405S-001|1223027": {
+    "metadata": {
+      "link_id": "L405S-001",
+      "tmc_id": "1223027",
+      "lanes": 5.0,
+      "length_mi": 0.6052155412391632,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 44.7014435695538
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 69.48164530058233,
+          "critical_density_vehpmipl": 31.77039211513208,
+          "m": 3.771807351027143
+        },
+        "fit": {
+          "success": true,
+          "cost": 58117.60964264128,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 296.203615236585
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 65.69238384740899,
+          "capacity_vehphpl": 1397.9506639398573,
+          "cutoff_speed_mph": 65.69238384740899,
+          "backward_wave_speed_mph": 2.0000000000000027,
+          "jam_density_vehpmipl": 720.2555867280292
+        },
+        "fit": {
+          "success": true,
+          "cost": 9424.342795582597,
+          "n": 288,
+          "flow_rmse_vehphpl": 42.94684731824002
+        }
+      }
+    }
+  },
+  "L405S-004|1201525": {
+    "metadata": {
+      "link_id": "L405S-004",
+      "tmc_id": "1201525",
+      "lanes": 8.0,
+      "length_mi": 0.1317306927543148,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 43.39656406585541
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 70.21471015709292,
+          "critical_density_vehpmipl": 29.78520388240697,
+          "m": 2.7789407987870107
+        },
+        "fit": {
+          "success": true,
+          "cost": 46488.896305866525,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 216.34748853275246
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 64.18543559737947,
+          "capacity_vehphpl": 1177.1321378145117,
+          "cutoff_speed_mph": 64.18543559737947,
+          "backward_wave_speed_mph": 2.8165933850407723,
+          "jam_density_vehpmipl": 436.2671606649192
+        },
+        "fit": {
+          "success": true,
+          "cost": 9330.935623536414,
+          "n": 288,
+          "flow_rmse_vehphpl": 44.49276936139284
+        }
+      }
+    }
+  },
+  "L405S-005|1201589": {
+    "metadata": {
+      "link_id": "L405S-005",
+      "tmc_id": "1201589",
+      "lanes": 7.0,
+      "length_mi": 0.07891414141414141,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 43.73210450966356
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 70.99326288613348,
+          "critical_density_vehpmipl": 32.22637159287105,
+          "m": 2.7542445598725886
+        },
+        "fit": {
+          "success": false,
+          "cost": 57674.507569639434,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 258.83951733712706
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 62.24820688127411,
+          "capacity_vehphpl": 11127.359433771187,
+          "cutoff_speed_mph": 62.24820688127411,
+          "backward_wave_speed_mph": 2.0678954351533942,
+          "jam_density_vehpmipl": 5559.764728309151
+        },
+        "fit": {
+          "success": true,
+          "cost": 23660.794510884,
+          "n": 288,
+          "flow_rmse_vehphpl": 162.22576508815777
+        }
+      }
+    }
+  },
+  "L405S-012|1214081": {
+    "metadata": {
+      "link_id": "L405S-012",
+      "tmc_id": "1214081",
+      "lanes": 6.0,
+      "length_mi": 0.2727819533921896,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 42.35266046289668
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 67.74597262272586,
+          "critical_density_vehpmipl": 27.404838259363242,
+          "m": 2.8028232213611672
+        },
+        "fit": {
+          "success": true,
+          "cost": 43285.13434527187,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 216.08758343373572
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 62.61616650927341,
+          "capacity_vehphpl": 1121.85538307715,
+          "cutoff_speed_mph": 62.61616650927341,
+          "backward_wave_speed_mph": 2.0000000000000004,
+          "jam_density_vehpmipl": 578.8440771242527
+        },
+        "fit": {
+          "success": true,
+          "cost": 8437.585178468578,
+          "n": 288,
+          "flow_rmse_vehphpl": 42.123183881291645
+        }
+      }
+    }
+  },
+  "L405S-014|1201315": {
+    "metadata": {
+      "link_id": "L405S-014",
+      "tmc_id": "1201315",
+      "lanes": 6.0,
+      "length_mi": 0.18268313051777618,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 42.72548317823909
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 69.55233108244478,
+          "critical_density_vehpmipl": 34.407597905524554,
+          "m": 2.444444608847184
+        },
+        "fit": {
+          "success": true,
+          "cost": 87250.38306922755,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 439.72360792629655
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 62.96999229383455,
+          "capacity_vehphpl": 1310.6334524918643,
+          "cutoff_speed_mph": 62.96999229383455,
+          "backward_wave_speed_mph": 3.8533469175490658,
+          "jam_density_vehpmipl": 360.9422090367322
+        },
+        "fit": {
+          "success": true,
+          "cost": 10005.41918311744,
+          "n": 288,
+          "flow_rmse_vehphpl": 52.67638604122708
+        }
+      }
+    }
+  },
+  "L405S-020|1201419": {
+    "metadata": {
+      "link_id": "L405S-020",
+      "tmc_id": "1201419",
+      "lanes": 6.0,
+      "length_mi": 0.16031376759723218,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 45.22339537103316
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 70.08417343361712,
+          "critical_density_vehpmipl": 28.313974607416277,
+          "m": 3.6091785175200997
+        },
+        "fit": {
+          "success": true,
+          "cost": 41760.82402378457,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 213.45421351588146
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 62.28789905173404,
+          "capacity_vehphpl": 8715.122918069412,
+          "cutoff_speed_mph": 62.28789905173404,
+          "backward_wave_speed_mph": 2.4889607997854473,
+          "jam_density_vehpmipl": 3641.427508809166
+        },
+        "fit": {
+          "success": true,
+          "cost": 18264.74134720763,
+          "n": 288,
+          "flow_rmse_vehphpl": 117.46207939940575
+        }
+      }
+    }
+  },
+  "L405S-023|1222845": {
+    "metadata": {
+      "link_id": "L405S-023",
+      "tmc_id": "1222845",
+      "lanes": 5.0,
+      "length_mi": 0.5331364829396326,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 43.993080410403245
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 68.30000192322657,
+          "critical_density_vehpmipl": 26.80773226022743,
+          "m": 7.999999475276477
+        },
+        "fit": {
+          "success": true,
+          "cost": 79400.16785100863,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 403.85577828385766
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 64.58872714439616,
+          "capacity_vehphpl": 1627.9599921817487,
+          "cutoff_speed_mph": 64.58872714439616,
+          "backward_wave_speed_mph": 2.000000000000005,
+          "jam_density_vehpmipl": 839.1850135011434
+        },
+        "fit": {
+          "success": true,
+          "cost": 8342.967475323872,
+          "n": 288,
+          "flow_rmse_vehphpl": 42.18657789998152
+        }
+      }
+    }
+  },
+  "L405S-024|1222909": {
+    "metadata": {
+      "link_id": "L405S-024",
+      "tmc_id": "1222909",
+      "lanes": 5.0,
+      "length_mi": 0.922736220472441,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 44.21677403960868
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 69.60000308922838,
+          "critical_density_vehpmipl": 26.5029918001196,
+          "m": 6.414040885223618
+        },
+        "fit": {
+          "success": true,
+          "cost": 71307.86411308812,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 384.4351099718978
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 64.43909983861741,
+          "capacity_vehphpl": 2801.107810742819,
+          "cutoff_speed_mph": 64.43909983861741,
+          "backward_wave_speed_mph": 2.3663640144212827,
+          "jam_density_vehpmipl": 1227.1871269897022
+        },
+        "fit": {
+          "success": true,
+          "cost": 10789.346553666786,
+          "n": 288,
+          "flow_rmse_vehphpl": 49.47626135052546
+        }
+      }
+    }
+  },
+  "L405S-041|1201497": {
+    "metadata": {
+      "link_id": "L405S-041",
+      "tmc_id": "1201497",
+      "lanes": 6.0,
+      "length_mi": 0.12551698083194146,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 44.40318539727988
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 99.99999998056691,
+          "critical_density_vehpmipl": 13.719522096398592,
+          "m": 7.999999999999999
+        },
+        "fit": {
+          "success": true,
+          "cost": 87258.8620480401,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 390.4332212807755
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 66.95928767680581,
+          "capacity_vehphpl": 8422.414834157662,
+          "cutoff_speed_mph": 66.95928767680581,
+          "backward_wave_speed_mph": 2.0765018696185145,
+          "jam_density_vehpmipl": 4181.843471488686
+        },
+        "fit": {
+          "success": true,
+          "cost": 9337.140497152874,
+          "n": 288,
+          "flow_rmse_vehphpl": 49.631881468430066
+        }
+      }
+    }
+  },
+  "L405S-041|1222412": {
+    "metadata": {
+      "link_id": "L405S-041",
+      "tmc_id": "1222412",
+      "lanes": 6.0,
+      "length_mi": 0.12551698083194146,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 43.023741350513
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 99.99999999999996,
+          "critical_density_vehpmipl": 9.485660666534354,
+          "m": 7.999999999999999
+        },
+        "fit": {
+          "success": true,
+          "cost": 88684.33598912881,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 376.47469491233437
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 69.06949439178176,
+          "capacity_vehphpl": 1737.2238906537527,
+          "cutoff_speed_mph": 69.06949439178176,
+          "backward_wave_speed_mph": 2.6259001590131454,
+          "jam_density_vehpmipl": 686.7245381806908
+        },
+        "fit": {
+          "success": true,
+          "cost": 1485.354843402386,
+          "n": 288,
+          "flow_rmse_vehphpl": 9.571472801783429
+        }
+      }
+    }
+  },
+  "L405S-055|1214209": {
+    "metadata": {
+      "link_id": "L405S-055",
+      "tmc_id": "1214209",
+      "lanes": 6.0,
+      "length_mi": 0.15410005567485882,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 42.8373299928418
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 68.28248339344024,
+          "critical_density_vehpmipl": 28.993089283966604,
+          "m": 4.120620600884819
+        },
+        "fit": {
+          "success": true,
+          "cost": 50394.3521531908,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 254.78711803977936
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 63.76135771261701,
+          "capacity_vehphpl": 5402.5180042751335,
+          "cutoff_speed_mph": 63.76135771261701,
+          "backward_wave_speed_mph": 3.161635180878317,
+          "jam_density_vehpmipl": 1793.5036553804416
+        },
+        "fit": {
+          "success": true,
+          "cost": 23085.232105280043,
+          "n": 288,
+          "flow_rmse_vehphpl": 221.0685504146389
+        }
+      }
+    }
+  },
+  "L405S-061|1201350": {
+    "metadata": {
+      "link_id": "L405S-061",
+      "tmc_id": "1201350",
+      "lanes": 6.0,
+      "length_mi": 0.2852093772369363,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 44.14220949654021
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 71.76738127357085,
+          "critical_density_vehpmipl": 21.156642737695314,
+          "m": 3.8765156677505055
+        },
+        "fit": {
+          "success": true,
+          "cost": 34427.604470747836,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 158.30779641816181
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 65.54857777101942,
+          "capacity_vehphpl": 1559.746589625271,
+          "cutoff_speed_mph": 65.54857777101942,
+          "backward_wave_speed_mph": 2.493763767520127,
+          "jam_density_vehpmipl": 649.2541159150118
+        },
+        "fit": {
+          "success": true,
+          "cost": 11811.035686993615,
+          "n": 288,
+          "flow_rmse_vehphpl": 86.05934159928552
+        }
+      }
+    }
+  },
+  "L405S-108|1201620": {
+    "metadata": {
+      "link_id": "L405S-108",
+      "tmc_id": "1201620",
+      "lanes": 2.0,
+      "length_mi": 2.690537262387656,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 44.03036268193748
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 71.77904489601973,
+          "critical_density_vehpmipl": 103.79780894170771,
+          "m": 2.7816645088843552
+        },
+        "fit": {
+          "success": false,
+          "cost": 185057.05980887238,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 878.4481915666349
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 63.459517517434,
+          "capacity_vehphpl": 15144.571482820353,
+          "cutoff_speed_mph": 63.459517517434,
+          "backward_wave_speed_mph": 3.72080027581349,
+          "jam_density_vehpmipl": 4308.895075189978
+        },
+        "fit": {
+          "success": true,
+          "cost": 58134.6605995085,
+          "n": 288,
+          "flow_rmse_vehphpl": 328.81582736970296
+        }
+      }
+    }
+  },
+  "L405S-108|1201653": {
+    "metadata": {
+      "link_id": "L405S-108",
+      "tmc_id": "1201653",
+      "lanes": 2.0,
+      "length_mi": 2.690537262387656,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 42.76276544977332
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 68.90133532552473,
+          "critical_density_vehpmipl": 82.46089938754186,
+          "m": 3.036218314920541
+        },
+        "fit": {
+          "success": true,
+          "cost": 166009.95716450206,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 808.7480544379732
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 61.257913386505635,
+          "capacity_vehphpl": 5095.743550367823,
+          "cutoff_speed_mph": 61.257913386505635,
+          "backward_wave_speed_mph": 2.2502174747608765,
+          "jam_density_vehpmipl": 2347.7410953050107
+        },
+        "fit": {
+          "success": true,
+          "cost": 53454.964586996975,
+          "n": 288,
+          "flow_rmse_vehphpl": 331.5460772362988
+        }
+      }
+    }
+  },
+  "L405S-108|1201719": {
+    "metadata": {
+      "link_id": "L405S-108",
+      "tmc_id": "1201719",
+      "lanes": 2.0,
+      "length_mi": 2.690537262387656,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 42.650918635170605
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 68.3471407592678,
+          "critical_density_vehpmipl": 65.54318343471016,
+          "m": 4.064791419703023
+        },
+        "fit": {
+          "success": true,
+          "cost": 182299.2648665279,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 894.2737213100314
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 62.273768535003285,
+          "capacity_vehphpl": 13702.794009761083,
+          "cutoff_speed_mph": 62.273768535003285,
+          "backward_wave_speed_mph": 6.244383019429599,
+          "jam_density_vehpmipl": 2414.4603911674885
+        },
+        "fit": {
+          "success": true,
+          "cost": 55548.08178231666,
+          "n": 288,
+          "flow_rmse_vehphpl": 366.60905896220663
+        }
+      }
+    }
+  },
+  "L405S-108|1222728": {
+    "metadata": {
+      "link_id": "L405S-108",
+      "tmc_id": "1222728",
+      "lanes": 2.0,
+      "length_mi": 2.690537262387656,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 43.433846337389646
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 72.11821634915368,
+          "critical_density_vehpmipl": 101.48896186603942,
+          "m": 2.549443006654373
+        },
+        "fit": {
+          "success": true,
+          "cost": 159206.07739076324,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 832.9705079509175
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 65.87987018854851,
+          "capacity_vehphpl": 4210.1876376940945,
+          "cutoff_speed_mph": 65.87987018854851,
+          "backward_wave_speed_mph": 3.6512877978545237,
+          "jam_density_vehpmipl": 1216.976279799817
+        },
+        "fit": {
+          "success": true,
+          "cost": 29584.289897004863,
+          "n": 288,
+          "flow_rmse_vehphpl": 136.62015347014906
+        }
+      }
+    }
+  },
+  "L405S-109|1222978": {
+    "metadata": {
+      "link_id": "L405S-109",
+      "tmc_id": "1222978",
+      "lanes": 1.0,
+      "length_mi": 0.1224101248707548,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 42.94917680744452
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 68.42819226684469,
+          "critical_density_vehpmipl": 172.5123008986178,
+          "m": 5.399036966199359
+        },
+        "fit": {
+          "success": false,
+          "cost": 464159.9549726303,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 2472.1339586659847
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 66.7449825873901,
+          "capacity_vehphpl": 9330.10375455211,
+          "cutoff_speed_mph": 66.7449825873901,
+          "backward_wave_speed_mph": 2.000000000000062,
+          "jam_density_vehpmipl": 4804.839219977455
+        },
+        "fit": {
+          "success": true,
+          "cost": 60464.6709651572,
+          "n": 288,
+          "flow_rmse_vehphpl": 305.72779710381485
+        }
+      }
+    }
+  },
+  "L405S-110|1201941": {
+    "metadata": {
+      "link_id": "L405S-110",
+      "tmc_id": "1201941",
+      "lanes": 2.0,
+      "length_mi": 4.715585977889128,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 46.379145788594606
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 65.55011907967415,
+          "critical_density_vehpmipl": 86.38801282909976,
+          "m": 4.330763475083412
+        },
+        "fit": {
+          "success": true,
+          "cost": 286083.9688130526,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 1383.1799894670933
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 56.37743440065938,
+          "capacity_vehphpl": 4501.627710690018,
+          "cutoff_speed_mph": 56.37743440065938,
+          "backward_wave_speed_mph": 4.5305032421810845,
+          "jam_density_vehpmipl": 1073.4744598400262
+        },
+        "fit": {
+          "success": true,
+          "cost": 60487.543033544964,
+          "n": 288,
+          "flow_rmse_vehphpl": 284.0244490057006
+        }
+      }
+    }
+  },
+  "L405S-110|1223081": {
+    "metadata": {
+      "link_id": "L405S-110",
+      "tmc_id": "1223081",
+      "lanes": 2.0,
+      "length_mi": 4.715585977889128,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 44.104927225005966
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 71.45393656490585,
+          "critical_density_vehpmipl": 152.1873430382545,
+          "m": 2.1009300795673203
+        },
+        "fit": {
+          "success": false,
+          "cost": 149103.3623193007,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 730.1508131964714
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 65.66629497915356,
+          "capacity_vehphpl": 15515.91271524702,
+          "cutoff_speed_mph": 65.66629497915356,
+          "backward_wave_speed_mph": 4.61317134013293,
+          "jam_density_vehpmipl": 3599.6782524160762
+        },
+        "fit": {
+          "success": true,
+          "cost": 18338.954355575876,
+          "n": 288,
+          "flow_rmse_vehphpl": 81.03077578993668
+        }
+      }
+    }
+  },
+  "L405S-117|1201558": {
+    "metadata": {
+      "link_id": "L405S-117",
+      "tmc_id": "1201558",
+      "lanes": 2.0,
+      "length_mi": 0.9295713035870515,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 43.73210450966356
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 70.41349795921093,
+          "critical_density_vehpmipl": 88.61222019816377,
+          "m": 3.4635760977203787
+        },
+        "fit": {
+          "success": true,
+          "cost": 186437.9474035593,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 899.792748648641
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 62.41361138956463,
+          "capacity_vehphpl": 12544.41245772751,
+          "cutoff_speed_mph": 62.41361138956463,
+          "backward_wave_speed_mph": 2.034780024577641,
+          "jam_density_vehpmipl": 6365.985266820611
+        },
+        "fit": {
+          "success": true,
+          "cost": 81368.35350932973,
+          "n": 288,
+          "flow_rmse_vehphpl": 605.2941181628612
+        }
+      }
+    }
+  },
+  "L405S-123|1201469": {
+    "metadata": {
+      "link_id": "L405S-123",
+      "tmc_id": "1201469",
+      "lanes": 5.0,
+      "length_mi": 0.19511055436252286,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 43.433846337389646
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 71.02971600840324,
+          "critical_density_vehpmipl": 35.474342894462694,
+          "m": 2.868645706414587
+        },
+        "fit": {
+          "success": true,
+          "cost": 64076.162823232735,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 312.8489833380136
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 64.41133845794774,
+          "capacity_vehphpl": 9443.925590043536,
+          "cutoff_speed_mph": 64.41133845794774,
+          "backward_wave_speed_mph": 2.0810803944308187,
+          "jam_density_vehpmipl": 4684.610709014719
+        },
+        "fit": {
+          "success": true,
+          "cost": 21658.272838800836,
+          "n": 288,
+          "flow_rmse_vehphpl": 155.94080680871167
+        }
+      }
+    }
+  },
+  "L405S-132|1222749": {
+    "metadata": {
+      "link_id": "L405S-132",
+      "tmc_id": "1222749",
+      "lanes": 2.0,
+      "length_mi": 1.2794032848166708,
+      "free_speed_mph": 65.24397518492006,
+      "capacity_vehphpl": 2000.0,
+      "cutoff_speed_mph": 43.843951324266285
+    },
+    "models": {
+      "s3": {
+        "parameters": {
+          "free_speed_mph": 70.70515765350585,
+          "critical_density_vehpmipl": 82.01509279504349,
+          "m": 3.786327292846125
+        },
+        "fit": {
+          "success": false,
+          "cost": 196638.40343030935,
+          "n": 288,
+          "fit_target": "flow_from_speed_direct",
+          "flow_rmse_vehphpl": 956.6367444910929
+        }
+      },
+      "triangular": {
+        "parameters": {
+          "free_speed_mph": 63.47142442931189,
+          "capacity_vehphpl": 14546.509940682945,
+          "cutoff_speed_mph": 63.47142442931189,
+          "backward_wave_speed_mph": 2.0302440471173266,
+          "jam_density_vehpmipl": 7394.089107408687
+        },
+        "fit": {
+          "success": true,
+          "cost": 87916.30560611395,
+          "n": 288,
+          "flow_rmse_vehphpl": 632.4273656180809
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,5855 @@
+{
+  "input": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\fdq_single_link_benchmark_v0_2\\fdq_single_link_benchmark_v0_2\\outputs\\jinxi_i405_all_links_constant_mu\\reference_all_links.csv",
+  "blendIntervals": 6,
+  "blendMinutes": 30,
+  "links": [
+    {
+      "id": "L405S-001|1222782",
+      "linkId": "L405S-001",
+      "tmcId": "1222782",
+      "muByPeriod": {
+        "AM": 5467.2,
+        "MD": 3506.4,
+        "NT1": 5181.6,
+        "NT2": 4708.8,
+        "PM": 979.2
+      },
+      "rows": [
+        {
+          "time": "00:00",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "00:05",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "00:10",
+          "muDynamic": 5181.6,
+          "queueDynamic": 17.0
+        },
+        {
+          "time": "00:15",
+          "muDynamic": 5181.6,
+          "queueDynamic": 42.0
+        },
+        {
+          "time": "00:20",
+          "muDynamic": 5181.6,
+          "queueDynamic": 74.19999999999999
+        },
+        {
+          "time": "00:25",
+          "muDynamic": 5181.6,
+          "queueDynamic": 91.99999999999994
+        },
+        {
+          "time": "00:30",
+          "muDynamic": 5181.6,
+          "queueDynamic": 84.59999999999985
+        },
+        {
+          "time": "00:35",
+          "muDynamic": 5181.6,
+          "queueDynamic": 74.79999999999984
+        },
+        {
+          "time": "00:40",
+          "muDynamic": 5181.6,
+          "queueDynamic": 72.5999999999998
+        },
+        {
+          "time": "00:45",
+          "muDynamic": 5181.6,
+          "queueDynamic": 88.99999999999972
+        },
+        {
+          "time": "00:50",
+          "muDynamic": 5181.6,
+          "queueDynamic": 89.59999999999962
+        },
+        {
+          "time": "00:55",
+          "muDynamic": 5181.6,
+          "queueDynamic": 75.39999999999958
+        },
+        {
+          "time": "01:00",
+          "muDynamic": 5181.6,
+          "queueDynamic": 62.199999999999534
+        },
+        {
+          "time": "01:05",
+          "muDynamic": 5181.6,
+          "queueDynamic": 67.7999999999995
+        },
+        {
+          "time": "01:10",
+          "muDynamic": 5181.6,
+          "queueDynamic": 60.99999999999949
+        },
+        {
+          "time": "01:15",
+          "muDynamic": 5181.6,
+          "queueDynamic": 40.39999999999941
+        },
+        {
+          "time": "01:20",
+          "muDynamic": 5181.6,
+          "queueDynamic": 39.39999999999941
+        },
+        {
+          "time": "01:25",
+          "muDynamic": 5181.6,
+          "queueDynamic": 31.79999999999933
+        },
+        {
+          "time": "01:30",
+          "muDynamic": 5181.6,
+          "queueDynamic": 23.399999999999295
+        },
+        {
+          "time": "01:35",
+          "muDynamic": 5181.6,
+          "queueDynamic": 42.799999999999216
+        },
+        {
+          "time": "01:40",
+          "muDynamic": 5181.6,
+          "queueDynamic": 31.799999999999216
+        },
+        {
+          "time": "01:45",
+          "muDynamic": 5181.6,
+          "queueDynamic": 37.59999999999917
+        },
+        {
+          "time": "01:50",
+          "muDynamic": 5181.6,
+          "queueDynamic": 14.399999999999125
+        },
+        {
+          "time": "01:55",
+          "muDynamic": 5181.6,
+          "queueDynamic": 8.99999999999909
+        },
+        {
+          "time": "02:00",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "02:05",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "02:10",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "02:15",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "02:20",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "02:25",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "02:30",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "02:35",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "02:40",
+          "muDynamic": 5181.6,
+          "queueDynamic": 12.799999999999955
+        },
+        {
+          "time": "02:45",
+          "muDynamic": 5181.6,
+          "queueDynamic": 5.599999999999909
+        },
+        {
+          "time": "02:50",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "02:55",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "03:00",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "03:05",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "03:10",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "03:15",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "03:20",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "03:25",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "03:30",
+          "muDynamic": 5181.6,
+          "queueDynamic": 18.39999999999992
+        },
+        {
+          "time": "03:35",
+          "muDynamic": 5181.6,
+          "queueDynamic": 16.999999999999886
+        },
+        {
+          "time": "03:40",
+          "muDynamic": 5181.6,
+          "queueDynamic": 21.399999999999807
+        },
+        {
+          "time": "03:45",
+          "muDynamic": 5181.6,
+          "queueDynamic": 37.19999999999976
+        },
+        {
+          "time": "03:50",
+          "muDynamic": 5181.6,
+          "queueDynamic": 17.59999999999968
+        },
+        {
+          "time": "03:55",
+          "muDynamic": 5181.6,
+          "queueDynamic": 7.199999999999648
+        },
+        {
+          "time": "04:00",
+          "muDynamic": 5181.6,
+          "queueDynamic": 4.399999999999636
+        },
+        {
+          "time": "04:05",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "04:10",
+          "muDynamic": 5181.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "04:15",
+          "muDynamic": 5181.6,
+          "queueDynamic": 14.199999999999989
+        },
+        {
+          "time": "04:20",
+          "muDynamic": 5181.6,
+          "queueDynamic": 28.19999999999999
+        },
+        {
+          "time": "04:25",
+          "muDynamic": 5181.6,
+          "queueDynamic": 39.799999999999955
+        },
+        {
+          "time": "04:30",
+          "muDynamic": 5181.6,
+          "queueDynamic": 43.799999999999955
+        },
+        {
+          "time": "04:35",
+          "muDynamic": 5181.6,
+          "queueDynamic": 58.59999999999991
+        },
+        {
+          "time": "04:40",
+          "muDynamic": 5181.6,
+          "queueDynamic": 74.7999999999999
+        },
+        {
+          "time": "04:45",
+          "muDynamic": 5181.6,
+          "queueDynamic": 75.19999999999982
+        },
+        {
+          "time": "04:50",
+          "muDynamic": 5181.6,
+          "queueDynamic": 68.79999999999978
+        },
+        {
+          "time": "04:55",
+          "muDynamic": 5181.6,
+          "queueDynamic": 56.39999999999975
+        },
+        {
+          "time": "05:00",
+          "muDynamic": 5181.6,
+          "queueDynamic": 48.79999999999967
+        },
+        {
+          "time": "05:05",
+          "muDynamic": 5181.6,
+          "queueDynamic": 27.79999999999967
+        },
+        {
+          "time": "05:10",
+          "muDynamic": 5181.6,
+          "queueDynamic": 15.399999999999636
+        },
+        {
+          "time": "05:15",
+          "muDynamic": 5181.6,
+          "queueDynamic": 20.799999999999557
+        },
+        {
+          "time": "05:20",
+          "muDynamic": 5181.6,
+          "queueDynamic": 19.199999999999477
+        },
+        {
+          "time": "05:25",
+          "muDynamic": 5181.6,
+          "queueDynamic": 33.79999999999944
+        },
+        {
+          "time": "05:30",
+          "muDynamic": 5181.6,
+          "queueDynamic": 44.19999999999936
+        },
+        {
+          "time": "05:35",
+          "muDynamic": 5205.400000000001,
+          "queueDynamic": 49.416666666666
+        },
+        {
+          "time": "05:40",
+          "muDynamic": 5229.200000000001,
+          "queueDynamic": 43.84999999999923
+        },
+        {
+          "time": "05:45",
+          "muDynamic": 5253.0,
+          "queueDynamic": 50.09999999999923
+        },
+        {
+          "time": "05:50",
+          "muDynamic": 5276.8,
+          "queueDynamic": 51.966666666665844
+        },
+        {
+          "time": "05:55",
+          "muDynamic": 5300.6,
+          "queueDynamic": 41.649999999999125
+        },
+        {
+          "time": "06:00",
+          "muDynamic": 5324.4,
+          "queueDynamic": 2.749999999999204
+        },
+        {
+          "time": "06:05",
+          "muDynamic": 5348.2,
+          "queueDynamic": 10.066666666665924
+        },
+        {
+          "time": "06:10",
+          "muDynamic": 5372.0,
+          "queueDynamic": 17.799999999999272
+        },
+        {
+          "time": "06:15",
+          "muDynamic": 5395.8,
+          "queueDynamic": 16.349999999999227
+        },
+        {
+          "time": "06:20",
+          "muDynamic": 5419.6,
+          "queueDynamic": 7.716666666665901
+        },
+        {
+          "time": "06:25",
+          "muDynamic": 5443.4,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "06:30",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "06:35",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "06:40",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "06:45",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "06:50",
+          "muDynamic": 5467.2,
+          "queueDynamic": 1.400000000000034
+        },
+        {
+          "time": "06:55",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:00",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:05",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:10",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:15",
+          "muDynamic": 5467.2,
+          "queueDynamic": 8.599999999999966
+        },
+        {
+          "time": "07:20",
+          "muDynamic": 5467.2,
+          "queueDynamic": 10.599999999999966
+        },
+        {
+          "time": "07:25",
+          "muDynamic": 5467.2,
+          "queueDynamic": 5.599999999999966
+        },
+        {
+          "time": "07:30",
+          "muDynamic": 5467.2,
+          "queueDynamic": 5.399999999999977
+        },
+        {
+          "time": "07:35",
+          "muDynamic": 5467.2,
+          "queueDynamic": 3.8000000000000114
+        },
+        {
+          "time": "07:40",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:45",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:50",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:55",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:00",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.4000000000000341
+        },
+        {
+          "time": "08:05",
+          "muDynamic": 5467.2,
+          "queueDynamic": 9.60000000000008
+        },
+        {
+          "time": "08:10",
+          "muDynamic": 5467.2,
+          "queueDynamic": 6.000000000000114
+        },
+        {
+          "time": "08:15",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:20",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:25",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:30",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:35",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:40",
+          "muDynamic": 5467.2,
+          "queueDynamic": 4.599999999999966
+        },
+        {
+          "time": "08:45",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:50",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:55",
+          "muDynamic": 5467.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "09:00",
+          "muDynamic": 5467.2,
+          "queueDynamic": 2.599999999999966
+        },
+        {
+          "time": "09:05",
+          "muDynamic": 5467.2,
+          "queueDynamic": 19.199999999999932
+        },
+        {
+          "time": "09:10",
+          "muDynamic": 5467.2,
+          "queueDynamic": 23.799999999999898
+        },
+        {
+          "time": "09:15",
+          "muDynamic": 5467.2,
+          "queueDynamic": 27.199999999999932
+        },
+        {
+          "time": "09:20",
+          "muDynamic": 5467.2,
+          "queueDynamic": 25.399999999999977
+        },
+        {
+          "time": "09:25",
+          "muDynamic": 5467.2,
+          "queueDynamic": 25.399999999999977
+        },
+        {
+          "time": "09:30",
+          "muDynamic": 5467.2,
+          "queueDynamic": 25.600000000000023
+        },
+        {
+          "time": "09:35",
+          "muDynamic": 5303.8,
+          "queueDynamic": 53.01666666666665
+        },
+        {
+          "time": "09:40",
+          "muDynamic": 5140.4,
+          "queueDynamic": 78.25
+        },
+        {
+          "time": "09:45",
+          "muDynamic": 4977.0,
+          "queueDynamic": 130.89999999999998
+        },
+        {
+          "time": "09:50",
+          "muDynamic": 4813.6,
+          "queueDynamic": 197.16666666666663
+        },
+        {
+          "time": "09:55",
+          "muDynamic": 4650.2,
+          "queueDynamic": 268.65
+        },
+        {
+          "time": "10:00",
+          "muDynamic": 4486.8,
+          "queueDynamic": 355.35
+        },
+        {
+          "time": "10:05",
+          "muDynamic": 4323.4,
+          "queueDynamic": 455.4666666666667
+        },
+        {
+          "time": "10:10",
+          "muDynamic": 4160.0,
+          "queueDynamic": 573.2
+        },
+        {
+          "time": "10:15",
+          "muDynamic": 3996.6,
+          "queueDynamic": 711.55
+        },
+        {
+          "time": "10:20",
+          "muDynamic": 3833.2,
+          "queueDynamic": 867.5166666666665
+        },
+        {
+          "time": "10:25",
+          "muDynamic": 3669.8,
+          "queueDynamic": 1049.6999999999998
+        },
+        {
+          "time": "10:30",
+          "muDynamic": 3506.4,
+          "queueDynamic": 1219.6999999999996
+        },
+        {
+          "time": "10:35",
+          "muDynamic": 3506.4,
+          "queueDynamic": 1389.8999999999994
+        },
+        {
+          "time": "10:40",
+          "muDynamic": 3506.4,
+          "queueDynamic": 1565.8999999999994
+        },
+        {
+          "time": "10:45",
+          "muDynamic": 3506.4,
+          "queueDynamic": 1741.6999999999994
+        },
+        {
+          "time": "10:50",
+          "muDynamic": 3506.4,
+          "queueDynamic": 1917.4999999999993
+        },
+        {
+          "time": "10:55",
+          "muDynamic": 3506.4,
+          "queueDynamic": 2079.2999999999993
+        },
+        {
+          "time": "11:00",
+          "muDynamic": 3506.4,
+          "queueDynamic": 2237.4999999999995
+        },
+        {
+          "time": "11:05",
+          "muDynamic": 3506.4,
+          "queueDynamic": 2392.1
+        },
+        {
+          "time": "11:10",
+          "muDynamic": 3506.4,
+          "queueDynamic": 2533.1
+        },
+        {
+          "time": "11:15",
+          "muDynamic": 3506.4,
+          "queueDynamic": 2685.3
+        },
+        {
+          "time": "11:20",
+          "muDynamic": 3506.4,
+          "queueDynamic": 2839.5000000000005
+        },
+        {
+          "time": "11:25",
+          "muDynamic": 3506.4,
+          "queueDynamic": 2990.100000000001
+        },
+        {
+          "time": "11:30",
+          "muDynamic": 3506.4,
+          "queueDynamic": 3145.700000000001
+        },
+        {
+          "time": "11:35",
+          "muDynamic": 3506.4,
+          "queueDynamic": 3293.700000000001
+        },
+        {
+          "time": "11:40",
+          "muDynamic": 3506.4,
+          "queueDynamic": 3426.3000000000015
+        },
+        {
+          "time": "11:45",
+          "muDynamic": 3506.4,
+          "queueDynamic": 3558.900000000002
+        },
+        {
+          "time": "11:50",
+          "muDynamic": 3506.4,
+          "queueDynamic": 3686.5000000000023
+        },
+        {
+          "time": "11:55",
+          "muDynamic": 3506.4,
+          "queueDynamic": 3805.9000000000024
+        },
+        {
+          "time": "12:00",
+          "muDynamic": 3506.4,
+          "queueDynamic": 3919.9000000000024
+        },
+        {
+          "time": "12:05",
+          "muDynamic": 3506.4,
+          "queueDynamic": 4045.5000000000027
+        },
+        {
+          "time": "12:10",
+          "muDynamic": 3506.4,
+          "queueDynamic": 4166.700000000003
+        },
+        {
+          "time": "12:15",
+          "muDynamic": 3506.4,
+          "queueDynamic": 4296.900000000002
+        },
+        {
+          "time": "12:20",
+          "muDynamic": 3506.4,
+          "queueDynamic": 4415.500000000003
+        },
+        {
+          "time": "12:25",
+          "muDynamic": 3506.4,
+          "queueDynamic": 4524.300000000003
+        },
+        {
+          "time": "12:30",
+          "muDynamic": 3506.4,
+          "queueDynamic": 4621.500000000003
+        },
+        {
+          "time": "12:35",
+          "muDynamic": 3506.4,
+          "queueDynamic": 4728.500000000003
+        },
+        {
+          "time": "12:40",
+          "muDynamic": 3506.4,
+          "queueDynamic": 4851.900000000003
+        },
+        {
+          "time": "12:45",
+          "muDynamic": 3506.4,
+          "queueDynamic": 4938.7000000000035
+        },
+        {
+          "time": "12:50",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5039.500000000004
+        },
+        {
+          "time": "12:55",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5109.500000000004
+        },
+        {
+          "time": "13:00",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5192.7000000000035
+        },
+        {
+          "time": "13:05",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5252.900000000003
+        },
+        {
+          "time": "13:10",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5318.900000000003
+        },
+        {
+          "time": "13:15",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5339.300000000004
+        },
+        {
+          "time": "13:20",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5355.100000000004
+        },
+        {
+          "time": "13:25",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5388.100000000004
+        },
+        {
+          "time": "13:30",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5406.500000000005
+        },
+        {
+          "time": "13:35",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5412.900000000005
+        },
+        {
+          "time": "13:40",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5420.900000000005
+        },
+        {
+          "time": "13:45",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5425.700000000005
+        },
+        {
+          "time": "13:50",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5426.100000000006
+        },
+        {
+          "time": "13:55",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5431.300000000006
+        },
+        {
+          "time": "14:00",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5421.900000000006
+        },
+        {
+          "time": "14:05",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5421.500000000006
+        },
+        {
+          "time": "14:10",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5400.900000000007
+        },
+        {
+          "time": "14:15",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5389.900000000007
+        },
+        {
+          "time": "14:20",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5382.3000000000075
+        },
+        {
+          "time": "14:25",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5376.3000000000075
+        },
+        {
+          "time": "14:30",
+          "muDynamic": 3506.4,
+          "queueDynamic": 5357.100000000008
+        },
+        {
+          "time": "14:35",
+          "muDynamic": 3295.8,
+          "queueDynamic": 5349.450000000008
+        },
+        {
+          "time": "14:40",
+          "muDynamic": 3085.2000000000003,
+          "queueDynamic": 5342.750000000007
+        },
+        {
+          "time": "14:45",
+          "muDynamic": 2874.6000000000004,
+          "queueDynamic": 5385.8000000000075
+        },
+        {
+          "time": "14:50",
+          "muDynamic": 2664.0,
+          "queueDynamic": 5418.600000000008
+        },
+        {
+          "time": "14:55",
+          "muDynamic": 2453.4,
+          "queueDynamic": 5469.750000000008
+        },
+        {
+          "time": "15:00",
+          "muDynamic": 2242.8,
+          "queueDynamic": 5546.450000000009
+        },
+        {
+          "time": "15:05",
+          "muDynamic": 2032.2,
+          "queueDynamic": 5613.100000000009
+        },
+        {
+          "time": "15:10",
+          "muDynamic": 1821.6000000000001,
+          "queueDynamic": 5709.100000000009
+        },
+        {
+          "time": "15:15",
+          "muDynamic": 1611.0000000000002,
+          "queueDynamic": 5831.050000000008
+        },
+        {
+          "time": "15:20",
+          "muDynamic": 1400.4,
+          "queueDynamic": 5961.350000000009
+        },
+        {
+          "time": "15:25",
+          "muDynamic": 1189.8000000000002,
+          "queueDynamic": 6102.800000000009
+        },
+        {
+          "time": "15:30",
+          "muDynamic": 979.2,
+          "queueDynamic": 6262.800000000009
+        },
+        {
+          "time": "15:35",
+          "muDynamic": 979.2,
+          "queueDynamic": 6410.600000000009
+        },
+        {
+          "time": "15:40",
+          "muDynamic": 979.2,
+          "queueDynamic": 6566.600000000009
+        },
+        {
+          "time": "15:45",
+          "muDynamic": 979.2,
+          "queueDynamic": 6721.000000000008
+        },
+        {
+          "time": "15:50",
+          "muDynamic": 979.2,
+          "queueDynamic": 6853.8000000000075
+        },
+        {
+          "time": "15:55",
+          "muDynamic": 979.2,
+          "queueDynamic": 7000.000000000007
+        },
+        {
+          "time": "16:00",
+          "muDynamic": 979.2,
+          "queueDynamic": 7117.200000000007
+        },
+        {
+          "time": "16:05",
+          "muDynamic": 979.2,
+          "queueDynamic": 7238.400000000007
+        },
+        {
+          "time": "16:10",
+          "muDynamic": 979.2,
+          "queueDynamic": 7358.000000000006
+        },
+        {
+          "time": "16:15",
+          "muDynamic": 979.2,
+          "queueDynamic": 7472.000000000006
+        },
+        {
+          "time": "16:20",
+          "muDynamic": 979.2,
+          "queueDynamic": 7577.200000000006
+        },
+        {
+          "time": "16:25",
+          "muDynamic": 979.2,
+          "queueDynamic": 7673.600000000006
+        },
+        {
+          "time": "16:30",
+          "muDynamic": 979.2,
+          "queueDynamic": 7767.0000000000055
+        },
+        {
+          "time": "16:35",
+          "muDynamic": 979.2,
+          "queueDynamic": 7853.200000000005
+        },
+        {
+          "time": "16:40",
+          "muDynamic": 979.2,
+          "queueDynamic": 7942.000000000005
+        },
+        {
+          "time": "16:45",
+          "muDynamic": 979.2,
+          "queueDynamic": 8034.000000000005
+        },
+        {
+          "time": "16:50",
+          "muDynamic": 979.2,
+          "queueDynamic": 8111.000000000004
+        },
+        {
+          "time": "16:55",
+          "muDynamic": 979.2,
+          "queueDynamic": 8182.200000000003
+        },
+        {
+          "time": "17:00",
+          "muDynamic": 979.2,
+          "queueDynamic": 8255.800000000003
+        },
+        {
+          "time": "17:05",
+          "muDynamic": 979.2,
+          "queueDynamic": 8303.800000000003
+        },
+        {
+          "time": "17:10",
+          "muDynamic": 979.2,
+          "queueDynamic": 8365.800000000003
+        },
+        {
+          "time": "17:15",
+          "muDynamic": 979.2,
+          "queueDynamic": 8432.000000000002
+        },
+        {
+          "time": "17:20",
+          "muDynamic": 979.2,
+          "queueDynamic": 8481.800000000001
+        },
+        {
+          "time": "17:25",
+          "muDynamic": 979.2,
+          "queueDynamic": 8536.6
+        },
+        {
+          "time": "17:30",
+          "muDynamic": 979.2,
+          "queueDynamic": 8588.8
+        },
+        {
+          "time": "17:35",
+          "muDynamic": 979.2,
+          "queueDynamic": 8625.199999999999
+        },
+        {
+          "time": "17:40",
+          "muDynamic": 979.2,
+          "queueDynamic": 8650.8
+        },
+        {
+          "time": "17:45",
+          "muDynamic": 979.2,
+          "queueDynamic": 8677.599999999999
+        },
+        {
+          "time": "17:50",
+          "muDynamic": 979.2,
+          "queueDynamic": 8689.399999999998
+        },
+        {
+          "time": "17:55",
+          "muDynamic": 979.2,
+          "queueDynamic": 8700.999999999998
+        },
+        {
+          "time": "18:00",
+          "muDynamic": 979.2,
+          "queueDynamic": 8705.399999999998
+        },
+        {
+          "time": "18:05",
+          "muDynamic": 979.2,
+          "queueDynamic": 8705.399999999998
+        },
+        {
+          "time": "18:10",
+          "muDynamic": 979.2,
+          "queueDynamic": 8699.799999999997
+        },
+        {
+          "time": "18:15",
+          "muDynamic": 979.2,
+          "queueDynamic": 8691.199999999997
+        },
+        {
+          "time": "18:20",
+          "muDynamic": 979.2,
+          "queueDynamic": 8667.399999999996
+        },
+        {
+          "time": "18:25",
+          "muDynamic": 979.2,
+          "queueDynamic": 8651.399999999996
+        },
+        {
+          "time": "18:30",
+          "muDynamic": 979.2,
+          "queueDynamic": 8635.599999999995
+        },
+        {
+          "time": "18:35",
+          "muDynamic": 1290.0,
+          "queueDynamic": 8590.699999999995
+        },
+        {
+          "time": "18:40",
+          "muDynamic": 1600.8000000000002,
+          "queueDynamic": 8510.099999999995
+        },
+        {
+          "time": "18:45",
+          "muDynamic": 1911.6000000000001,
+          "queueDynamic": 8408.599999999995
+        },
+        {
+          "time": "18:50",
+          "muDynamic": 2222.4,
+          "queueDynamic": 8275.799999999994
+        },
+        {
+          "time": "18:55",
+          "muDynamic": 2533.2,
+          "queueDynamic": 8117.699999999993
+        },
+        {
+          "time": "19:00",
+          "muDynamic": 2844.0,
+          "queueDynamic": 7930.699999999993
+        },
+        {
+          "time": "19:05",
+          "muDynamic": 3154.8,
+          "queueDynamic": 7714.199999999993
+        },
+        {
+          "time": "19:10",
+          "muDynamic": 3465.6000000000004,
+          "queueDynamic": 7470.199999999993
+        },
+        {
+          "time": "19:15",
+          "muDynamic": 3776.4000000000005,
+          "queueDynamic": 7215.899999999993
+        },
+        {
+          "time": "19:20",
+          "muDynamic": 4087.2,
+          "queueDynamic": 6929.099999999993
+        },
+        {
+          "time": "19:25",
+          "muDynamic": 4398.0,
+          "queueDynamic": 6616.599999999993
+        },
+        {
+          "time": "19:30",
+          "muDynamic": 4708.8,
+          "queueDynamic": 6275.799999999994
+        },
+        {
+          "time": "19:35",
+          "muDynamic": 4708.8,
+          "queueDynamic": 5935.399999999994
+        },
+        {
+          "time": "19:40",
+          "muDynamic": 4708.8,
+          "queueDynamic": 5589.399999999994
+        },
+        {
+          "time": "19:45",
+          "muDynamic": 4708.8,
+          "queueDynamic": 5248.599999999995
+        },
+        {
+          "time": "19:50",
+          "muDynamic": 4708.8,
+          "queueDynamic": 4900.799999999996
+        },
+        {
+          "time": "19:55",
+          "muDynamic": 4708.8,
+          "queueDynamic": 4557.799999999996
+        },
+        {
+          "time": "20:00",
+          "muDynamic": 4708.8,
+          "queueDynamic": 4218.999999999996
+        },
+        {
+          "time": "20:05",
+          "muDynamic": 4708.8,
+          "queueDynamic": 3876.799999999996
+        },
+        {
+          "time": "20:10",
+          "muDynamic": 4708.8,
+          "queueDynamic": 3530.199999999996
+        },
+        {
+          "time": "20:15",
+          "muDynamic": 4708.8,
+          "queueDynamic": 3194.799999999996
+        },
+        {
+          "time": "20:20",
+          "muDynamic": 4708.8,
+          "queueDynamic": 2856.999999999996
+        },
+        {
+          "time": "20:25",
+          "muDynamic": 4708.8,
+          "queueDynamic": 2515.999999999996
+        },
+        {
+          "time": "20:30",
+          "muDynamic": 4708.8,
+          "queueDynamic": 2184.7999999999956
+        },
+        {
+          "time": "20:35",
+          "muDynamic": 4708.8,
+          "queueDynamic": 1847.9999999999955
+        },
+        {
+          "time": "20:40",
+          "muDynamic": 4708.8,
+          "queueDynamic": 1519.1999999999953
+        },
+        {
+          "time": "20:45",
+          "muDynamic": 4708.8,
+          "queueDynamic": 1191.399999999995
+        },
+        {
+          "time": "20:50",
+          "muDynamic": 4708.8,
+          "queueDynamic": 860.599999999995
+        },
+        {
+          "time": "20:55",
+          "muDynamic": 4708.8,
+          "queueDynamic": 525.7999999999951
+        },
+        {
+          "time": "21:00",
+          "muDynamic": 4708.8,
+          "queueDynamic": 189.79999999999507
+        },
+        {
+          "time": "21:05",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:10",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:15",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:20",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:25",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:30",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:35",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:40",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:45",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:50",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:55",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:00",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:05",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:10",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:15",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:20",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:25",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:30",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:35",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:40",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:45",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:50",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:55",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:00",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:05",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:10",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:15",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:20",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:25",
+          "muDynamic": 4708.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:30",
+          "muDynamic": 4708.8,
+          "queueDynamic": 1.0
+        },
+        {
+          "time": "23:35",
+          "muDynamic": 4708.8,
+          "queueDynamic": 18.400000000000034
+        },
+        {
+          "time": "23:40",
+          "muDynamic": 4708.8,
+          "queueDynamic": 44.80000000000007
+        },
+        {
+          "time": "23:45",
+          "muDynamic": 4708.8,
+          "queueDynamic": 45.2000000000001
+        },
+        {
+          "time": "23:50",
+          "muDynamic": 4708.8,
+          "queueDynamic": 44.800000000000125
+        },
+        {
+          "time": "23:55",
+          "muDynamic": 4708.8,
+          "queueDynamic": 38.000000000000114
+        }
+      ],
+      "summary": {
+        "constantMaxQueue": 8892.4,
+        "dynamicMaxQueue": 8705.399999999998,
+        "constantFinalQueue": 38.000000000000114,
+        "dynamicFinalQueue": 38.000000000000114,
+        "queueMaeDifference": 57.17291666666743,
+        "queueRmseDifference": 101.34702462370224
+      }
+    },
+    {
+      "id": "L405S-001|1223027",
+      "linkId": "L405S-001",
+      "tmcId": "1223027",
+      "muByPeriod": {
+        "AM": 7072.8,
+        "MD": 4041.6,
+        "NT1": 6427.2,
+        "NT2": 5452.8,
+        "PM": 1008.0
+      },
+      "rows": [
+        {
+          "time": "00:00",
+          "muDynamic": 6427.2,
+          "queueDynamic": 2.6000000000000227
+        },
+        {
+          "time": "00:05",
+          "muDynamic": 6427.2,
+          "queueDynamic": 3.800000000000068
+        },
+        {
+          "time": "00:10",
+          "muDynamic": 6427.2,
+          "queueDynamic": 34.80000000000007
+        },
+        {
+          "time": "00:15",
+          "muDynamic": 6427.2,
+          "queueDynamic": 79.40000000000009
+        },
+        {
+          "time": "00:20",
+          "muDynamic": 6427.2,
+          "queueDynamic": 139.4000000000001
+        },
+        {
+          "time": "00:25",
+          "muDynamic": 6427.2,
+          "queueDynamic": 167.0000000000001
+        },
+        {
+          "time": "00:30",
+          "muDynamic": 6427.2,
+          "queueDynamic": 170.60000000000014
+        },
+        {
+          "time": "00:35",
+          "muDynamic": 6427.2,
+          "queueDynamic": 183.00000000000023
+        },
+        {
+          "time": "00:40",
+          "muDynamic": 6427.2,
+          "queueDynamic": 185.8000000000003
+        },
+        {
+          "time": "00:45",
+          "muDynamic": 6427.2,
+          "queueDynamic": 211.8000000000003
+        },
+        {
+          "time": "00:50",
+          "muDynamic": 6427.2,
+          "queueDynamic": 215.8000000000003
+        },
+        {
+          "time": "00:55",
+          "muDynamic": 6427.2,
+          "queueDynamic": 212.60000000000036
+        },
+        {
+          "time": "01:00",
+          "muDynamic": 6427.2,
+          "queueDynamic": 206.60000000000036
+        },
+        {
+          "time": "01:05",
+          "muDynamic": 6427.2,
+          "queueDynamic": 216.8000000000004
+        },
+        {
+          "time": "01:10",
+          "muDynamic": 6427.2,
+          "queueDynamic": 212.2000000000005
+        },
+        {
+          "time": "01:15",
+          "muDynamic": 6427.2,
+          "queueDynamic": 196.2000000000005
+        },
+        {
+          "time": "01:20",
+          "muDynamic": 6427.2,
+          "queueDynamic": 206.00000000000057
+        },
+        {
+          "time": "01:25",
+          "muDynamic": 6427.2,
+          "queueDynamic": 208.6000000000006
+        },
+        {
+          "time": "01:30",
+          "muDynamic": 6427.2,
+          "queueDynamic": 205.2000000000006
+        },
+        {
+          "time": "01:35",
+          "muDynamic": 6427.2,
+          "queueDynamic": 241.00000000000068
+        },
+        {
+          "time": "01:40",
+          "muDynamic": 6427.2,
+          "queueDynamic": 225.00000000000068
+        },
+        {
+          "time": "01:45",
+          "muDynamic": 6427.2,
+          "queueDynamic": 246.40000000000077
+        },
+        {
+          "time": "01:50",
+          "muDynamic": 6427.2,
+          "queueDynamic": 222.40000000000077
+        },
+        {
+          "time": "01:55",
+          "muDynamic": 6427.2,
+          "queueDynamic": 207.40000000000077
+        },
+        {
+          "time": "02:00",
+          "muDynamic": 6427.2,
+          "queueDynamic": 164.20000000000084
+        },
+        {
+          "time": "02:05",
+          "muDynamic": 6427.2,
+          "queueDynamic": 122.400000000001
+        },
+        {
+          "time": "02:10",
+          "muDynamic": 6427.2,
+          "queueDynamic": 60.600000000001046
+        },
+        {
+          "time": "02:15",
+          "muDynamic": 6427.2,
+          "queueDynamic": 26.20000000000107
+        },
+        {
+          "time": "02:20",
+          "muDynamic": 6427.2,
+          "queueDynamic": 12.800000000001091
+        },
+        {
+          "time": "02:25",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "02:30",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "02:35",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "02:40",
+          "muDynamic": 6427.2,
+          "queueDynamic": 17.600000000000023
+        },
+        {
+          "time": "02:45",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "02:50",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "02:55",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "03:00",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "03:05",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "03:10",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "03:15",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "03:20",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "03:25",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "03:30",
+          "muDynamic": 6427.2,
+          "queueDynamic": 20.40000000000009
+        },
+        {
+          "time": "03:35",
+          "muDynamic": 6427.2,
+          "queueDynamic": 18.40000000000009
+        },
+        {
+          "time": "03:40",
+          "muDynamic": 6427.2,
+          "queueDynamic": 24.600000000000136
+        },
+        {
+          "time": "03:45",
+          "muDynamic": 6427.2,
+          "queueDynamic": 30.600000000000136
+        },
+        {
+          "time": "03:50",
+          "muDynamic": 6427.2,
+          "queueDynamic": 10.800000000000182
+        },
+        {
+          "time": "03:55",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "04:00",
+          "muDynamic": 6427.2,
+          "queueDynamic": 1.6000000000000227
+        },
+        {
+          "time": "04:05",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "04:10",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "04:15",
+          "muDynamic": 6427.2,
+          "queueDynamic": 17.0
+        },
+        {
+          "time": "04:20",
+          "muDynamic": 6427.2,
+          "queueDynamic": 27.0
+        },
+        {
+          "time": "04:25",
+          "muDynamic": 6427.2,
+          "queueDynamic": 42.40000000000009
+        },
+        {
+          "time": "04:30",
+          "muDynamic": 6427.2,
+          "queueDynamic": 37.40000000000009
+        },
+        {
+          "time": "04:35",
+          "muDynamic": 6427.2,
+          "queueDynamic": 66.00000000000011
+        },
+        {
+          "time": "04:40",
+          "muDynamic": 6427.2,
+          "queueDynamic": 106.00000000000011
+        },
+        {
+          "time": "04:45",
+          "muDynamic": 6427.2,
+          "queueDynamic": 113.4000000000002
+        },
+        {
+          "time": "04:50",
+          "muDynamic": 6427.2,
+          "queueDynamic": 99.60000000000025
+        },
+        {
+          "time": "04:55",
+          "muDynamic": 6427.2,
+          "queueDynamic": 48.00000000000034
+        },
+        {
+          "time": "05:00",
+          "muDynamic": 6427.2,
+          "queueDynamic": 30.200000000000387
+        },
+        {
+          "time": "05:05",
+          "muDynamic": 6427.2,
+          "queueDynamic": 2.6000000000004775
+        },
+        {
+          "time": "05:10",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "05:15",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "05:20",
+          "muDynamic": 6427.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "05:25",
+          "muDynamic": 6427.2,
+          "queueDynamic": 28.200000000000045
+        },
+        {
+          "time": "05:30",
+          "muDynamic": 6427.2,
+          "queueDynamic": 33.80000000000007
+        },
+        {
+          "time": "05:35",
+          "muDynamic": 6481.0,
+          "queueDynamic": 47.91666666666674
+        },
+        {
+          "time": "05:40",
+          "muDynamic": 6534.8,
+          "queueDynamic": 30.750000000000114
+        },
+        {
+          "time": "05:45",
+          "muDynamic": 6588.6,
+          "queueDynamic": 37.70000000000016
+        },
+        {
+          "time": "05:50",
+          "muDynamic": 6642.4,
+          "queueDynamic": 26.96666666666681
+        },
+        {
+          "time": "05:55",
+          "muDynamic": 6696.2,
+          "queueDynamic": 11.95000000000016
+        },
+        {
+          "time": "06:00",
+          "muDynamic": 6750.0,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "06:05",
+          "muDynamic": 6803.8,
+          "queueDynamic": 2.6166666666665606
+        },
+        {
+          "time": "06:10",
+          "muDynamic": 6857.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "06:15",
+          "muDynamic": 6911.4,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "06:20",
+          "muDynamic": 6965.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "06:25",
+          "muDynamic": 7019.0,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "06:30",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "06:35",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "06:40",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "06:45",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "06:50",
+          "muDynamic": 7072.8,
+          "queueDynamic": 1.0
+        },
+        {
+          "time": "06:55",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:00",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:05",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:10",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:15",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:20",
+          "muDynamic": 7072.8,
+          "queueDynamic": 4.399999999999977
+        },
+        {
+          "time": "07:25",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:30",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:35",
+          "muDynamic": 7072.8,
+          "queueDynamic": 5.0
+        },
+        {
+          "time": "07:40",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:45",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:50",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "07:55",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:00",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:05",
+          "muDynamic": 7072.8,
+          "queueDynamic": 12.0
+        },
+        {
+          "time": "08:10",
+          "muDynamic": 7072.8,
+          "queueDynamic": 10.0
+        },
+        {
+          "time": "08:15",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:20",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:25",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:30",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:35",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:40",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.39999999999997726
+        },
+        {
+          "time": "08:45",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:50",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "08:55",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "09:00",
+          "muDynamic": 7072.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "09:05",
+          "muDynamic": 7072.8,
+          "queueDynamic": 13.199999999999932
+        },
+        {
+          "time": "09:10",
+          "muDynamic": 7072.8,
+          "queueDynamic": 17.399999999999864
+        },
+        {
+          "time": "09:15",
+          "muDynamic": 7072.8,
+          "queueDynamic": 30.79999999999984
+        },
+        {
+          "time": "09:20",
+          "muDynamic": 7072.8,
+          "queueDynamic": 24.399999999999864
+        },
+        {
+          "time": "09:25",
+          "muDynamic": 7072.8,
+          "queueDynamic": 27.999999999999886
+        },
+        {
+          "time": "09:30",
+          "muDynamic": 7072.8,
+          "queueDynamic": 35.999999999999886
+        },
+        {
+          "time": "09:35",
+          "muDynamic": 6820.2,
+          "queueDynamic": 75.64999999999998
+        },
+        {
+          "time": "09:40",
+          "muDynamic": 6567.6,
+          "queueDynamic": 117.75
+        },
+        {
+          "time": "09:45",
+          "muDynamic": 6315.0,
+          "queueDynamic": 193.89999999999998
+        },
+        {
+          "time": "09:50",
+          "muDynamic": 6062.4,
+          "queueDynamic": 294.9
+        },
+        {
+          "time": "09:55",
+          "muDynamic": 5809.8,
+          "queueDynamic": 410.94999999999993
+        },
+        {
+          "time": "10:00",
+          "muDynamic": 5557.2,
+          "queueDynamic": 538.05
+        },
+        {
+          "time": "10:05",
+          "muDynamic": 5304.6,
+          "queueDynamic": 688.0
+        },
+        {
+          "time": "10:10",
+          "muDynamic": 5052.0,
+          "queueDynamic": 862.0
+        },
+        {
+          "time": "10:15",
+          "muDynamic": 4799.4,
+          "queueDynamic": 1068.85
+        },
+        {
+          "time": "10:20",
+          "muDynamic": 4546.8,
+          "queueDynamic": 1301.35
+        },
+        {
+          "time": "10:25",
+          "muDynamic": 4294.2,
+          "queueDynamic": 1556.1
+        },
+        {
+          "time": "10:30",
+          "muDynamic": 4041.6,
+          "queueDynamic": 1821.3
+        },
+        {
+          "time": "10:35",
+          "muDynamic": 4041.6,
+          "queueDynamic": 2083.5
+        },
+        {
+          "time": "10:40",
+          "muDynamic": 4041.6,
+          "queueDynamic": 2337.3
+        },
+        {
+          "time": "10:45",
+          "muDynamic": 4041.6,
+          "queueDynamic": 2591.9000000000005
+        },
+        {
+          "time": "10:50",
+          "muDynamic": 4041.6,
+          "queueDynamic": 2845.500000000001
+        },
+        {
+          "time": "10:55",
+          "muDynamic": 4041.6,
+          "queueDynamic": 3087.7000000000007
+        },
+        {
+          "time": "11:00",
+          "muDynamic": 4041.6,
+          "queueDynamic": 3333.1000000000004
+        },
+        {
+          "time": "11:05",
+          "muDynamic": 4041.6,
+          "queueDynamic": 3565.9000000000005
+        },
+        {
+          "time": "11:10",
+          "muDynamic": 4041.6,
+          "queueDynamic": 3778.5
+        },
+        {
+          "time": "11:15",
+          "muDynamic": 4041.6,
+          "queueDynamic": 3999.8999999999996
+        },
+        {
+          "time": "11:20",
+          "muDynamic": 4041.6,
+          "queueDynamic": 4228.9
+        },
+        {
+          "time": "11:25",
+          "muDynamic": 4041.6,
+          "queueDynamic": 4447.7
+        },
+        {
+          "time": "11:30",
+          "muDynamic": 4041.6,
+          "queueDynamic": 4675.499999999999
+        },
+        {
+          "time": "11:35",
+          "muDynamic": 4041.6,
+          "queueDynamic": 4891.299999999998
+        },
+        {
+          "time": "11:40",
+          "muDynamic": 4041.6,
+          "queueDynamic": 5099.099999999998
+        },
+        {
+          "time": "11:45",
+          "muDynamic": 4041.6,
+          "queueDynamic": 5303.299999999997
+        },
+        {
+          "time": "11:50",
+          "muDynamic": 4041.6,
+          "queueDynamic": 5500.099999999998
+        },
+        {
+          "time": "11:55",
+          "muDynamic": 4041.6,
+          "queueDynamic": 5688.499999999997
+        },
+        {
+          "time": "12:00",
+          "muDynamic": 4041.6,
+          "queueDynamic": 5866.699999999997
+        },
+        {
+          "time": "12:05",
+          "muDynamic": 4041.6,
+          "queueDynamic": 6038.2999999999965
+        },
+        {
+          "time": "12:10",
+          "muDynamic": 4041.6,
+          "queueDynamic": 6214.699999999996
+        },
+        {
+          "time": "12:15",
+          "muDynamic": 4041.6,
+          "queueDynamic": 6375.499999999996
+        },
+        {
+          "time": "12:20",
+          "muDynamic": 4041.6,
+          "queueDynamic": 6545.499999999996
+        },
+        {
+          "time": "12:25",
+          "muDynamic": 4041.6,
+          "queueDynamic": 6692.699999999996
+        },
+        {
+          "time": "12:30",
+          "muDynamic": 4041.6,
+          "queueDynamic": 6838.899999999996
+        },
+        {
+          "time": "12:35",
+          "muDynamic": 4041.6,
+          "queueDynamic": 6974.299999999996
+        },
+        {
+          "time": "12:40",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7146.899999999995
+        },
+        {
+          "time": "12:45",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7270.699999999995
+        },
+        {
+          "time": "12:50",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7409.099999999995
+        },
+        {
+          "time": "12:55",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7510.099999999995
+        },
+        {
+          "time": "13:00",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7633.699999999994
+        },
+        {
+          "time": "13:05",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7708.699999999994
+        },
+        {
+          "time": "13:10",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7801.899999999994
+        },
+        {
+          "time": "13:15",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7840.699999999994
+        },
+        {
+          "time": "13:20",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7863.299999999995
+        },
+        {
+          "time": "13:25",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7910.899999999995
+        },
+        {
+          "time": "13:30",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7951.099999999994
+        },
+        {
+          "time": "13:35",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7963.699999999994
+        },
+        {
+          "time": "13:40",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7984.099999999994
+        },
+        {
+          "time": "13:45",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7985.499999999994
+        },
+        {
+          "time": "13:50",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7994.6999999999925
+        },
+        {
+          "time": "13:55",
+          "muDynamic": 4041.6,
+          "queueDynamic": 8003.899999999993
+        },
+        {
+          "time": "14:00",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7998.099999999994
+        },
+        {
+          "time": "14:05",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7996.699999999994
+        },
+        {
+          "time": "14:10",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7981.899999999993
+        },
+        {
+          "time": "14:15",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7959.499999999994
+        },
+        {
+          "time": "14:20",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7951.6999999999925
+        },
+        {
+          "time": "14:25",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7941.899999999993
+        },
+        {
+          "time": "14:30",
+          "muDynamic": 4041.6,
+          "queueDynamic": 7918.899999999993
+        },
+        {
+          "time": "14:35",
+          "muDynamic": 3788.7999999999997,
+          "queueDynamic": 7903.56666666666
+        },
+        {
+          "time": "14:40",
+          "muDynamic": 3536.0,
+          "queueDynamic": 7895.499999999994
+        },
+        {
+          "time": "14:45",
+          "muDynamic": 3283.2,
+          "queueDynamic": 7947.099999999993
+        },
+        {
+          "time": "14:50",
+          "muDynamic": 3030.4,
+          "queueDynamic": 7986.566666666659
+        },
+        {
+          "time": "14:55",
+          "muDynamic": 2777.6,
+          "queueDynamic": 8050.299999999993
+        },
+        {
+          "time": "15:00",
+          "muDynamic": 2524.8,
+          "queueDynamic": 8136.299999999994
+        },
+        {
+          "time": "15:05",
+          "muDynamic": 2272.0,
+          "queueDynamic": 8222.36666666666
+        },
+        {
+          "time": "15:10",
+          "muDynamic": 2019.2,
+          "queueDynamic": 8330.899999999992
+        },
+        {
+          "time": "15:15",
+          "muDynamic": 1766.4,
+          "queueDynamic": 8475.899999999992
+        },
+        {
+          "time": "15:20",
+          "muDynamic": 1513.6,
+          "queueDynamic": 8633.566666666658
+        },
+        {
+          "time": "15:25",
+          "muDynamic": 1260.8000000000002,
+          "queueDynamic": 8800.49999999999
+        },
+        {
+          "time": "15:30",
+          "muDynamic": 1008.0,
+          "queueDynamic": 8994.29999999999
+        },
+        {
+          "time": "15:35",
+          "muDynamic": 1008.0,
+          "queueDynamic": 9175.09999999999
+        },
+        {
+          "time": "15:40",
+          "muDynamic": 1008.0,
+          "queueDynamic": 9359.29999999999
+        },
+        {
+          "time": "15:45",
+          "muDynamic": 1008.0,
+          "queueDynamic": 9544.89999999999
+        },
+        {
+          "time": "15:50",
+          "muDynamic": 1008.0,
+          "queueDynamic": 9709.89999999999
+        },
+        {
+          "time": "15:55",
+          "muDynamic": 1008.0,
+          "queueDynamic": 9877.69999999999
+        },
+        {
+          "time": "16:00",
+          "muDynamic": 1008.0,
+          "queueDynamic": 10021.69999999999
+        },
+        {
+          "time": "16:05",
+          "muDynamic": 1008.0,
+          "queueDynamic": 10168.09999999999
+        },
+        {
+          "time": "16:10",
+          "muDynamic": 1008.0,
+          "queueDynamic": 10311.69999999999
+        },
+        {
+          "time": "16:15",
+          "muDynamic": 1008.0,
+          "queueDynamic": 10448.69999999999
+        },
+        {
+          "time": "16:20",
+          "muDynamic": 1008.0,
+          "queueDynamic": 10567.29999999999
+        },
+        {
+          "time": "16:25",
+          "muDynamic": 1008.0,
+          "queueDynamic": 10673.09999999999
+        },
+        {
+          "time": "16:30",
+          "muDynamic": 1008.0,
+          "queueDynamic": 10788.09999999999
+        },
+        {
+          "time": "16:35",
+          "muDynamic": 1008.0,
+          "queueDynamic": 10886.499999999989
+        },
+        {
+          "time": "16:40",
+          "muDynamic": 1008.0,
+          "queueDynamic": 10988.299999999988
+        },
+        {
+          "time": "16:45",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11097.299999999988
+        },
+        {
+          "time": "16:50",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11192.699999999988
+        },
+        {
+          "time": "16:55",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11272.699999999988
+        },
+        {
+          "time": "17:00",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11365.699999999988
+        },
+        {
+          "time": "17:05",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11424.699999999988
+        },
+        {
+          "time": "17:10",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11499.499999999987
+        },
+        {
+          "time": "17:15",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11581.299999999987
+        },
+        {
+          "time": "17:20",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11644.099999999986
+        },
+        {
+          "time": "17:25",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11709.099999999986
+        },
+        {
+          "time": "17:30",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11769.099999999986
+        },
+        {
+          "time": "17:35",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11815.499999999985
+        },
+        {
+          "time": "17:40",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11851.499999999985
+        },
+        {
+          "time": "17:45",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11880.899999999985
+        },
+        {
+          "time": "17:50",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11897.499999999985
+        },
+        {
+          "time": "17:55",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11910.899999999985
+        },
+        {
+          "time": "18:00",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11919.299999999985
+        },
+        {
+          "time": "18:05",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11919.299999999985
+        },
+        {
+          "time": "18:10",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11916.899999999985
+        },
+        {
+          "time": "18:15",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11905.899999999985
+        },
+        {
+          "time": "18:20",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11886.899999999985
+        },
+        {
+          "time": "18:25",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11867.499999999985
+        },
+        {
+          "time": "18:30",
+          "muDynamic": 1008.0,
+          "queueDynamic": 11853.899999999985
+        },
+        {
+          "time": "18:35",
+          "muDynamic": 1378.4,
+          "queueDynamic": 11802.433333333318
+        },
+        {
+          "time": "18:40",
+          "muDynamic": 1748.8000000000002,
+          "queueDynamic": 11711.699999999984
+        },
+        {
+          "time": "18:45",
+          "muDynamic": 2119.2,
+          "queueDynamic": 11594.299999999985
+        },
+        {
+          "time": "18:50",
+          "muDynamic": 2489.6000000000004,
+          "queueDynamic": 11440.433333333318
+        },
+        {
+          "time": "18:55",
+          "muDynamic": 2860.0,
+          "queueDynamic": 11256.299999999985
+        },
+        {
+          "time": "19:00",
+          "muDynamic": 3230.4,
+          "queueDynamic": 11039.099999999984
+        },
+        {
+          "time": "19:05",
+          "muDynamic": 3600.8,
+          "queueDynamic": 10787.033333333316
+        },
+        {
+          "time": "19:10",
+          "muDynamic": 3971.2000000000003,
+          "queueDynamic": 10502.699999999984
+        },
+        {
+          "time": "19:15",
+          "muDynamic": 4341.6,
+          "queueDynamic": 10200.299999999985
+        },
+        {
+          "time": "19:20",
+          "muDynamic": 4712.0,
+          "queueDynamic": 9862.83333333332
+        },
+        {
+          "time": "19:25",
+          "muDynamic": 5082.400000000001,
+          "queueDynamic": 9494.499999999987
+        },
+        {
+          "time": "19:30",
+          "muDynamic": 5452.8,
+          "queueDynamic": 9094.299999999988
+        },
+        {
+          "time": "19:35",
+          "muDynamic": 5452.8,
+          "queueDynamic": 8692.299999999988
+        },
+        {
+          "time": "19:40",
+          "muDynamic": 5452.8,
+          "queueDynamic": 8283.699999999988
+        },
+        {
+          "time": "19:45",
+          "muDynamic": 5452.8,
+          "queueDynamic": 7883.299999999988
+        },
+        {
+          "time": "19:50",
+          "muDynamic": 5452.8,
+          "queueDynamic": 7475.0999999999885
+        },
+        {
+          "time": "19:55",
+          "muDynamic": 5452.8,
+          "queueDynamic": 7068.0999999999885
+        },
+        {
+          "time": "20:00",
+          "muDynamic": 5452.8,
+          "queueDynamic": 6667.899999999989
+        },
+        {
+          "time": "20:05",
+          "muDynamic": 5452.8,
+          "queueDynamic": 6265.499999999989
+        },
+        {
+          "time": "20:10",
+          "muDynamic": 5452.8,
+          "queueDynamic": 5855.499999999989
+        },
+        {
+          "time": "20:15",
+          "muDynamic": 5452.8,
+          "queueDynamic": 5459.69999999999
+        },
+        {
+          "time": "20:20",
+          "muDynamic": 5452.8,
+          "queueDynamic": 5061.09999999999
+        },
+        {
+          "time": "20:25",
+          "muDynamic": 5452.8,
+          "queueDynamic": 4655.09999999999
+        },
+        {
+          "time": "20:30",
+          "muDynamic": 5452.8,
+          "queueDynamic": 4263.8999999999905
+        },
+        {
+          "time": "20:35",
+          "muDynamic": 5452.8,
+          "queueDynamic": 3864.4999999999905
+        },
+        {
+          "time": "20:40",
+          "muDynamic": 5452.8,
+          "queueDynamic": 3474.0999999999904
+        },
+        {
+          "time": "20:45",
+          "muDynamic": 5452.8,
+          "queueDynamic": 3087.29999999999
+        },
+        {
+          "time": "20:50",
+          "muDynamic": 5452.8,
+          "queueDynamic": 2696.6999999999903
+        },
+        {
+          "time": "20:55",
+          "muDynamic": 5452.8,
+          "queueDynamic": 2299.6999999999903
+        },
+        {
+          "time": "21:00",
+          "muDynamic": 5452.8,
+          "queueDynamic": 1901.6999999999903
+        },
+        {
+          "time": "21:05",
+          "muDynamic": 5452.8,
+          "queueDynamic": 1506.6999999999903
+        },
+        {
+          "time": "21:10",
+          "muDynamic": 5452.8,
+          "queueDynamic": 1123.6999999999903
+        },
+        {
+          "time": "21:15",
+          "muDynamic": 5452.8,
+          "queueDynamic": 747.2999999999903
+        },
+        {
+          "time": "21:20",
+          "muDynamic": 5452.8,
+          "queueDynamic": 380.49999999999034
+        },
+        {
+          "time": "21:25",
+          "muDynamic": 5452.8,
+          "queueDynamic": 30.499999999990337
+        },
+        {
+          "time": "21:30",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:35",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:40",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:45",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:50",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:55",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:00",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:05",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:10",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:15",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:20",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:25",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:30",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:35",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:40",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:45",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:50",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:55",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:00",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:05",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:10",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:15",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:20",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:25",
+          "muDynamic": 5452.8,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:30",
+          "muDynamic": 5452.8,
+          "queueDynamic": 9.0
+        },
+        {
+          "time": "23:35",
+          "muDynamic": 5452.8,
+          "queueDynamic": 68.0
+        },
+        {
+          "time": "23:40",
+          "muDynamic": 5452.8,
+          "queueDynamic": 125.19999999999993
+        },
+        {
+          "time": "23:45",
+          "muDynamic": 5452.8,
+          "queueDynamic": 173.9999999999999
+        },
+        {
+          "time": "23:50",
+          "muDynamic": 5452.8,
+          "queueDynamic": 197.79999999999984
+        },
+        {
+          "time": "23:55",
+          "muDynamic": 5452.8,
+          "queueDynamic": 206.9999999999999
+        }
+      ],
+      "summary": {
+        "constantMaxQueue": 12171.999999999984,
+        "dynamicMaxQueue": 11919.299999999985,
+        "constantFinalQueue": 206.9999999999999,
+        "dynamicFinalQueue": 206.9999999999999,
+        "queueMaeDifference": 82.6401620370372,
+        "queueRmseDifference": 137.9194724943972
+      }
+    },
+    {
+      "id": "L405S-020|1201419",
+      "linkId": "L405S-020",
+      "tmcId": "1201419",
+      "muByPeriod": {
+        "AM": 7656.0,
+        "MD": 4582.8,
+        "NT1": 6824.4,
+        "NT2": 7293.6,
+        "PM": 825.6
+      },
+      "rows": [
+        {
+          "time": "00:00",
+          "muDynamic": 6824.4,
+          "queueDynamic": 93.70000000000005
+        },
+        {
+          "time": "00:05",
+          "muDynamic": 6824.4,
+          "queueDynamic": 224.39999999999998
+        },
+        {
+          "time": "00:10",
+          "muDynamic": 6824.4,
+          "queueDynamic": 383.30000000000007
+        },
+        {
+          "time": "00:15",
+          "muDynamic": 6824.4,
+          "queueDynamic": 519.9999999999999
+        },
+        {
+          "time": "00:20",
+          "muDynamic": 6824.4,
+          "queueDynamic": 677.6999999999997
+        },
+        {
+          "time": "00:25",
+          "muDynamic": 6824.4,
+          "queueDynamic": 853.9999999999999
+        },
+        {
+          "time": "00:30",
+          "muDynamic": 6824.4,
+          "queueDynamic": 1005.0999999999998
+        },
+        {
+          "time": "00:35",
+          "muDynamic": 6824.4,
+          "queueDynamic": 1130.6
+        },
+        {
+          "time": "00:40",
+          "muDynamic": 6824.4,
+          "queueDynamic": 1231.1
+        },
+        {
+          "time": "00:45",
+          "muDynamic": 6824.4,
+          "queueDynamic": 1384.1999999999998
+        },
+        {
+          "time": "00:50",
+          "muDynamic": 6824.4,
+          "queueDynamic": 1527.3000000000002
+        },
+        {
+          "time": "00:55",
+          "muDynamic": 6824.4,
+          "queueDynamic": 1617.4000000000005
+        },
+        {
+          "time": "01:00",
+          "muDynamic": 6824.4,
+          "queueDynamic": 1697.7000000000007
+        },
+        {
+          "time": "01:05",
+          "muDynamic": 6824.4,
+          "queueDynamic": 1767.6000000000008
+        },
+        {
+          "time": "01:10",
+          "muDynamic": 6824.4,
+          "queueDynamic": 1835.1000000000008
+        },
+        {
+          "time": "01:15",
+          "muDynamic": 6824.4,
+          "queueDynamic": 1909.2000000000007
+        },
+        {
+          "time": "01:20",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2016.1000000000008
+        },
+        {
+          "time": "01:25",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2139.000000000001
+        },
+        {
+          "time": "01:30",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2244.700000000001
+        },
+        {
+          "time": "01:35",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2374.6000000000013
+        },
+        {
+          "time": "01:40",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2498.1000000000013
+        },
+        {
+          "time": "01:45",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2626.6000000000013
+        },
+        {
+          "time": "01:50",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2739.7000000000016
+        },
+        {
+          "time": "01:55",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2829.000000000002
+        },
+        {
+          "time": "02:00",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2904.300000000002
+        },
+        {
+          "time": "02:05",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2958.4000000000024
+        },
+        {
+          "time": "02:10",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3029.3000000000025
+        },
+        {
+          "time": "02:15",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3103.6000000000026
+        },
+        {
+          "time": "02:20",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3143.5000000000027
+        },
+        {
+          "time": "02:25",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3188.400000000003
+        },
+        {
+          "time": "02:30",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3236.5000000000027
+        },
+        {
+          "time": "02:35",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3282.800000000003
+        },
+        {
+          "time": "02:40",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3348.9000000000033
+        },
+        {
+          "time": "02:45",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3404.4000000000033
+        },
+        {
+          "time": "02:50",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3449.7000000000035
+        },
+        {
+          "time": "02:55",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3434.4000000000037
+        },
+        {
+          "time": "03:00",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3393.700000000004
+        },
+        {
+          "time": "03:05",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3351.400000000004
+        },
+        {
+          "time": "03:10",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3313.1000000000045
+        },
+        {
+          "time": "03:15",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3281.0000000000045
+        },
+        {
+          "time": "03:20",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3243.100000000005
+        },
+        {
+          "time": "03:25",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3218.000000000005
+        },
+        {
+          "time": "03:30",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3177.900000000005
+        },
+        {
+          "time": "03:35",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3134.6000000000054
+        },
+        {
+          "time": "03:40",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3110.3000000000056
+        },
+        {
+          "time": "03:45",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3118.000000000006
+        },
+        {
+          "time": "03:50",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3106.100000000006
+        },
+        {
+          "time": "03:55",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3077.600000000006
+        },
+        {
+          "time": "04:00",
+          "muDynamic": 6824.4,
+          "queueDynamic": 3022.300000000006
+        },
+        {
+          "time": "04:05",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2959.200000000006
+        },
+        {
+          "time": "04:10",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2930.5000000000064
+        },
+        {
+          "time": "04:15",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2908.4000000000065
+        },
+        {
+          "time": "04:20",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2861.9000000000065
+        },
+        {
+          "time": "04:25",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2823.2000000000066
+        },
+        {
+          "time": "04:30",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2815.3000000000065
+        },
+        {
+          "time": "04:35",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2810.2000000000066
+        },
+        {
+          "time": "04:40",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2804.3000000000065
+        },
+        {
+          "time": "04:45",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2783.000000000007
+        },
+        {
+          "time": "04:50",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2797.500000000007
+        },
+        {
+          "time": "04:55",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2798.200000000007
+        },
+        {
+          "time": "05:00",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2773.3000000000075
+        },
+        {
+          "time": "05:05",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2737.8000000000075
+        },
+        {
+          "time": "05:10",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2713.7000000000075
+        },
+        {
+          "time": "05:15",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2685.8000000000075
+        },
+        {
+          "time": "05:20",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2678.7000000000075
+        },
+        {
+          "time": "05:25",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2676.2000000000075
+        },
+        {
+          "time": "05:30",
+          "muDynamic": 6824.4,
+          "queueDynamic": 2664.1000000000076
+        },
+        {
+          "time": "05:35",
+          "muDynamic": 6893.7,
+          "queueDynamic": 2670.6250000000077
+        },
+        {
+          "time": "05:40",
+          "muDynamic": 6963.0,
+          "queueDynamic": 2646.5750000000075
+        },
+        {
+          "time": "05:45",
+          "muDynamic": 7032.299999999999,
+          "queueDynamic": 2649.5500000000075
+        },
+        {
+          "time": "05:50",
+          "muDynamic": 7101.599999999999,
+          "queueDynamic": 2636.3500000000076
+        },
+        {
+          "time": "05:55",
+          "muDynamic": 7170.9,
+          "queueDynamic": 2606.775000000008
+        },
+        {
+          "time": "06:00",
+          "muDynamic": 7240.2,
+          "queueDynamic": 2554.225000000008
+        },
+        {
+          "time": "06:05",
+          "muDynamic": 7309.5,
+          "queueDynamic": 2458.100000000008
+        },
+        {
+          "time": "06:10",
+          "muDynamic": 7378.8,
+          "queueDynamic": 2395.400000000008
+        },
+        {
+          "time": "06:15",
+          "muDynamic": 7448.1,
+          "queueDynamic": 2368.325000000008
+        },
+        {
+          "time": "06:20",
+          "muDynamic": 7517.4,
+          "queueDynamic": 2349.2750000000083
+        },
+        {
+          "time": "06:25",
+          "muDynamic": 7586.7,
+          "queueDynamic": 2317.850000000008
+        },
+        {
+          "time": "06:30",
+          "muDynamic": 7656.0,
+          "queueDynamic": 2306.650000000008
+        },
+        {
+          "time": "06:35",
+          "muDynamic": 7656.0,
+          "queueDynamic": 2290.050000000008
+        },
+        {
+          "time": "06:40",
+          "muDynamic": 7656.0,
+          "queueDynamic": 2249.8500000000076
+        },
+        {
+          "time": "06:45",
+          "muDynamic": 7656.0,
+          "queueDynamic": 2230.4500000000075
+        },
+        {
+          "time": "06:50",
+          "muDynamic": 7656.0,
+          "queueDynamic": 2189.2500000000073
+        },
+        {
+          "time": "06:55",
+          "muDynamic": 7656.0,
+          "queueDynamic": 2129.0500000000075
+        },
+        {
+          "time": "07:00",
+          "muDynamic": 7656.0,
+          "queueDynamic": 2056.4500000000075
+        },
+        {
+          "time": "07:05",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1984.8500000000076
+        },
+        {
+          "time": "07:10",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1950.0500000000075
+        },
+        {
+          "time": "07:15",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1935.4500000000075
+        },
+        {
+          "time": "07:20",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1923.2500000000073
+        },
+        {
+          "time": "07:25",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1939.6500000000074
+        },
+        {
+          "time": "07:30",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1952.2500000000073
+        },
+        {
+          "time": "07:35",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1931.8500000000072
+        },
+        {
+          "time": "07:40",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1902.650000000007
+        },
+        {
+          "time": "07:45",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1905.450000000007
+        },
+        {
+          "time": "07:50",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1904.450000000007
+        },
+        {
+          "time": "07:55",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1887.450000000007
+        },
+        {
+          "time": "08:00",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1855.8500000000072
+        },
+        {
+          "time": "08:05",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1823.050000000007
+        },
+        {
+          "time": "08:10",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1811.650000000007
+        },
+        {
+          "time": "08:15",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1807.450000000007
+        },
+        {
+          "time": "08:20",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1828.2500000000073
+        },
+        {
+          "time": "08:25",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1827.2500000000073
+        },
+        {
+          "time": "08:30",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1815.6500000000074
+        },
+        {
+          "time": "08:35",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1815.6500000000074
+        },
+        {
+          "time": "08:40",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1871.8500000000072
+        },
+        {
+          "time": "08:45",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1898.650000000007
+        },
+        {
+          "time": "08:50",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1901.450000000007
+        },
+        {
+          "time": "08:55",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1899.050000000007
+        },
+        {
+          "time": "09:00",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1897.450000000007
+        },
+        {
+          "time": "09:05",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1887.450000000007
+        },
+        {
+          "time": "09:10",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1873.050000000007
+        },
+        {
+          "time": "09:15",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1898.2500000000068
+        },
+        {
+          "time": "09:20",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1917.8500000000067
+        },
+        {
+          "time": "09:25",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1913.8500000000067
+        },
+        {
+          "time": "09:30",
+          "muDynamic": 7656.0,
+          "queueDynamic": 1894.4500000000066
+        },
+        {
+          "time": "09:35",
+          "muDynamic": 7399.9,
+          "queueDynamic": 1932.9916666666732
+        },
+        {
+          "time": "09:40",
+          "muDynamic": 7143.8,
+          "queueDynamic": 1997.8750000000064
+        },
+        {
+          "time": "09:45",
+          "muDynamic": 6887.7,
+          "queueDynamic": 2102.9000000000065
+        },
+        {
+          "time": "09:50",
+          "muDynamic": 6631.6,
+          "queueDynamic": 2214.066666666673
+        },
+        {
+          "time": "09:55",
+          "muDynamic": 6375.5,
+          "queueDynamic": 2297.7750000000065
+        },
+        {
+          "time": "10:00",
+          "muDynamic": 6119.4,
+          "queueDynamic": 2397.6250000000064
+        },
+        {
+          "time": "10:05",
+          "muDynamic": 5863.3,
+          "queueDynamic": 2548.2166666666726
+        },
+        {
+          "time": "10:10",
+          "muDynamic": 5607.200000000001,
+          "queueDynamic": 2747.9500000000057
+        },
+        {
+          "time": "10:15",
+          "muDynamic": 5351.1,
+          "queueDynamic": 2956.8250000000053
+        },
+        {
+          "time": "10:20",
+          "muDynamic": 5095.0,
+          "queueDynamic": 3184.4416666666716
+        },
+        {
+          "time": "10:25",
+          "muDynamic": 4838.900000000001,
+          "queueDynamic": 3413.0000000000045
+        },
+        {
+          "time": "10:30",
+          "muDynamic": 4582.8,
+          "queueDynamic": 3646.5000000000045
+        },
+        {
+          "time": "10:35",
+          "muDynamic": 4582.8,
+          "queueDynamic": 3858.200000000004
+        },
+        {
+          "time": "10:40",
+          "muDynamic": 4582.8,
+          "queueDynamic": 4062.1000000000035
+        },
+        {
+          "time": "10:45",
+          "muDynamic": 4582.8,
+          "queueDynamic": 4277.400000000004
+        },
+        {
+          "time": "10:50",
+          "muDynamic": 4582.8,
+          "queueDynamic": 4483.100000000004
+        },
+        {
+          "time": "10:55",
+          "muDynamic": 4582.8,
+          "queueDynamic": 4655.600000000004
+        },
+        {
+          "time": "11:00",
+          "muDynamic": 4582.8,
+          "queueDynamic": 4846.900000000004
+        },
+        {
+          "time": "11:05",
+          "muDynamic": 4582.8,
+          "queueDynamic": 5008.400000000004
+        },
+        {
+          "time": "11:10",
+          "muDynamic": 4582.8,
+          "queueDynamic": 5222.500000000005
+        },
+        {
+          "time": "11:15",
+          "muDynamic": 4582.8,
+          "queueDynamic": 5416.400000000005
+        },
+        {
+          "time": "11:20",
+          "muDynamic": 4582.8,
+          "queueDynamic": 5609.5000000000055
+        },
+        {
+          "time": "11:25",
+          "muDynamic": 4582.8,
+          "queueDynamic": 5783.200000000006
+        },
+        {
+          "time": "11:30",
+          "muDynamic": 4582.8,
+          "queueDynamic": 5967.500000000006
+        },
+        {
+          "time": "11:35",
+          "muDynamic": 4582.8,
+          "queueDynamic": 6137.000000000006
+        },
+        {
+          "time": "11:40",
+          "muDynamic": 4582.8,
+          "queueDynamic": 6287.500000000006
+        },
+        {
+          "time": "11:45",
+          "muDynamic": 4582.8,
+          "queueDynamic": 6450.600000000007
+        },
+        {
+          "time": "11:50",
+          "muDynamic": 4582.8,
+          "queueDynamic": 6599.300000000007
+        },
+        {
+          "time": "11:55",
+          "muDynamic": 4582.8,
+          "queueDynamic": 6728.000000000007
+        },
+        {
+          "time": "12:00",
+          "muDynamic": 4582.8,
+          "queueDynamic": 6828.500000000007
+        },
+        {
+          "time": "12:05",
+          "muDynamic": 4582.8,
+          "queueDynamic": 6943.8000000000075
+        },
+        {
+          "time": "12:10",
+          "muDynamic": 4582.8,
+          "queueDynamic": 7067.700000000008
+        },
+        {
+          "time": "12:15",
+          "muDynamic": 4582.8,
+          "queueDynamic": 7160.800000000008
+        },
+        {
+          "time": "12:20",
+          "muDynamic": 4582.8,
+          "queueDynamic": 7272.900000000009
+        },
+        {
+          "time": "12:25",
+          "muDynamic": 4582.8,
+          "queueDynamic": 7378.000000000009
+        },
+        {
+          "time": "12:30",
+          "muDynamic": 4582.8,
+          "queueDynamic": 7481.1000000000095
+        },
+        {
+          "time": "12:35",
+          "muDynamic": 4582.8,
+          "queueDynamic": 7543.00000000001
+        },
+        {
+          "time": "12:40",
+          "muDynamic": 4582.8,
+          "queueDynamic": 7622.900000000011
+        },
+        {
+          "time": "12:45",
+          "muDynamic": 4582.8,
+          "queueDynamic": 7702.800000000011
+        },
+        {
+          "time": "12:50",
+          "muDynamic": 4582.8,
+          "queueDynamic": 7779.500000000012
+        },
+        {
+          "time": "12:55",
+          "muDynamic": 4582.8,
+          "queueDynamic": 7818.600000000011
+        },
+        {
+          "time": "13:00",
+          "muDynamic": 4582.8,
+          "queueDynamic": 7878.500000000011
+        },
+        {
+          "time": "13:05",
+          "muDynamic": 4582.8,
+          "queueDynamic": 7923.400000000011
+        },
+        {
+          "time": "13:10",
+          "muDynamic": 4582.8,
+          "queueDynamic": 7969.500000000011
+        },
+        {
+          "time": "13:15",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8025.600000000011
+        },
+        {
+          "time": "13:20",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8095.900000000012
+        },
+        {
+          "time": "13:25",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8144.2000000000135
+        },
+        {
+          "time": "13:30",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8161.100000000013
+        },
+        {
+          "time": "13:35",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8178.600000000013
+        },
+        {
+          "time": "13:40",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8203.100000000013
+        },
+        {
+          "time": "13:45",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8206.600000000013
+        },
+        {
+          "time": "13:50",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8216.900000000014
+        },
+        {
+          "time": "13:55",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8210.800000000014
+        },
+        {
+          "time": "14:00",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8195.900000000014
+        },
+        {
+          "time": "14:05",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8184.800000000014
+        },
+        {
+          "time": "14:10",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8181.300000000014
+        },
+        {
+          "time": "14:15",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8174.600000000015
+        },
+        {
+          "time": "14:20",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8181.100000000015
+        },
+        {
+          "time": "14:25",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8151.000000000015
+        },
+        {
+          "time": "14:30",
+          "muDynamic": 4582.8,
+          "queueDynamic": 8095.500000000015
+        },
+        {
+          "time": "14:35",
+          "muDynamic": 4269.7,
+          "queueDynamic": 8075.091666666681
+        },
+        {
+          "time": "14:40",
+          "muDynamic": 3956.6000000000004,
+          "queueDynamic": 8069.775000000014
+        },
+        {
+          "time": "14:45",
+          "muDynamic": 3643.5,
+          "queueDynamic": 8079.9500000000135
+        },
+        {
+          "time": "14:50",
+          "muDynamic": 3330.4,
+          "queueDynamic": 8123.21666666668
+        },
+        {
+          "time": "14:55",
+          "muDynamic": 3017.3,
+          "queueDynamic": 8152.575000000013
+        },
+        {
+          "time": "15:00",
+          "muDynamic": 2704.2,
+          "queueDynamic": 8217.425000000012
+        },
+        {
+          "time": "15:05",
+          "muDynamic": 2391.1,
+          "queueDynamic": 8293.966666666678
+        },
+        {
+          "time": "15:10",
+          "muDynamic": 2078.0,
+          "queueDynamic": 8394.400000000012
+        },
+        {
+          "time": "15:15",
+          "muDynamic": 1764.9,
+          "queueDynamic": 8521.525000000012
+        },
+        {
+          "time": "15:20",
+          "muDynamic": 1451.8000000000002,
+          "queueDynamic": 8651.941666666678
+        },
+        {
+          "time": "15:25",
+          "muDynamic": 1138.6999999999998,
+          "queueDynamic": 8833.850000000011
+        },
+        {
+          "time": "15:30",
+          "muDynamic": 825.6,
+          "queueDynamic": 9013.650000000012
+        },
+        {
+          "time": "15:35",
+          "muDynamic": 825.6,
+          "queueDynamic": 9175.450000000013
+        },
+        {
+          "time": "15:40",
+          "muDynamic": 825.6,
+          "queueDynamic": 9330.850000000015
+        },
+        {
+          "time": "15:45",
+          "muDynamic": 825.6,
+          "queueDynamic": 9478.450000000015
+        },
+        {
+          "time": "15:50",
+          "muDynamic": 825.6,
+          "queueDynamic": 9620.850000000017
+        },
+        {
+          "time": "15:55",
+          "muDynamic": 825.6,
+          "queueDynamic": 9748.450000000017
+        },
+        {
+          "time": "16:00",
+          "muDynamic": 825.6,
+          "queueDynamic": 9857.450000000017
+        },
+        {
+          "time": "16:05",
+          "muDynamic": 825.6,
+          "queueDynamic": 9963.050000000017
+        },
+        {
+          "time": "16:10",
+          "muDynamic": 825.6,
+          "queueDynamic": 10053.250000000018
+        },
+        {
+          "time": "16:15",
+          "muDynamic": 825.6,
+          "queueDynamic": 10146.05000000002
+        },
+        {
+          "time": "16:20",
+          "muDynamic": 825.6,
+          "queueDynamic": 10226.65000000002
+        },
+        {
+          "time": "16:25",
+          "muDynamic": 825.6,
+          "queueDynamic": 10297.85000000002
+        },
+        {
+          "time": "16:30",
+          "muDynamic": 825.6,
+          "queueDynamic": 10370.650000000021
+        },
+        {
+          "time": "16:35",
+          "muDynamic": 825.6,
+          "queueDynamic": 10432.450000000023
+        },
+        {
+          "time": "16:40",
+          "muDynamic": 825.6,
+          "queueDynamic": 10496.450000000023
+        },
+        {
+          "time": "16:45",
+          "muDynamic": 825.6,
+          "queueDynamic": 10562.050000000023
+        },
+        {
+          "time": "16:50",
+          "muDynamic": 825.6,
+          "queueDynamic": 10612.450000000024
+        },
+        {
+          "time": "16:55",
+          "muDynamic": 825.6,
+          "queueDynamic": 10658.650000000025
+        },
+        {
+          "time": "17:00",
+          "muDynamic": 825.6,
+          "queueDynamic": 10702.450000000026
+        },
+        {
+          "time": "17:05",
+          "muDynamic": 825.6,
+          "queueDynamic": 10737.450000000026
+        },
+        {
+          "time": "17:10",
+          "muDynamic": 825.6,
+          "queueDynamic": 10784.250000000027
+        },
+        {
+          "time": "17:15",
+          "muDynamic": 825.6,
+          "queueDynamic": 10818.850000000028
+        },
+        {
+          "time": "17:20",
+          "muDynamic": 825.6,
+          "queueDynamic": 10859.450000000028
+        },
+        {
+          "time": "17:25",
+          "muDynamic": 825.6,
+          "queueDynamic": 10877.25000000003
+        },
+        {
+          "time": "17:30",
+          "muDynamic": 825.6,
+          "queueDynamic": 10906.85000000003
+        },
+        {
+          "time": "17:35",
+          "muDynamic": 825.6,
+          "queueDynamic": 10926.65000000003
+        },
+        {
+          "time": "17:40",
+          "muDynamic": 825.6,
+          "queueDynamic": 10946.450000000032
+        },
+        {
+          "time": "17:45",
+          "muDynamic": 825.6,
+          "queueDynamic": 10962.650000000032
+        },
+        {
+          "time": "17:50",
+          "muDynamic": 825.6,
+          "queueDynamic": 10982.450000000033
+        },
+        {
+          "time": "17:55",
+          "muDynamic": 825.6,
+          "queueDynamic": 10992.650000000034
+        },
+        {
+          "time": "18:00",
+          "muDynamic": 825.6,
+          "queueDynamic": 11003.250000000035
+        },
+        {
+          "time": "18:05",
+          "muDynamic": 825.6,
+          "queueDynamic": 11003.250000000035
+        },
+        {
+          "time": "18:10",
+          "muDynamic": 825.6,
+          "queueDynamic": 10998.650000000036
+        },
+        {
+          "time": "18:15",
+          "muDynamic": 825.6,
+          "queueDynamic": 10992.650000000036
+        },
+        {
+          "time": "18:20",
+          "muDynamic": 825.6,
+          "queueDynamic": 10982.650000000036
+        },
+        {
+          "time": "18:25",
+          "muDynamic": 825.6,
+          "queueDynamic": 10978.450000000037
+        },
+        {
+          "time": "18:30",
+          "muDynamic": 825.6,
+          "queueDynamic": 10961.450000000037
+        },
+        {
+          "time": "18:35",
+          "muDynamic": 1364.6,
+          "queueDynamic": 10899.33333333337
+        },
+        {
+          "time": "18:40",
+          "muDynamic": 1903.6,
+          "queueDynamic": 10792.900000000038
+        },
+        {
+          "time": "18:45",
+          "muDynamic": 2442.6,
+          "queueDynamic": 10643.150000000038
+        },
+        {
+          "time": "18:50",
+          "muDynamic": 2981.6,
+          "queueDynamic": 10443.283333333371
+        },
+        {
+          "time": "18:55",
+          "muDynamic": 3520.6,
+          "queueDynamic": 10201.700000000037
+        },
+        {
+          "time": "19:00",
+          "muDynamic": 4059.6,
+          "queueDynamic": 9910.200000000037
+        },
+        {
+          "time": "19:05",
+          "muDynamic": 4598.6,
+          "queueDynamic": 9575.38333333337
+        },
+        {
+          "time": "19:10",
+          "muDynamic": 5137.6,
+          "queueDynamic": 9195.250000000036
+        },
+        {
+          "time": "19:15",
+          "muDynamic": 5676.6,
+          "queueDynamic": 8766.400000000038
+        },
+        {
+          "time": "19:20",
+          "muDynamic": 6215.6,
+          "queueDynamic": 8299.033333333371
+        },
+        {
+          "time": "19:25",
+          "muDynamic": 6754.6,
+          "queueDynamic": 7780.5500000000375
+        },
+        {
+          "time": "19:30",
+          "muDynamic": 7293.6,
+          "queueDynamic": 7218.5500000000375
+        },
+        {
+          "time": "19:35",
+          "muDynamic": 7293.6,
+          "queueDynamic": 6657.150000000037
+        },
+        {
+          "time": "19:40",
+          "muDynamic": 7293.6,
+          "queueDynamic": 6099.750000000036
+        },
+        {
+          "time": "19:45",
+          "muDynamic": 7293.6,
+          "queueDynamic": 5540.950000000036
+        },
+        {
+          "time": "19:50",
+          "muDynamic": 7293.6,
+          "queueDynamic": 4979.350000000036
+        },
+        {
+          "time": "19:55",
+          "muDynamic": 7293.6,
+          "queueDynamic": 4418.950000000035
+        },
+        {
+          "time": "20:00",
+          "muDynamic": 7293.6,
+          "queueDynamic": 3858.9500000000353
+        },
+        {
+          "time": "20:05",
+          "muDynamic": 7293.6,
+          "queueDynamic": 3293.350000000035
+        },
+        {
+          "time": "20:10",
+          "muDynamic": 7293.6,
+          "queueDynamic": 2732.7500000000346
+        },
+        {
+          "time": "20:15",
+          "muDynamic": 7293.6,
+          "queueDynamic": 2178.7500000000346
+        },
+        {
+          "time": "20:20",
+          "muDynamic": 7293.6,
+          "queueDynamic": 1622.7500000000348
+        },
+        {
+          "time": "20:25",
+          "muDynamic": 7293.6,
+          "queueDynamic": 1076.9500000000348
+        },
+        {
+          "time": "20:30",
+          "muDynamic": 7293.6,
+          "queueDynamic": 533.3500000000349
+        },
+        {
+          "time": "20:35",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "20:40",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "20:45",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "20:50",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "20:55",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:00",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:05",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:10",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:15",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:20",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:25",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:30",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:35",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:40",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:45",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:50",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:55",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:00",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:05",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:10",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:15",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:20",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:25",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:30",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:35",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:40",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:45",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:50",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:55",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:00",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:05",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:10",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:15",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:20",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:25",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:30",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:35",
+          "muDynamic": 7293.6,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:40",
+          "muDynamic": 7293.6,
+          "queueDynamic": 33.799999999999955
+        },
+        {
+          "time": "23:45",
+          "muDynamic": 7293.6,
+          "queueDynamic": 75.39999999999998
+        },
+        {
+          "time": "23:50",
+          "muDynamic": 7293.6,
+          "queueDynamic": 101.79999999999995
+        },
+        {
+          "time": "23:55",
+          "muDynamic": 7293.6,
+          "queueDynamic": 101.79999999999995
+        }
+      ],
+      "summary": {
+        "constantMaxQueue": 11253.20000000004,
+        "dynamicMaxQueue": 11003.250000000035,
+        "constantFinalQueue": 101.79999999999995,
+        "dynamicFinalQueue": 101.79999999999995,
+        "queueMaeDifference": 79.97743055555635,
+        "queueRmseDifference": 143.70439076673097
+      }
+    },
+    {
+      "id": "L405S-061|1201350",
+      "linkId": "L405S-061",
+      "tmcId": "1201350",
+      "muByPeriod": {
+        "AM": 6304.8,
+        "MD": 3853.2,
+        "NT1": 5313.6,
+        "NT2": 5251.2,
+        "PM": 691.2
+      },
+      "rows": [
+        {
+          "time": "00:00",
+          "muDynamic": 5313.6,
+          "queueDynamic": 44.799999999999955
+        },
+        {
+          "time": "00:05",
+          "muDynamic": 5313.6,
+          "queueDynamic": 100.19999999999987
+        },
+        {
+          "time": "00:10",
+          "muDynamic": 5313.6,
+          "queueDynamic": 191.3999999999998
+        },
+        {
+          "time": "00:15",
+          "muDynamic": 5313.6,
+          "queueDynamic": 306.79999999999967
+        },
+        {
+          "time": "00:20",
+          "muDynamic": 5313.6,
+          "queueDynamic": 412.9999999999997
+        },
+        {
+          "time": "00:25",
+          "muDynamic": 5313.6,
+          "queueDynamic": 529.5999999999997
+        },
+        {
+          "time": "00:30",
+          "muDynamic": 5313.6,
+          "queueDynamic": 644.7999999999997
+        },
+        {
+          "time": "00:35",
+          "muDynamic": 5313.6,
+          "queueDynamic": 773.1999999999996
+        },
+        {
+          "time": "00:40",
+          "muDynamic": 5313.6,
+          "queueDynamic": 877.9999999999995
+        },
+        {
+          "time": "00:45",
+          "muDynamic": 5313.6,
+          "queueDynamic": 987.7999999999995
+        },
+        {
+          "time": "00:50",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1096.7999999999995
+        },
+        {
+          "time": "00:55",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1173.5999999999995
+        },
+        {
+          "time": "01:00",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1226.9999999999993
+        },
+        {
+          "time": "01:05",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1278.9999999999993
+        },
+        {
+          "time": "01:10",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1339.5999999999992
+        },
+        {
+          "time": "01:15",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1380.3999999999992
+        },
+        {
+          "time": "01:20",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1432.1999999999991
+        },
+        {
+          "time": "01:25",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1510.999999999999
+        },
+        {
+          "time": "01:30",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1589.399999999999
+        },
+        {
+          "time": "01:35",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1663.1999999999991
+        },
+        {
+          "time": "01:40",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1749.799999999999
+        },
+        {
+          "time": "01:45",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1826.5999999999988
+        },
+        {
+          "time": "01:50",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1879.7999999999986
+        },
+        {
+          "time": "01:55",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1909.3999999999985
+        },
+        {
+          "time": "02:00",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1916.5999999999988
+        },
+        {
+          "time": "02:05",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1926.7999999999986
+        },
+        {
+          "time": "02:10",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1948.3999999999985
+        },
+        {
+          "time": "02:15",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1992.3999999999985
+        },
+        {
+          "time": "02:20",
+          "muDynamic": 5313.6,
+          "queueDynamic": 2004.3999999999985
+        },
+        {
+          "time": "02:25",
+          "muDynamic": 5313.6,
+          "queueDynamic": 2004.5999999999988
+        },
+        {
+          "time": "02:30",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1998.1999999999987
+        },
+        {
+          "time": "02:35",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1994.7999999999986
+        },
+        {
+          "time": "02:40",
+          "muDynamic": 5313.6,
+          "queueDynamic": 2013.9999999999984
+        },
+        {
+          "time": "02:45",
+          "muDynamic": 5313.6,
+          "queueDynamic": 2031.7999999999986
+        },
+        {
+          "time": "02:50",
+          "muDynamic": 5313.6,
+          "queueDynamic": 2039.5999999999988
+        },
+        {
+          "time": "02:55",
+          "muDynamic": 5313.6,
+          "queueDynamic": 2014.7999999999986
+        },
+        {
+          "time": "03:00",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1968.1999999999987
+        },
+        {
+          "time": "03:05",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1929.7999999999986
+        },
+        {
+          "time": "03:10",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1904.1999999999987
+        },
+        {
+          "time": "03:15",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1875.1999999999987
+        },
+        {
+          "time": "03:20",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1850.5999999999988
+        },
+        {
+          "time": "03:25",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1818.7999999999986
+        },
+        {
+          "time": "03:30",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1784.5999999999988
+        },
+        {
+          "time": "03:35",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1741.1999999999987
+        },
+        {
+          "time": "03:40",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1721.399999999999
+        },
+        {
+          "time": "03:45",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1719.399999999999
+        },
+        {
+          "time": "03:50",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1715.399999999999
+        },
+        {
+          "time": "03:55",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1698.9999999999989
+        },
+        {
+          "time": "04:00",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1669.799999999999
+        },
+        {
+          "time": "04:05",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1631.1999999999991
+        },
+        {
+          "time": "04:10",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1607.1999999999991
+        },
+        {
+          "time": "04:15",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1611.5999999999992
+        },
+        {
+          "time": "04:20",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1583.7999999999993
+        },
+        {
+          "time": "04:25",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1559.9999999999993
+        },
+        {
+          "time": "04:30",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1559.7999999999993
+        },
+        {
+          "time": "04:35",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1574.9999999999993
+        },
+        {
+          "time": "04:40",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1554.9999999999993
+        },
+        {
+          "time": "04:45",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1543.5999999999992
+        },
+        {
+          "time": "04:50",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1542.3999999999992
+        },
+        {
+          "time": "04:55",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1561.9999999999993
+        },
+        {
+          "time": "05:00",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1545.5999999999992
+        },
+        {
+          "time": "05:05",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1539.1999999999991
+        },
+        {
+          "time": "05:10",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1546.999999999999
+        },
+        {
+          "time": "05:15",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1556.799999999999
+        },
+        {
+          "time": "05:20",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1557.799999999999
+        },
+        {
+          "time": "05:25",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1563.599999999999
+        },
+        {
+          "time": "05:30",
+          "muDynamic": 5313.6,
+          "queueDynamic": 1570.399999999999
+        },
+        {
+          "time": "05:35",
+          "muDynamic": 5396.200000000001,
+          "queueDynamic": 1581.1166666666654
+        },
+        {
+          "time": "05:40",
+          "muDynamic": 5478.8,
+          "queueDynamic": 1595.949999999999
+        },
+        {
+          "time": "05:45",
+          "muDynamic": 5561.400000000001,
+          "queueDynamic": 1580.0999999999988
+        },
+        {
+          "time": "05:50",
+          "muDynamic": 5644.0,
+          "queueDynamic": 1570.7666666666655
+        },
+        {
+          "time": "05:55",
+          "muDynamic": 5726.6,
+          "queueDynamic": 1530.5499999999988
+        },
+        {
+          "time": "06:00",
+          "muDynamic": 5809.200000000001,
+          "queueDynamic": 1484.0499999999988
+        },
+        {
+          "time": "06:05",
+          "muDynamic": 5891.8,
+          "queueDynamic": 1430.4666666666656
+        },
+        {
+          "time": "06:10",
+          "muDynamic": 5974.400000000001,
+          "queueDynamic": 1347.7999999999988
+        },
+        {
+          "time": "06:15",
+          "muDynamic": 6057.0,
+          "queueDynamic": 1307.6499999999987
+        },
+        {
+          "time": "06:20",
+          "muDynamic": 6139.6,
+          "queueDynamic": 1269.2166666666653
+        },
+        {
+          "time": "06:25",
+          "muDynamic": 6222.2,
+          "queueDynamic": 1231.2999999999986
+        },
+        {
+          "time": "06:30",
+          "muDynamic": 6304.8,
+          "queueDynamic": 1172.6999999999985
+        },
+        {
+          "time": "06:35",
+          "muDynamic": 6304.8,
+          "queueDynamic": 1142.6999999999985
+        },
+        {
+          "time": "06:40",
+          "muDynamic": 6304.8,
+          "queueDynamic": 1083.0999999999985
+        },
+        {
+          "time": "06:45",
+          "muDynamic": 6304.8,
+          "queueDynamic": 1034.2999999999984
+        },
+        {
+          "time": "06:50",
+          "muDynamic": 6304.8,
+          "queueDynamic": 983.2999999999985
+        },
+        {
+          "time": "06:55",
+          "muDynamic": 6304.8,
+          "queueDynamic": 923.2999999999985
+        },
+        {
+          "time": "07:00",
+          "muDynamic": 6304.8,
+          "queueDynamic": 832.8999999999984
+        },
+        {
+          "time": "07:05",
+          "muDynamic": 6304.8,
+          "queueDynamic": 773.0999999999984
+        },
+        {
+          "time": "07:10",
+          "muDynamic": 6304.8,
+          "queueDynamic": 729.0999999999984
+        },
+        {
+          "time": "07:15",
+          "muDynamic": 6304.8,
+          "queueDynamic": 705.2999999999985
+        },
+        {
+          "time": "07:20",
+          "muDynamic": 6304.8,
+          "queueDynamic": 681.8999999999984
+        },
+        {
+          "time": "07:25",
+          "muDynamic": 6304.8,
+          "queueDynamic": 688.8999999999984
+        },
+        {
+          "time": "07:30",
+          "muDynamic": 6304.8,
+          "queueDynamic": 679.2999999999985
+        },
+        {
+          "time": "07:35",
+          "muDynamic": 6304.8,
+          "queueDynamic": 652.6999999999986
+        },
+        {
+          "time": "07:40",
+          "muDynamic": 6304.8,
+          "queueDynamic": 621.6999999999986
+        },
+        {
+          "time": "07:45",
+          "muDynamic": 6304.8,
+          "queueDynamic": 663.6999999999986
+        },
+        {
+          "time": "07:50",
+          "muDynamic": 6304.8,
+          "queueDynamic": 685.8999999999984
+        },
+        {
+          "time": "07:55",
+          "muDynamic": 6304.8,
+          "queueDynamic": 672.8999999999984
+        },
+        {
+          "time": "08:00",
+          "muDynamic": 6304.8,
+          "queueDynamic": 660.6999999999983
+        },
+        {
+          "time": "08:05",
+          "muDynamic": 6304.8,
+          "queueDynamic": 620.0999999999984
+        },
+        {
+          "time": "08:10",
+          "muDynamic": 6304.8,
+          "queueDynamic": 616.4999999999983
+        },
+        {
+          "time": "08:15",
+          "muDynamic": 6304.8,
+          "queueDynamic": 611.6999999999981
+        },
+        {
+          "time": "08:20",
+          "muDynamic": 6304.8,
+          "queueDynamic": 599.0999999999982
+        },
+        {
+          "time": "08:25",
+          "muDynamic": 6304.8,
+          "queueDynamic": 599.0999999999982
+        },
+        {
+          "time": "08:30",
+          "muDynamic": 6304.8,
+          "queueDynamic": 569.2999999999982
+        },
+        {
+          "time": "08:35",
+          "muDynamic": 6304.8,
+          "queueDynamic": 542.0999999999982
+        },
+        {
+          "time": "08:40",
+          "muDynamic": 6304.8,
+          "queueDynamic": 557.6999999999981
+        },
+        {
+          "time": "08:45",
+          "muDynamic": 6304.8,
+          "queueDynamic": 558.6999999999981
+        },
+        {
+          "time": "08:50",
+          "muDynamic": 6304.8,
+          "queueDynamic": 555.299999999998
+        },
+        {
+          "time": "08:55",
+          "muDynamic": 6304.8,
+          "queueDynamic": 528.4999999999981
+        },
+        {
+          "time": "09:00",
+          "muDynamic": 6304.8,
+          "queueDynamic": 492.49999999999807
+        },
+        {
+          "time": "09:05",
+          "muDynamic": 6304.8,
+          "queueDynamic": 496.299999999998
+        },
+        {
+          "time": "09:10",
+          "muDynamic": 6304.8,
+          "queueDynamic": 507.6999999999981
+        },
+        {
+          "time": "09:15",
+          "muDynamic": 6304.8,
+          "queueDynamic": 537.299999999998
+        },
+        {
+          "time": "09:20",
+          "muDynamic": 6304.8,
+          "queueDynamic": 545.6999999999981
+        },
+        {
+          "time": "09:25",
+          "muDynamic": 6304.8,
+          "queueDynamic": 530.8999999999982
+        },
+        {
+          "time": "09:30",
+          "muDynamic": 6304.8,
+          "queueDynamic": 524.299999999998
+        },
+        {
+          "time": "09:35",
+          "muDynamic": 6100.5,
+          "queueDynamic": 548.9249999999979
+        },
+        {
+          "time": "09:40",
+          "muDynamic": 5896.2,
+          "queueDynamic": 610.374999999998
+        },
+        {
+          "time": "09:45",
+          "muDynamic": 5691.9,
+          "queueDynamic": 702.4499999999979
+        },
+        {
+          "time": "09:50",
+          "muDynamic": 5487.6,
+          "queueDynamic": 784.9499999999978
+        },
+        {
+          "time": "09:55",
+          "muDynamic": 5283.3,
+          "queueDynamic": 868.8749999999978
+        },
+        {
+          "time": "10:00",
+          "muDynamic": 5079.0,
+          "queueDynamic": 942.4249999999979
+        },
+        {
+          "time": "10:05",
+          "muDynamic": 4874.7,
+          "queueDynamic": 1039.199999999998
+        },
+        {
+          "time": "10:10",
+          "muDynamic": 4670.4,
+          "queueDynamic": 1194.799999999998
+        },
+        {
+          "time": "10:15",
+          "muDynamic": 4466.1,
+          "queueDynamic": 1379.2249999999979
+        },
+        {
+          "time": "10:20",
+          "muDynamic": 4261.799999999999,
+          "queueDynamic": 1551.874999999998
+        },
+        {
+          "time": "10:25",
+          "muDynamic": 4057.4999999999995,
+          "queueDynamic": 1725.1499999999978
+        },
+        {
+          "time": "10:30",
+          "muDynamic": 3853.2,
+          "queueDynamic": 1890.2499999999977
+        },
+        {
+          "time": "10:35",
+          "muDynamic": 3853.2,
+          "queueDynamic": 2048.549999999998
+        },
+        {
+          "time": "10:40",
+          "muDynamic": 3853.2,
+          "queueDynamic": 2200.249999999998
+        },
+        {
+          "time": "10:45",
+          "muDynamic": 3853.2,
+          "queueDynamic": 2347.1499999999983
+        },
+        {
+          "time": "10:50",
+          "muDynamic": 3853.2,
+          "queueDynamic": 2503.6499999999983
+        },
+        {
+          "time": "10:55",
+          "muDynamic": 3853.2,
+          "queueDynamic": 2650.9499999999985
+        },
+        {
+          "time": "11:00",
+          "muDynamic": 3853.2,
+          "queueDynamic": 2795.0499999999984
+        },
+        {
+          "time": "11:05",
+          "muDynamic": 3853.2,
+          "queueDynamic": 2919.3499999999985
+        },
+        {
+          "time": "11:10",
+          "muDynamic": 3853.2,
+          "queueDynamic": 3069.049999999999
+        },
+        {
+          "time": "11:15",
+          "muDynamic": 3853.2,
+          "queueDynamic": 3236.549999999999
+        },
+        {
+          "time": "11:20",
+          "muDynamic": 3853.2,
+          "queueDynamic": 3375.049999999999
+        },
+        {
+          "time": "11:25",
+          "muDynamic": 3853.2,
+          "queueDynamic": 3499.349999999999
+        },
+        {
+          "time": "11:30",
+          "muDynamic": 3853.2,
+          "queueDynamic": 3624.249999999999
+        },
+        {
+          "time": "11:35",
+          "muDynamic": 3853.2,
+          "queueDynamic": 3744.749999999999
+        },
+        {
+          "time": "11:40",
+          "muDynamic": 3853.2,
+          "queueDynamic": 3867.849999999999
+        },
+        {
+          "time": "11:45",
+          "muDynamic": 3853.2,
+          "queueDynamic": 4007.349999999999
+        },
+        {
+          "time": "11:50",
+          "muDynamic": 3853.2,
+          "queueDynamic": 4120.249999999998
+        },
+        {
+          "time": "11:55",
+          "muDynamic": 3853.2,
+          "queueDynamic": 4199.149999999998
+        },
+        {
+          "time": "12:00",
+          "muDynamic": 3853.2,
+          "queueDynamic": 4282.849999999998
+        },
+        {
+          "time": "12:05",
+          "muDynamic": 3853.2,
+          "queueDynamic": 4371.149999999997
+        },
+        {
+          "time": "12:10",
+          "muDynamic": 3853.2,
+          "queueDynamic": 4472.849999999997
+        },
+        {
+          "time": "12:15",
+          "muDynamic": 3853.2,
+          "queueDynamic": 4548.749999999996
+        },
+        {
+          "time": "12:20",
+          "muDynamic": 3853.2,
+          "queueDynamic": 4617.449999999996
+        },
+        {
+          "time": "12:25",
+          "muDynamic": 3853.2,
+          "queueDynamic": 4682.549999999996
+        },
+        {
+          "time": "12:30",
+          "muDynamic": 3853.2,
+          "queueDynamic": 4754.049999999996
+        },
+        {
+          "time": "12:35",
+          "muDynamic": 3853.2,
+          "queueDynamic": 4823.549999999996
+        },
+        {
+          "time": "12:40",
+          "muDynamic": 3853.2,
+          "queueDynamic": 4875.449999999995
+        },
+        {
+          "time": "12:45",
+          "muDynamic": 3853.2,
+          "queueDynamic": 4921.549999999995
+        },
+        {
+          "time": "12:50",
+          "muDynamic": 3853.2,
+          "queueDynamic": 4961.2499999999945
+        },
+        {
+          "time": "12:55",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5007.949999999994
+        },
+        {
+          "time": "13:00",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5023.449999999994
+        },
+        {
+          "time": "13:05",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5045.749999999994
+        },
+        {
+          "time": "13:10",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5082.849999999993
+        },
+        {
+          "time": "13:15",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5115.549999999993
+        },
+        {
+          "time": "13:20",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5162.649999999992
+        },
+        {
+          "time": "13:25",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5200.349999999992
+        },
+        {
+          "time": "13:30",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5219.849999999992
+        },
+        {
+          "time": "13:35",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5236.549999999992
+        },
+        {
+          "time": "13:40",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5255.849999999991
+        },
+        {
+          "time": "13:45",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5256.749999999991
+        },
+        {
+          "time": "13:50",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5255.84999999999
+        },
+        {
+          "time": "13:55",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5250.54999999999
+        },
+        {
+          "time": "14:00",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5247.64999999999
+        },
+        {
+          "time": "14:05",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5231.549999999989
+        },
+        {
+          "time": "14:10",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5227.049999999989
+        },
+        {
+          "time": "14:15",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5242.549999999989
+        },
+        {
+          "time": "14:20",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5244.449999999989
+        },
+        {
+          "time": "14:25",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5218.149999999989
+        },
+        {
+          "time": "14:30",
+          "muDynamic": 3853.2,
+          "queueDynamic": 5184.049999999988
+        },
+        {
+          "time": "14:35",
+          "muDynamic": 3589.7,
+          "queueDynamic": 5174.108333333322
+        },
+        {
+          "time": "14:40",
+          "muDynamic": 3326.2,
+          "queueDynamic": 5163.524999999989
+        },
+        {
+          "time": "14:45",
+          "muDynamic": 3062.7,
+          "queueDynamic": 5176.299999999988
+        },
+        {
+          "time": "14:50",
+          "muDynamic": 2799.2,
+          "queueDynamic": 5201.833333333322
+        },
+        {
+          "time": "14:55",
+          "muDynamic": 2535.7,
+          "queueDynamic": 5237.124999999989
+        },
+        {
+          "time": "15:00",
+          "muDynamic": 2272.2,
+          "queueDynamic": 5300.174999999988
+        },
+        {
+          "time": "15:05",
+          "muDynamic": 2008.6999999999998,
+          "queueDynamic": 5367.183333333322
+        },
+        {
+          "time": "15:10",
+          "muDynamic": 1745.1999999999998,
+          "queueDynamic": 5468.3499999999885
+        },
+        {
+          "time": "15:15",
+          "muDynamic": 1481.6999999999998,
+          "queueDynamic": 5582.674999999988
+        },
+        {
+          "time": "15:20",
+          "muDynamic": 1218.1999999999998,
+          "queueDynamic": 5702.358333333322
+        },
+        {
+          "time": "15:25",
+          "muDynamic": 954.6999999999998,
+          "queueDynamic": 5852.199999999988
+        },
+        {
+          "time": "15:30",
+          "muDynamic": 691.2,
+          "queueDynamic": 6008.799999999987
+        },
+        {
+          "time": "15:35",
+          "muDynamic": 691.2,
+          "queueDynamic": 6156.599999999987
+        },
+        {
+          "time": "15:40",
+          "muDynamic": 691.2,
+          "queueDynamic": 6295.199999999986
+        },
+        {
+          "time": "15:45",
+          "muDynamic": 691.2,
+          "queueDynamic": 6445.599999999986
+        },
+        {
+          "time": "15:50",
+          "muDynamic": 691.2,
+          "queueDynamic": 6588.599999999986
+        },
+        {
+          "time": "15:55",
+          "muDynamic": 691.2,
+          "queueDynamic": 6707.199999999985
+        },
+        {
+          "time": "16:00",
+          "muDynamic": 691.2,
+          "queueDynamic": 6818.799999999985
+        },
+        {
+          "time": "16:05",
+          "muDynamic": 691.2,
+          "queueDynamic": 6926.199999999984
+        },
+        {
+          "time": "16:10",
+          "muDynamic": 691.2,
+          "queueDynamic": 7023.599999999984
+        },
+        {
+          "time": "16:15",
+          "muDynamic": 691.2,
+          "queueDynamic": 7108.799999999984
+        },
+        {
+          "time": "16:20",
+          "muDynamic": 691.2,
+          "queueDynamic": 7187.799999999984
+        },
+        {
+          "time": "16:25",
+          "muDynamic": 691.2,
+          "queueDynamic": 7256.799999999984
+        },
+        {
+          "time": "16:30",
+          "muDynamic": 691.2,
+          "queueDynamic": 7321.599999999983
+        },
+        {
+          "time": "16:35",
+          "muDynamic": 691.2,
+          "queueDynamic": 7381.599999999983
+        },
+        {
+          "time": "16:40",
+          "muDynamic": 691.2,
+          "queueDynamic": 7441.1999999999825
+        },
+        {
+          "time": "16:45",
+          "muDynamic": 691.2,
+          "queueDynamic": 7500.399999999982
+        },
+        {
+          "time": "16:50",
+          "muDynamic": 691.2,
+          "queueDynamic": 7553.799999999982
+        },
+        {
+          "time": "16:55",
+          "muDynamic": 691.2,
+          "queueDynamic": 7594.799999999982
+        },
+        {
+          "time": "17:00",
+          "muDynamic": 691.2,
+          "queueDynamic": 7628.399999999981
+        },
+        {
+          "time": "17:05",
+          "muDynamic": 691.2,
+          "queueDynamic": 7656.799999999981
+        },
+        {
+          "time": "17:10",
+          "muDynamic": 691.2,
+          "queueDynamic": 7688.3999999999805
+        },
+        {
+          "time": "17:15",
+          "muDynamic": 691.2,
+          "queueDynamic": 7720.99999999998
+        },
+        {
+          "time": "17:20",
+          "muDynamic": 691.2,
+          "queueDynamic": 7754.599999999979
+        },
+        {
+          "time": "17:25",
+          "muDynamic": 691.2,
+          "queueDynamic": 7775.799999999979
+        },
+        {
+          "time": "17:30",
+          "muDynamic": 691.2,
+          "queueDynamic": 7802.399999999979
+        },
+        {
+          "time": "17:35",
+          "muDynamic": 691.2,
+          "queueDynamic": 7820.999999999978
+        },
+        {
+          "time": "17:40",
+          "muDynamic": 691.2,
+          "queueDynamic": 7832.799999999977
+        },
+        {
+          "time": "17:45",
+          "muDynamic": 691.2,
+          "queueDynamic": 7846.399999999977
+        },
+        {
+          "time": "17:50",
+          "muDynamic": 691.2,
+          "queueDynamic": 7860.599999999977
+        },
+        {
+          "time": "17:55",
+          "muDynamic": 691.2,
+          "queueDynamic": 7870.599999999977
+        },
+        {
+          "time": "18:00",
+          "muDynamic": 691.2,
+          "queueDynamic": 7877.999999999976
+        },
+        {
+          "time": "18:05",
+          "muDynamic": 691.2,
+          "queueDynamic": 7877.999999999976
+        },
+        {
+          "time": "18:10",
+          "muDynamic": 691.2,
+          "queueDynamic": 7874.999999999976
+        },
+        {
+          "time": "18:15",
+          "muDynamic": 691.2,
+          "queueDynamic": 7874.399999999976
+        },
+        {
+          "time": "18:20",
+          "muDynamic": 691.2,
+          "queueDynamic": 7869.599999999976
+        },
+        {
+          "time": "18:25",
+          "muDynamic": 691.2,
+          "queueDynamic": 7857.799999999976
+        },
+        {
+          "time": "18:30",
+          "muDynamic": 691.2,
+          "queueDynamic": 7847.799999999976
+        },
+        {
+          "time": "18:35",
+          "muDynamic": 1071.2,
+          "queueDynamic": 7802.733333333309
+        },
+        {
+          "time": "18:40",
+          "muDynamic": 1451.2,
+          "queueDynamic": 7728.999999999975
+        },
+        {
+          "time": "18:45",
+          "muDynamic": 1831.2,
+          "queueDynamic": 7623.599999999975
+        },
+        {
+          "time": "18:50",
+          "muDynamic": 2211.2,
+          "queueDynamic": 7480.3333333333085
+        },
+        {
+          "time": "18:55",
+          "muDynamic": 2591.2,
+          "queueDynamic": 7309.799999999975
+        },
+        {
+          "time": "19:00",
+          "muDynamic": 2971.2,
+          "queueDynamic": 7099.199999999974
+        },
+        {
+          "time": "19:05",
+          "muDynamic": 3351.2,
+          "queueDynamic": 6859.533333333308
+        },
+        {
+          "time": "19:10",
+          "muDynamic": 3731.2,
+          "queueDynamic": 6591.399999999975
+        },
+        {
+          "time": "19:15",
+          "muDynamic": 4111.2,
+          "queueDynamic": 6287.799999999975
+        },
+        {
+          "time": "19:20",
+          "muDynamic": 4491.2,
+          "queueDynamic": 5952.733333333308
+        },
+        {
+          "time": "19:25",
+          "muDynamic": 4871.2,
+          "queueDynamic": 5584.799999999975
+        },
+        {
+          "time": "19:30",
+          "muDynamic": 5251.2,
+          "queueDynamic": 5183.399999999974
+        },
+        {
+          "time": "19:35",
+          "muDynamic": 5251.2,
+          "queueDynamic": 4786.599999999974
+        },
+        {
+          "time": "19:40",
+          "muDynamic": 5251.2,
+          "queueDynamic": 4390.399999999973
+        },
+        {
+          "time": "19:45",
+          "muDynamic": 5251.2,
+          "queueDynamic": 3989.199999999973
+        },
+        {
+          "time": "19:50",
+          "muDynamic": 5251.2,
+          "queueDynamic": 3591.799999999973
+        },
+        {
+          "time": "19:55",
+          "muDynamic": 5251.2,
+          "queueDynamic": 3189.199999999973
+        },
+        {
+          "time": "20:00",
+          "muDynamic": 5251.2,
+          "queueDynamic": 2790.599999999973
+        },
+        {
+          "time": "20:05",
+          "muDynamic": 5251.2,
+          "queueDynamic": 2388.599999999973
+        },
+        {
+          "time": "20:10",
+          "muDynamic": 5251.2,
+          "queueDynamic": 1983.599999999973
+        },
+        {
+          "time": "20:15",
+          "muDynamic": 5251.2,
+          "queueDynamic": 1584.599999999973
+        },
+        {
+          "time": "20:20",
+          "muDynamic": 5251.2,
+          "queueDynamic": 1180.7999999999731
+        },
+        {
+          "time": "20:25",
+          "muDynamic": 5251.2,
+          "queueDynamic": 790.5999999999733
+        },
+        {
+          "time": "20:30",
+          "muDynamic": 5251.2,
+          "queueDynamic": 400.99999999997334
+        },
+        {
+          "time": "20:35",
+          "muDynamic": 5251.2,
+          "queueDynamic": 9.999999999973397
+        },
+        {
+          "time": "20:40",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "20:45",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "20:50",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "20:55",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:00",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:05",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:10",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:15",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:20",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:25",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:30",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:35",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:40",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:45",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:50",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "21:55",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:00",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:05",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:10",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:15",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:20",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:25",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:30",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:35",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:40",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:45",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:50",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "22:55",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:00",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:05",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:10",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:15",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:20",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:25",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:30",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:35",
+          "muDynamic": 5251.2,
+          "queueDynamic": 0.0
+        },
+        {
+          "time": "23:40",
+          "muDynamic": 5251.2,
+          "queueDynamic": 24.0
+        },
+        {
+          "time": "23:45",
+          "muDynamic": 5251.2,
+          "queueDynamic": 76.80000000000001
+        },
+        {
+          "time": "23:50",
+          "muDynamic": 5251.2,
+          "queueDynamic": 112.40000000000003
+        },
+        {
+          "time": "23:55",
+          "muDynamic": 5251.2,
+          "queueDynamic": 112.40000000000003
+        }
+      ],
+      "summary": {
+        "constantMaxQueue": 8070.599999999973,
+        "dynamicMaxQueue": 7877.999999999976,
+        "constantFinalQueue": 112.40000000000003,
+        "dynamicFinalQueue": 112.40000000000003,
+        "queueMaeDifference": 61.85098379629548,
+        "queueRmseDifference": 109.23815533246409
+      }
+    }
+  ]
+}

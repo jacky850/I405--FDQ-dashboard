@@ -1,0 +1,33 @@
+{
+  "link_id": "L405S-001",
+  "tmc_id": "1222782",
+  "model_for_reference": "s3",
+  "mu_strategy": "post_t2_median",
+  "queue_reset_at_period_boundaries": false,
+  "speed_volume": {
+    "n": 288,
+    "mae": 808.1957003980874,
+    "rmse": 1256.6857872761136,
+    "mape_pct": 52.6450380881308,
+    "r2": 0.5026649017611358,
+    "p90_abs_pct_error": 117.48357764689624,
+    "p95_abs_pct_error": 235.47814874043922,
+    "max_abs_pct_error": 455.12208370112546
+  },
+  "speed_volume_period_anchored": {
+    "n": 288,
+    "mae": 858.12241183536,
+    "rmse": 1311.296034359375,
+    "mape_pct": 41.70534447621147,
+    "r2": 0.45850157411327797,
+    "p90_abs_pct_error": 100.0,
+    "p95_abs_pct_error": 112.57268412573127,
+    "max_abs_pct_error": 251.7480700095228
+  },
+  "queue_qaqc": {
+    "queue_nonnegative": true,
+    "cumulative_arrival_monotone": true,
+    "cumulative_departure_monotone": true,
+    "mass_balance_max_abs_veh": 5.245510692475364e-10
+  }
+}

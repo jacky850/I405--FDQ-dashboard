@@ -1,0 +1,21 @@
+{
+  "case_id": "synthetic_exact_fdq_pn",
+  "link_id": "SYN_FDQ_001",
+  "tmc_code": null,
+  "length_mi": 0.5,
+  "lanes": 3,
+  "free_speed_mph": 63.0,
+  "capacity_vehphpl": 1900.0,
+  "cutoff_speed_mph": 47.25,
+  "backward_wave_speed_mph": 12.0,
+  "t0_hour": 15.0,
+  "t3_hour": 19.0,
+  "t2_hour": 17.666666666666668,
+  "qmax_target_veh_per_lane": 40.0,
+  "theta_vehph_per_queue_veh": 10.0,
+  "dt_minutes": 5.0,
+  "source_type": "synthetic_exact",
+  "critical_density_vehpmipl": 40.21164021164021,
+  "jam_density_vehpmipl": 198.54497354497354,
+  "gamma": 12.65625
+}

@@ -1,0 +1,18 @@
+{
+  "source": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\I210E_corridor_data_package\\multicorridor_2026_pilot\\trafficflowbench_five_corridors\\data_public\\kaggle_release\\corridors\\D12_I405_S",
+  "corridor": "D12_I405_S",
+  "start_date": "2025-06-16",
+  "end_date": "2025-06-22",
+  "include_imputed": false,
+  "observed_only": true,
+  "rows": 43035,
+  "average_weekday_rows": 7190,
+  "links": 18,
+  "stations": 25,
+  "dates": 8,
+  "speed_conversion": "speed_mph = speed_kmh * 0.621371192237334",
+  "flow_units": "veh/hour; copied from flow_vph",
+  "local_timezone": "America/Los_Angeles",
+  "timestamp_contract": "UTC ISO-8601 source timestamp retained; weekday grouping and time_of_day use America/Los_Angeles",
+  "note": "This is a processed 5-minute public release; observed-only output excludes is_imputed == 1."
+}

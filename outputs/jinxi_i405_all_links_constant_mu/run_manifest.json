@@ -1,0 +1,15 @@
+{
+  "n_complete_profiles": 23,
+  "skipped": [
+    {
+      "link_id": "L405S-108",
+      "tmc_id": "1222696",
+      "rows": 286
+    },
+    {
+      "link_id": "L405S-114",
+      "tmc_id": "1201805",
+      "rows": 280
+    }
+  ]
+}

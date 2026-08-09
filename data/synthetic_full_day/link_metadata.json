@@ -1,0 +1,10 @@
+{
+  "link_id": "SYN_I405_001",
+  "tmc_id": "SYN_TMC_001",
+  "lanes": 1,
+  "length_mi": 1.0,
+  "free_speed_mph": 65.0,
+  "capacity_vehphpl": 1378.8582233137674,
+  "cutoff_speed_mph": 45.961940777125584,
+  "note": "Synthetic full-day example generated from S3; replace with Jinxi average-weekday data."
+}

@@ -1,0 +1,2 @@
+link_id,tmc_code,length_mi,lanes,free_speed_mph,capacity_vehphpl,cutoff_speed_mph,backward_wave_speed_mph,jam_density_vehpmipl,source_label
+SYN_FDQ_001,,0.5,3,63.0,1900.0,47.25,12.0,198.54497354497354,synthetic_exact_fdq_pn

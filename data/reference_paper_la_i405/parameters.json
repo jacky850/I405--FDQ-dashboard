@@ -1,0 +1,12 @@
+{
+  "source": "Pan, Hu, Zhou (2026), Transportation Research Part C 184, 105533",
+  "case": "LA I-405",
+  "capacity_vehphpl": 1679,
+  "free_speed_kmph": 67,
+  "backward_wave_speed_kmph": 12.09,
+  "critical_density_vehpkmpl": 31.14,
+  "jam_density_vehpkmpl": 158.1,
+  "gamma": 1.71,
+  "theta": 14.51,
+  "note": "Parameter transcription only; raw 5-minute detector series are not included in the uploaded paper file."
+}

@@ -1,0 +1,30 @@
+{
+  "s3": {
+    "parameters": {
+      "free_speed_mph": 65.00000465061193,
+      "critical_density_vehpmipl": 29.999708066923986,
+      "m": 3.999919574036984
+    },
+    "fit": {
+      "success": true,
+      "cost": 7.223247500132146e-06,
+      "n": 288,
+      "flow_rmse_vehphpl": 0.011723511895876683
+    }
+  },
+  "triangular": {
+    "parameters": {
+      "free_speed_mph": 63.29148684341409,
+      "capacity_vehphpl": 1475.745621576158,
+      "cutoff_speed_mph": 63.29148684341409,
+      "backward_wave_speed_mph": 13.866472408470498,
+      "jam_density_vehpmipl": 129.7421067720117
+    },
+    "fit": {
+      "success": true,
+      "cost": 5767.124129569975,
+      "n": 288,
+      "flow_rmse_vehphpl": 36.966035541173206
+    }
+  }
+}
