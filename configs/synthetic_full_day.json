@@ -1,0 +1,52 @@
+{
+  "average_weekday_csv": "data/synthetic_full_day/average_weekday.csv",
+  "link_metadata_json": "data/synthetic_full_day/link_metadata.json",
+  "dt_minutes": 5,
+  "initial_queue_veh": 0.0,
+  "periods": [
+    {
+      "name": "NT1",
+      "start": "00:00",
+      "end": "06:00"
+    },
+    {
+      "name": "AM",
+      "start": "06:00",
+      "end": "10:00"
+    },
+    {
+      "name": "MD",
+      "start": "10:00",
+      "end": "15:00"
+    },
+    {
+      "name": "PM",
+      "start": "15:00",
+      "end": "19:00"
+    },
+    {
+      "name": "NT2",
+      "start": "19:00",
+      "end": "23:59"
+    }
+  ],
+  "speed_volume_model": {
+    "name": "s3",
+    "parameters": {
+      "free_speed_mph": 65.00000465061193,
+      "critical_density_vehpmipl": 29.999708066923986,
+      "m": 3.999919574036984
+    },
+    "period_volume_anchor": "observed"
+  },
+  "mu_config": {
+    "mode": "post_t2_median",
+    "blend_intervals": 3,
+    "t2_by_period": {
+      "AM": "08:15",
+      "MD": "13:00",
+      "PM": "17:15"
+    }
+  },
+  "output_dir": "outputs/synthetic_full_day"
+}
