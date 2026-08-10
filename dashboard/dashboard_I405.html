@@ -14,6 +14,7 @@
   <section class="grid two">
     <article class="card chart-card"><div class="card-title"><h2>Speed profile</h2><span>mph</span></div><div id="speedChart" class="chart"></div></article>
     <article class="card chart-card"><div class="card-title"><h2>Observed vs. inferred flow</h2><span>veh/h</span></div><div id="flowChart" class="chart"></div></article>
+    <article class="card chart-card"><div class="card-title"><h2>Reconstructed vs. observed speed</h2><span>holdout · mph</span></div><p class="table-note">Speed reconstructed from the held-out inferred-flow profile using the fitted S3 branch.</p><div id="closureSpeedChart" class="chart"></div></article>
     <article class="card chart-card"><div class="card-title"><h2>Queue scenarios</h2><span>vehicles</span></div><div id="queueChart" class="chart"></div></article>
     <article class="card chart-card"><div class="card-title"><h2>μ(t) profiles</h2><span>veh/h</span></div><div id="muChart" class="chart"></div></article>
     <article class="card chart-card"><div class="card-title"><h2>Flow-density FD</h2><span>per-link density</span></div><div id="fdChart" class="chart"></div></article>
@@ -25,5 +26,5 @@
   <section class="card table-card"><div class="card-title"><h2>Data contract</h2><span id="contractStatus"></span></div><table><tbody><tr><th>Time axis</th><td>LA local time (America/Los_Angeles); raw UTC ISO-8601 timestamps are retained</td></tr><tr><th>λ(t) / queue input</th><td>Observed ground-truth flow</td></tr><tr><th>μ(t) baseline</th><td>Constant within NT1 / AM / MD / PM / NT2</td></tr><tr><th>μ(t) candidate</th><td>Period μ values linearly blended across each boundary over 30 minutes; first dynamic-μ sensitivity version</td></tr><tr><th>Queue boundary behavior</th><td>Continuous; no reset at period boundaries</td></tr><tr><th>Speed-derived flow</th><td>Diagnostic only; not used to contaminate the ground-truth queue baseline</td></tr><tr><th>Mentor FD input convention</th><td>Speed mph; flow veh/h/lane; density veh/mi/lane</td></tr></tbody></table></section>
 </main>
 <footer>Generated from the local FDQBench I-405 outputs. Dynamic FDQ is intentionally disabled in this Stage-1 dashboard.</footer>
-<script src="data.js"></script><script src="closure_holdout_data.js"></script><script src="app.js"></script>
+<script src="data.js"></script><script src="closure_holdout_data.js"></script><script src="closure_reconstruction_data.js"></script><script src="app.js"></script>
 </body></html>

@@ -97,7 +97,7 @@ def main() -> None:
                     continue
                 group = group.sort_values("timestamp_la").reset_index(drop=True)
                 fd = models[period]
-                input_profile = group[["speed_mph", "flow_vehph", "period"]].rename(columns={"flow_vehph": "flow_observed_vehph"})
+                input_profile = group[["timestamp_la", "speed_mph", "flow_vehph", "period"]].rename(columns={"flow_vehph": "flow_observed_vehph"})
                 backward, closure_summary = backward_closure(
                     input_profile,
                     fd,
