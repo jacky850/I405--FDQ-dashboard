@@ -78,3 +78,67 @@ The public dashboard is hosted with GitHub Pages at the link above. The reposito
 ## Data and scope note
 
 The repository contains the processed I-405 week, average-weekday data, model inputs, outputs, and diagnostics used for the benchmark. The original external download package is not duplicated here. The project is intended for a transparent single-link Stage-1 benchmark before corridor/OpenDTA integration.
+
+## I-405 South PAQ-aware D/mu calibration (review branch)
+
+This branch adds an episode-level calibration for seven I-405 South links with directly observed upstream mainline flow:
+
+```text
+L405S-012, L405S-018, L405S-028, L405S-030,
+L405S-058, L405S-098, L405S-115
+```
+
+The calibration week is 2025-06-02 through 2025-06-06. PeMS timestamps are retained in UTC, while `time_la` is used for LA-time profiles and period labels. Flow is in veh/h; source speed is converted from km/h to mph for the PAQ threshold and dashboard display.
+
+### D construction
+
+For each target link and 5-minute interval:
+
+```text
+D(t) = observed upstream mainline flow + observed on-ramp flow
+```
+
+The link-period demand rate is the peak of a declared 1-hour rolling mean of `D(t)`, following the report's direct-profile route. Upstream link selection comes from `lwr_mainline_topology.csv`. Ramp flow is included only when the ramp observation is valid; imputation is preserved and labelled in the preprocessing outputs.
+
+### PAQ-aware mu construction
+
+The PAQ implementation follows `paq_d12_extract_standalone.py`: it detects speed fragments below 70% of the data-driven free-flow speed, merges spatially and temporally overlapping fragments, and produces `T0`, `T3`, `pm_range`, and `xstar_pm`.
+
+For each target-link episode, the observed flow source is selected from the PAQ bottleneck location:
+
+1. Match a PAQ object on the same source date, overlapping episode time, and containing the target detector postmile.
+2. Use the object's `xstar_link_id` as `mu_flow_link_id`.
+3. Compute `mu_e` as the mean observed flow from `t0` through `t3` on that selected link.
+4. If no PAQ object matches, retain `target_flow_no_paq_match`; this is a limited preliminary result, not a silently accepted bottleneck discharge estimate.
+
+The report-aligned identities are:
+
+```text
+mu_e = mean(mu(t)) over t0...t3
+k_mu = mu_e / C
+DQ = integral of D(t) over t0...t3
+```
+
+### Reproduce the PAQ-aware outputs
+
+Run these commands from the repository root after the processed weekday input has been prepared:
+
+```bash
+python scripts/run_i405_s_paq_bottleneck_mapping.py \
+  --raw-file <I405-S-train-detector-states.csv> \
+  --output-dir outputs/i405_s_paq_aware_direct7
+
+python scripts/build_i405_s_direct7_calibration.py \
+  --test-file outputs/i405_s_paq_aware_direct7/i405_s_link_ramp_flow_test.csv \
+  --raw-file <I405-S-train-detector-states.csv> \
+  --corridor-root <D12_I405_S-corridor-root> \
+  --summary outputs/i405_s_paq_aware_direct7/i405_s_d_mu_summary_direct7.csv \
+  --paq-file outputs/i405_s_paq_aware_direct7/i405_s_paq_objects_week_2025-06-02_to_2025-06-06.csv \
+  --output-dir outputs/i405_s_paq_aware_direct7
+```
+
+### Review status and outputs
+
+The main table is `outputs/i405_s_paq_aware_direct7/i405_s_calibration_link_period_direct7.csv`. Supporting tables include the 5-minute D/mu profile, congestion episode summary, PAQ objects, PAQ-to-detector comparison, and bottleneck decision audit. Figures are in `outputs/i405_s_paq_aware_direct7/figures/`.
+
+This is a review branch. Episodes without a PAQ match or without a complete recovery are explicitly flagged and should not be treated as fully identified mu calibration cases without additional validation.
