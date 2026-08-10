@@ -137,6 +137,179 @@ python scripts/build_i405_s_direct7_calibration.py \
   --output-dir outputs/i405_s_paq_aware_direct7
 ```
 
+### Processing code map: speed, volume, D, C, and mu
+
+The D and mu values have been calculated for seven selected links. The next step is to use the accepted values for calibration. This section maps each processing step to its input, script, and output.
+
+#### 1. Input data
+
+The workflow uses the processed public I-405 South corridor package:
+
+```text
+D12_I405_S/
+├── train/mainline_states/
+└── network/
+    ├── links.csv
+    ├── fd_parameters.csv
+    └── lwr_mainline_topology.csv
+```
+
+Important fields include `timestamp`, `link_id`, `station_id`, `speed_kmh`, `flow_vph`, `is_imputed`, `lanes`, and `capacity_vph`. Source timestamps are retained in UTC. Weekday grouping and dashboard labels use `America/Los_Angeles`. The original external PeMS download is not duplicated in this repository.
+
+#### 2. Generate speed(t) and observed volume(t)
+
+Main script:
+
+```text
+scripts/prepare_jinxi_i405_week.py
+```
+
+This script selects the date range, converts speed from km/h to mph, keeps observed flow in veh/h, converts timestamps to LA time, filters weekdays, and creates a 5-minute average-weekday profile.
+
+Example:
+
+```bash
+python scripts/prepare_jinxi_i405_week.py \
+  --source <D12_I405_S-corridor-root> \
+  --start 2025-06-02 \
+  --end 2025-06-06 \
+  --output data/i405_week
+```
+
+Outputs:
+
+```text
+data/i405_week/raw_observed_fdqbench.csv
+data/i405_week/average_weekday_fdqbench.csv
+data/i405_week/selection_manifest.json
+```
+
+Key generated fields are `timestamp_la`, `link_id`, `tmc_id`, `speed_mph`, `flow_vehph`, `lanes`, `source_date`, and `time_of_day`. `flow_vehph` is observed PeMS volume, not inferred volume.
+
+#### 3. Infer volume from speed using S3
+
+Core implementation:
+
+```text
+src/fdqbench/calibrate.py
+src/fdqbench/infer.py
+src/fdqbench/fd.py
+```
+
+The calculation is:
+
+```text
+observed speed -> S3 speed-density relationship
+                -> inferred density
+                -> inferred flow = speed x density x lanes
+```
+
+Execution scripts:
+
+```text
+scripts/fit_jinxi_speed_volume.py
+scripts/run_jinxi_i405_s3_period_models.py
+scripts/run_jinxi_i405_s3_anchored_models.py
+```
+
+Outputs are written under `outputs/` and include fitted parameters, inferred flow by time interval, observed-versus-inferred flow, and R2/MAE/RMSE/MAPE diagnostics. Pure S3 is speed-only inference. Anchored S3 rescales the inferred shape to observed weekday volume and is therefore a synthetic-reference candidate rather than a pure speed-only score.
+
+#### 4. Construct D(t)
+
+The D processing is implemented in:
+
+```text
+scripts/estimate_i405_s_d_mu.py
+scripts/build_i405_s_direct7_calibration.py
+```
+
+For each link and 5-minute interval:
+
+```text
+D(t) = upstream mainline flow + on-ramp flow
+```
+
+An observed upstream mainline detector is used when available. For a boundary link or unavailable upstream detector, target-link flow is used as a labelled boundary-demand proxy. The relevant fields are `mainline_inflow_vph`, `on_ramp_flow_vph`, `D_vph`, and `D_source`.
+
+The report-aligned demand rate is:
+
+```text
+D_peak_1h = maximum one-hour rolling average of D(t)
+```
+
+The outputs preserve `D_mean_vph`, `D_p95_vph`, `D_peak_1h_vph`, and `D_reference_window` for traceability.
+
+#### 5. Capacity C
+
+Capacity is read from `network/links.csv` and `network/fd_parameters.csv`. The effective capacity and its source are stored as `capacity_vph_effective` and `capacity_source`. FD-parameter capacity is used when available; otherwise the network-link capacity is used.
+
+#### 6. Generate mu and mu_e
+
+The PAQ-aware workflow uses:
+
+```text
+scripts/run_i405_s_paq_bottleneck_mapping.py
+scripts/build_i405_s_direct7_calibration.py
+```
+
+PAQ objects provide `T0`, `T3`, `pm_range`, `xstar_pm`, and `xstar_link_id`. When a PAQ object matches the date, time, and spatial range, the `xstar_link_id` detector is used as the discharge-flow source. Then:
+
+```text
+mu_e = mean observed discharge flow from t0 through t3
+```
+
+If no PAQ match is available, target-link flow is retained but labelled `target_flow_no_paq_match`. Relevant fields include `mu_e_vph`, `mu_flow_link_id`, `episode_mu_source`, `quality_status`, `t0`, `t2`, and `t3`.
+
+#### 7. Main result and supporting tables
+
+The main table for the next calibration step is:
+
+```text
+outputs/i405_s_paq_aware_direct7/i405_s_calibration_link_period_direct7.csv
+```
+
+It contains seven links by five periods: `NT1`, `AM`, `MD`, `PM`, and `NT2`. Review `D_mean_vph`, `D_peak_1h_vph`, `mu_e_vph`, `mu_flow_link_id`, `episode_mu_source`, `capacity_vph_effective`, `capacity_source`, `k_mu`, `D_peak_over_C`, `D_peak_over_mu_e`, and the quality/status fields.
+
+Supporting tables are:
+
+```text
+outputs/i405_s_paq_aware_direct7/i405_s_congestion_episode_summary_direct7.csv
+outputs/i405_s_paq_aware_direct7/i405_s_paq_detector_comparison_direct7.csv
+outputs/i405_s_paq_aware_direct7/i405_s_d_mu_profile_5min_direct7.csv
+outputs/i405_s_paq_aware_direct7/i405_s_paq_objects_week_2025-06-02_to_2025-06-06.csv
+```
+
+The episode table audits `t0`--`t3`, speed minimum, discharge detector, mu_e, queue accumulation, conservation residual, PAQ match, and quality status. The detector-comparison table explains the selected discharge detector. The 5-minute profile is for reproducing a specific link/timestamp calculation.
+
+#### 8. Diagnostic figures
+
+The eight figures are stored in `outputs/i405_s_paq_aware_direct7/figures/`:
+
+```text
+i405_s_direct7_mu_overview.png
+L405S-012_d_mu_diagnostic.png
+L405S-018_d_mu_diagnostic.png
+L405S-028_d_mu_diagnostic.png
+L405S-030_d_mu_diagnostic.png
+L405S-058_d_mu_diagnostic.png
+L405S-098_d_mu_diagnostic.png
+L405S-115_d_mu_diagnostic.png
+```
+
+The overview compares D and mu across all seven links. Each link figure checks the speed profile, demand/discharge-flow evidence, congestion episodes, and resulting D/mu values. Numerical values should be taken from the CSV files, not estimated from the figures.
+
+#### 9. Recommended next calibration workflow
+
+1. Read `i405_s_calibration_link_period_direct7.csv`.
+2. Filter by `quality_status` and `episode_mu_source`.
+3. Audit candidate episodes in `i405_s_congestion_episode_summary_direct7.csv`.
+4. Confirm the selected discharge detector using `i405_s_paq_detector_comparison_direct7.csv`.
+5. Accept only values with sufficient episode evidence.
+6. Export accepted D, C, and mu values to the next TAPLite/FDQ calibration step.
+7. Keep fallback and rejected cases explicitly labelled.
+
+Rows labelled `target_flow_no_paq_match` or `not_identified_no_recovery` should not automatically be treated as fully validated bottleneck discharge estimates.
+
 ### Review status and outputs
 
 The D and μ values have been calculated for the seven selected links. For the next calibration step, start with the files below in this order:
