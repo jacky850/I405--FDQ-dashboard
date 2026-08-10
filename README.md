@@ -139,7 +139,7 @@ python scripts/build_i405_s_direct7_calibration.py \
 
 ### Review status and outputs
 
-If you are continuing this work, start with the files below in this order:
+The D and μ values have been calculated for the seven selected links. For the next calibration step, start with the files below in this order:
 
 1. `outputs/i405_s_paq_aware_direct7/i405_s_calibration_link_period_direct7.csv` — **main link-period result table**. It has one row for each of the seven links and five periods (`NT1`, `AM`, `MD`, `PM`, `NT2`). Review `D_mean_vph`, `D_peak_1h_vph`, `mu_e_vph`, `mu_flow_link_id`, `episode_mu_source`, `capacity_source`, and the quality/status fields. This is the table intended for the next TAPLite/FDQ parameter-processing step.
 2. `outputs/i405_s_paq_aware_direct7/i405_s_congestion_episode_summary_direct7.csv` — **episode-level evidence table**. Each row is one detected congestion episode. It records `t0`, `t2`, `t3`, duration, minimum speed, selected discharge-flow detector, `mu_e_vph`, queue accumulation, conservation residual, PAQ match, and `quality_status`. Use this table to audit or reject individual episodes before aggregating them.
