@@ -6,6 +6,7 @@ from fdqbench.fd import S3FD,TriangularFD
 from fdqbench.queue import fluid_queue
 from fdqbench.reference import build_reference_day
 from fdqbench.calibrate import fit_s3_from_speed_flow
+from fdqbench.closure import backward_closure, reconstruct_speed_from_flow, closure_speed_metrics
 
 class TestV02(unittest.TestCase):
     def test_s3_speed_inverse(self):
@@ -31,4 +32,23 @@ class TestV02(unittest.TestCase):
         cfg={'name':'s3','parameters':fd.to_dict()}
         ref,_=build_reference_day(avg,meta,periods,cfg,{'mode':'capacity'},5,0)
         self.assertAlmostEqual(ref.queue_start_veh.iloc[12],ref.queue_end_veh.iloc[11],places=9)
+
+    def test_closure_backward_and_forward_round_trip(self):
+        fd=S3FD(65,30,4)
+        density=np.array([10,20,40,60,80],dtype=float)
+        speed=fd.speed_from_density(density)
+        flow=fd.flow_from_density(density)
+        profile=pd.DataFrame({
+            'speed_mph':speed,
+            'flow_observed_vehph':flow,
+            'period':['AM']*len(speed),
+        })
+        backward,summary=backward_closure(profile,fd,{'AM':fd.capacity_vehphpl},dt_minutes=5)
+        self.assertAlmostEqual(summary.observed_volume_veh,summary.inferred_volume_veh,places=8)
+        branch=np.where(density <= fd.critical_density_vehpmipl,'free','congested')
+        forward=reconstruct_speed_from_flow(flow,fd,branch=branch)
+        joined=profile.join(forward)
+        metrics=closure_speed_metrics(joined)
+        self.assertLess(metrics['mae'],1e-8)
+        self.assertTrue(backward['queue_end_veh'].ge(0).all())
 if __name__=='__main__': unittest.main()
