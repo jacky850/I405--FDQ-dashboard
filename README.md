@@ -139,6 +139,32 @@ python scripts/build_i405_s_direct7_calibration.py \
 
 ### Review status and outputs
 
-The main table is `outputs/i405_s_paq_aware_direct7/i405_s_calibration_link_period_direct7.csv`. Supporting tables include the 5-minute D/mu profile, congestion episode summary, PAQ objects, PAQ-to-detector comparison, and bottleneck decision audit. Figures are in `outputs/i405_s_paq_aware_direct7/figures/`.
+If you are continuing this work, start with the files below in this order:
+
+1. `outputs/i405_s_paq_aware_direct7/i405_s_calibration_link_period_direct7.csv` — **main link-period result table**. It has one row for each of the seven links and five periods (`NT1`, `AM`, `MD`, `PM`, `NT2`). Review `D_mean_vph`, `D_peak_1h_vph`, `mu_e_vph`, `mu_flow_link_id`, `episode_mu_source`, `capacity_source`, and the quality/status fields. This is the table intended for the next TAPLite/FDQ parameter-processing step.
+2. `outputs/i405_s_paq_aware_direct7/i405_s_congestion_episode_summary_direct7.csv` — **episode-level evidence table**. Each row is one detected congestion episode. It records `t0`, `t2`, `t3`, duration, minimum speed, selected discharge-flow detector, `mu_e_vph`, queue accumulation, conservation residual, PAQ match, and `quality_status`. Use this table to audit or reject individual episodes before aggregating them.
+3. `outputs/i405_s_paq_aware_direct7/i405_s_paq_detector_comparison_direct7.csv` — **detector-selection audit**. It compares each target detector with the PAQ queue object and shows whether an `xstar_link_id` was available. This explains why `mu_flow_link_id` is sometimes the target link and why some rows are marked `target_flow_no_paq_match`.
+4. `outputs/i405_s_paq_aware_direct7/i405_s_d_mu_profile_5min_direct7.csv` — **full 5-minute process table**. Use it only when reproducing calculations or checking a specific timestamp; it is not the first table to read.
+
+The eight diagnostic figures are in `outputs/i405_s_paq_aware_direct7/figures/`:
+
+- `i405_s_direct7_mu_overview.png`: all seven links, comparing the period-level D and mu results.
+- `L405S-012_d_mu_diagnostic.png`
+- `L405S-018_d_mu_diagnostic.png`
+- `L405S-028_d_mu_diagnostic.png`
+- `L405S-030_d_mu_diagnostic.png`
+- `L405S-058_d_mu_diagnostic.png`
+- `L405S-098_d_mu_diagnostic.png`
+- `L405S-115_d_mu_diagnostic.png`
+
+Each link figure is a visual check of the selected link's speed, demand/discharge-flow evidence, congestion episodes, and the resulting D/mu values. The figures are diagnostic, not the source of numerical values; cite the CSV tables for numbers.
+
+### Handoff checklist
+
+1. Read the main link-period table and filter `quality_status` and `episode_mu_source` before using `mu_e_vph`.
+2. For every candidate `mu_e_vph`, open the corresponding rows in the episode summary and confirm that the episode has a valid `t0`--`t3` interval, a PAQ match or an explicitly accepted fallback, and a reasonable conservation residual.
+3. Use the detector-comparison table to confirm whether the discharge-flow detector is the target link or the PAQ `xstar_link_id`.
+4. Re-run the two scripts in **Reproduce the PAQ-aware outputs** if the raw/processed inputs or PAQ rules change.
+5. Only after this review, export the accepted D and mu values to the downstream TAPLite/FDQ calibration. Do not treat rows labelled `target_flow_no_paq_match` or `not_identified_no_recovery` as fully validated bottleneck discharge estimates.
 
 This is a review branch. Episodes without a PAQ match or without a complete recovery are explicitly flagged and should not be treated as fully identified mu calibration cases without additional validation.
