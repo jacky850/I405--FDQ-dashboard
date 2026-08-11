@@ -2,7 +2,7 @@
 
 This repository contains the reproducible Stage-1 single-link benchmark used to build the I-405 FDQ dashboard.
 
-Dashboard: https://jacky850.github.io/I405--FDQ-dashboard/
+Interactive dashboard: https://jacky850.github.io/I405--FDQ-dashboard/dashboard/qvdf_multiweek.html
 
 ## Current primary validation: leakage-safe speed-only QVDF inversion
 
