@@ -1,0 +1,22 @@
+{
+  "speed_branch": "z=vc/vT2-1=f_p*P^s",
+  "s_status": "assumed_frozen_from_mentor_gold",
+  "s": 1.4,
+  "predeclared_gate": {
+    "severity_ratio": [
+      0.5,
+      2.0
+    ],
+    "maximum_absolute_vT2_error_mph": 10.0
+  },
+  "subset": "all_links",
+  "cases": 12,
+  "supported_cases": 11,
+  "coverage_pct": 91.66666666666666,
+  "vT2_MAE_mph": 2.194713627313947,
+  "volume_MAPE_all_pct": 48.12346033755179,
+  "volume_median_APE_all_pct": 15.658712523108132,
+  "volume_MAPE_supported_pct": 21.548711860057136,
+  "volume_median_APE_supported_pct": 15.577795516566823,
+  "interpretation": "failed cases are abstentions, not deleted observations; the speed branch is a consistency/identifiability gate and does not alter the mentor volume equation"
+}

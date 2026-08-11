@@ -1,0 +1,14 @@
+{
+  "mentor_script": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\fdq_single_link_benchmark_v0_2\\SLC_I10_Jinxin_Student_Package\\SLC_I10_Jinxin_Package\\scripts\\run_slc_i10.py",
+  "our_module": "src/fdqbench/slc_qvdf.py",
+  "synthetic_random_cases": 1000,
+  "i405_interface_cases": 100,
+  "state_comparisons": 20919,
+  "profile_comparisons": 1101,
+  "max_abs_state_difference": 0.0,
+  "max_abs_speed_profile_difference_mph": 0.0,
+  "max_abs_queue_profile_difference_veh": 0.0,
+  "tolerance": 1e-12,
+  "pass": true,
+  "i405_fixture_warning": "I-405 rows test interface/formula parity only. f_d, n, f_p, s, and k_mu are frozen synthetic values and are not I-405 calibration results."
+}

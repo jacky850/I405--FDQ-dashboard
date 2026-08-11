@@ -1,0 +1,10 @@
+{
+  "profile": "Monday-Friday mean by link and 5-minute LA-time bin",
+  "links": 7,
+  "bins_per_link": 288,
+  "minimum_contributing_weekdays": 5,
+  "canonical_episodes": 3,
+  "links_with_canonical_episode": 3,
+  "daily_role": "robustness and day-to-day uncertainty; not the primary average-weekday calibration target",
+  "station_aggregation": "mean across stations mapped to the same link/timestamp before weekday averaging"
+}

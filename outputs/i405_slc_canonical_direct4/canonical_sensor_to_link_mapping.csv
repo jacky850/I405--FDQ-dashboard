@@ -1,0 +1,5 @@
+model_link_id,tmc_id,mapping_method,direction_match,distance_error_m,confidence,effective_date,mapping_version
+L405S-001,1222782,published_station_to_link,True,,published_mapping,2025-06-16,trafficflowbench_public_2026_pilot
+L405S-001,1223027,published_station_to_link,True,,published_mapping,2025-06-16,trafficflowbench_public_2026_pilot
+L405S-020,1201419,published_station_to_link,True,,published_mapping,2025-06-16,trafficflowbench_public_2026_pilot
+L405S-061,1201350,published_station_to_link,True,,published_mapping,2025-06-16,trafficflowbench_public_2026_pilot
