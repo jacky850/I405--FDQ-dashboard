@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I-405 Speed-only QVDF Validation</title>
+  <link rel="stylesheet" href="qvdf_multiweek.css">
+</head>
+<body>
+  <header class="hero">
+    <nav><span class="brand">FDQBench</span><span class="stage">MULTIWEEK HOLDOUT · I-405 SOUTH</span></nav>
+    <div class="hero-grid">
+      <div>
+        <p class="kicker">Leakage-safe speed-to-volume validation</p>
+        <h1>Can speed alone recover<br><em>period volume?</em></h1>
+        <p class="lede">Each week is hidden in turn. Eleven weeks calibrate the QVDF; the holdout week contributes speed only until final scoring.</p>
+      </div>
+      <div class="hero-method" aria-label="Validation flow">
+        <div><b>11 weeks</b><span>speed + flow</span></div><i>→</i><div><b>1 holdout</b><span>speed only</span></div><i>→</i><div><b>V̂</b><span>gated estimate</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="metrics" aria-label="Overall metrics">
+      <article><span>Eligible cases</span><strong>168</strong><small>7 links × 2 periods × 12 weeks</small></article>
+      <article><span>Final coverage</span><strong class="teal">12.50%</strong><small>21 supported cases</small></article>
+      <article><span>Supported MAPE</span><strong class="orange">16.51%</strong><small>conditional on both gates</small></article>
+      <article><span>Median APE</span><strong>14.71%</strong><small>supported cases only</small></article>
+    </section>
+
+    <section class="card protocol-card">
+      <div class="section-head"><div><p class="overline">01 · EVALUATION DESIGN</p><h2>Every week takes a turn as holdout</h2></div><span class="pill">Flow hidden during inference</span></div>
+      <div id="weekTimeline" class="week-timeline"></div>
+      <div class="legend"><span><i class="training"></i>Training: speed + flow</span><span><i class="holdout"></i>Holdout: speed only</span><span><i class="holiday"></i>Excluded holiday week</span></div>
+    </section>
+
+    <section class="card funnel-card">
+      <div class="section-head"><div><p class="overline">02 · DECISION PIPELINE</p><h2>Coverage is earned, not assumed</h2></div><span class="pill muted">168 total cases</span></div>
+      <div class="funnel">
+        <div class="funnel-node base"><strong>168</strong><span>eligible link-period-weeks</span></div>
+        <div class="branch"><span>137 no canonical episode</span><b>31 episode identified</b></div>
+        <div class="funnel-node episode"><strong>31</strong><span>speed-derived episodes</span></div>
+        <div class="branch"><span>7 speed-gate failures</span><span>3 duration extrapolations</span></div>
+        <div class="funnel-node success"><strong>21</strong><span>supported volume estimates</span></div>
+      </div>
+    </section>
+
+    <section class="case-bar card">
+      <div><p class="overline">03 · CASE EXPLORER</p><h2>Inspect one supported holdout</h2></div>
+      <div class="selectors">
+        <label>Link<select id="linkSelect"></select></label>
+        <label>Period<select id="periodSelect"></select></label>
+        <label>Holdout week<select id="weekSelect"></select></label>
+      </div>
+    </section>
+
+    <section class="case-summary" id="caseSummary"></section>
+    <section id="failureReason" class="failure-reason" hidden></section>
+
+    <section class="chart-grid">
+      <article class="card chart-card wide">
+        <div class="section-head"><div><p class="overline">SPEED-ONLY INPUT</p><h2>Holdout average-weekday speed</h2></div><span class="unit">mph · LA time</span></div>
+        <div id="speedChart" class="chart"></div>
+      </article>
+      <article class="card chart-card">
+        <div class="section-head"><div><p class="overline">PERIOD OUTPUT</p><h2>Observed vs. inferred volume</h2></div><span class="unit">vehicles</span></div>
+        <div id="volumeChart" class="chart"></div>
+      </article>
+      <article class="card chart-card">
+        <div class="section-head"><div><p class="overline">CALIBRATION ENVELOPE</p><h2>Duration branch support</h2></div><span class="unit">P vs. D/C</span></div>
+        <div id="calibrationChart" class="chart"></div>
+      </article>
+      <article class="card chart-card wide">
+        <div class="section-head"><div><p class="overline">ALL HOLDOUT WEEKS</p><h2>Period-volume comparison</h2></div><span class="unit">selected link-period</span></div>
+        <div id="weeklyVolumeChart" class="chart"></div>
+      </article>
+    </section>
+
+    <section class="card table-card">
+      <div class="section-head"><div><p class="overline">04 · SUPPORTED RESULTS</p><h2>Accuracy for every case that passed both gates</h2></div><span class="pill">Click a row to inspect</span></div>
+      <div class="table-wrap"><table><thead><tr><th>Link</th><th>Period</th><th>Holdout week</th><th>Observed V</th><th>Inferred V</th><th>APE</th><th>Status</th></tr></thead><tbody id="caseTable"></tbody></table></div>
+    </section>
+
+    <section class="note-card">
+      <b>Why there is no 5-minute inferred-flow curve</b>
+      <p>The current duration inverse estimates one AM or PM period total, V̂. It does not identify a unique 5-minute flow profile. The observed five-minute flow is revealed only after inference and integrated for scoring.</p>
+    </section>
+  </main>
+  <footer><span>I-405 South · PeMS ground-truth validation</span><span>Average weekday · Los Angeles local time</span></footer>
+  <script src="qvdf_multiweek_data.js"></script>
+  <script src="qvdf_multiweek.js"></script>
+</body>
+</html>
