@@ -85,36 +85,64 @@ after inference is complete
 ```
 
 Here `D` is the QVDF peak demand rate, `C` is capacity, and `P` is congestion
-duration in hours; `D` must not be confused with duration. `T_p=4 h` for both
+duration in hours; `D` must not be confused with duration. $T_p=4\,\mathrm{h}$ for both
 declared periods. The exponents are frozen to the mentor-model values
-`n=1.10` and `s=1.40`.
+$n=1.10$ and $s=1.40$.
 
-For the eleven training weeks, the implementation estimates:
+For the 11 training weeks, the implementation estimates:
 
-```text
-C   = median weekly p95 observed flow
-k_d = median[D / (V / T_p)]
-x_i = D_i / C
-f_d = median[P_i / x_i^n]       over training episode weeks
-z_i = v_c,i / v(T2)_i - 1
-f_p = median[z_i / P_i^s]       over training episode weeks
-```
+$$
+\begin{aligned}
+C
+  &= \operatorname{median}_{w}\!\left(Q^{\mathrm{obs}}_{0.95,w}\right), \\
+k_d
+  &= \operatorname{median}_{w}\!\left(\frac{D_w}{V_w/T_p}\right), \\
+x_i
+  &= \frac{D_i}{C}, \\
+f_d
+  &= \operatorname{median}_{i\in\mathcal E_{\mathrm{train}}}
+     \!\left(\frac{P_i}{x_i^n}\right), \\
+z_i
+  &= \frac{v_{c,i}}{v_i(T_2)}-1, \\
+f_p
+  &= \operatorname{median}_{i\in\mathcal E_{\mathrm{train}}}
+     \!\left(\frac{z_i}{P_i^s}\right).
+\end{aligned}
+$$
+
+Here $w$ indexes all training weeks, while
+$\mathcal E_{\mathrm{train}}$ contains only training weeks with an identified
+canonical episode. $Q^{\mathrm{obs}}_{0.95,w}$ is the weekly 95th-percentile
+observed flow.
 
 The holdout flow is not used in these estimates. From the holdout speed-only
 episode, the duration branch computes:
 
-```text
-x_hat = (P / f_d)^(1/n)         where x_hat = inferred D/C
-D_hat = C * x_hat
-V_hat = T_p * D_hat / k_d
-```
+$$
+\begin{aligned}
+\widehat{x}
+  &= \left(\frac{P}{f_d}\right)^{1/n},
+  && \widehat{x}=\widehat{D/C}, \\
+\widehat D
+  &= C\widehat{x}, \\
+\widehat V
+  &= \frac{T_p\widehat D}{k_d}.
+\end{aligned}
+$$
 
 The held-out observed volume is calculated only for final scoring:
 
-```text
-APE  = abs(V_hat - V_obs) / V_obs x 100%
-MAPE = mean(APE) across final supported cases
-```
+For supported case $j$, and for the final supported set $\mathcal S$:
+
+$$
+\begin{aligned}
+\operatorname{APE}_j
+  &= \frac{\left|\widehat V_j-V^{\mathrm{obs}}_j\right|}
+          {V^{\mathrm{obs}}_j}\times100\%, \\
+\operatorname{MAPE}_{\mathcal S}
+  &= \frac{1}{|\mathcal S|}\sum_{j\in\mathcal S}\operatorname{APE}_j.
+\end{aligned}
+$$
 
 ### Canonical speed episode
 
@@ -128,18 +156,25 @@ time, `P=t3-t0`, and `v_c` is the recovery cutoff used by the severity branch.
 
 The frozen severity branch predicts the minimum speed:
 
-```text
-z_hat       = f_p P^s
-v_hat(T2)   = v_c / (1 + z_hat)
-z_observed  = v_c / v_observed(T2) - 1
-```
+$$
+\begin{aligned}
+\widehat z
+  &= f_pP^s, \\
+\widehat v(T_2)
+  &= \frac{v_c}{1+\widehat z}, \\
+z^{\mathrm{obs}}
+  &= \frac{v_c}{v^{\mathrm{obs}}(T_2)}-1.
+\end{aligned}
+$$
 
 The case passes only when both conditions hold:
 
-```text
-0.50 <= z_observed / z_hat <= 2.00
-abs[v_hat(T2) - v_observed(T2)] <= 10 mph
-```
+$$
+0.50\leq\frac{z^{\mathrm{obs}}}{\widehat z}\leq2.00,
+\qquad
+\left|\widehat v(T_2)-v^{\mathrm{obs}}(T_2)\right|
+\leq10\ \mathrm{mph}.
+$$
 
 This gate asks whether the calibrated QVDF severity branch can explain the
 holdout week's observed speed minimum. It does not inspect holdout flow.
@@ -149,14 +184,16 @@ holdout week's observed speed minimum. It does not inspect holdout flow.
 A case may reproduce `v(T2)` while the duration branch extrapolates far beyond
 the demand/capacity ratios observed during calibration. The second gate checks:
 
-```text
-duration extrapolation ratio
-    = x_hat_holdout / max(x_observed_training_episode_weeks)
-    <= 1.25
-```
+$$
+r_{\mathrm{ext}}
+=
+\frac{\widehat x_{\mathrm{holdout}}}
+     {\displaystyle\max_{i\in\mathcal E_{\mathrm{train}}}x_i}
+\leq1.25.
+$$
 
 Thus the inferred holdout `D/C` may be at most 25% above the largest `D/C`
-observed in that case's eleven-week training set. This gate also uses no
+observed in that case's 11-week training set. This gate also uses no
 holdout flow. It rejects the three L405S-018 cases whose extrapolation ratios
 are 2.09, 1.47, and 1.27. The 1.25 threshold is a transparent candidate chosen
 after diagnosing this I-405 sample; it must be frozen and tested on independent
