@@ -94,19 +94,19 @@ For the 11 training weeks, the implementation estimates:
 $$
 \begin{aligned}
 C
-  &= \operatorname{median}_{w}\!\left(Q^{\mathrm{obs}}_{0.95,w}\right), \\
+  &= \mathrm{median}_{w}\left(Q^{\mathrm{obs}}_{0.95,w}\right), \\
 k_d
-  &= \operatorname{median}_{w}\!\left(\frac{D_w}{V_w/T_p}\right), \\
+  &= \mathrm{median}_{w}\left(\frac{D_w}{V_w/T_p}\right), \\
 x_i
   &= \frac{D_i}{C}, \\
 f_d
-  &= \operatorname{median}_{i\in\mathcal E_{\mathrm{train}}}
-     \!\left(\frac{P_i}{x_i^n}\right), \\
+  &= \mathrm{median}_{i\in\mathcal E_{\mathrm{train}}}
+     \left(\frac{P_i}{x_i^n}\right), \\
 z_i
   &= \frac{v_{c,i}}{v_i(T_2)}-1, \\
 f_p
-  &= \operatorname{median}_{i\in\mathcal E_{\mathrm{train}}}
-     \!\left(\frac{z_i}{P_i^s}\right).
+  &= \mathrm{median}_{i\in\mathcal E_{\mathrm{train}}}
+     \left(\frac{z_i}{P_i^s}\right).
 \end{aligned}
 $$
 
@@ -136,11 +136,11 @@ For supported case $j$, and for the final supported set $\mathcal S$:
 
 $$
 \begin{aligned}
-\operatorname{APE}_j
+\mathrm{APE}_j
   &= \frac{\left|\widehat V_j-V^{\mathrm{obs}}_j\right|}
           {V^{\mathrm{obs}}_j}\times100\%, \\
-\operatorname{MAPE}_{\mathcal S}
-  &= \frac{1}{|\mathcal S|}\sum_{j\in\mathcal S}\operatorname{APE}_j.
+\mathrm{MAPE}_{\mathcal S}
+  &= \frac{1}{|\mathcal S|}\sum_{j\in\mathcal S}\mathrm{APE}_j.
 \end{aligned}
 $$
 
