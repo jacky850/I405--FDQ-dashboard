@@ -185,11 +185,12 @@ A case may reproduce `v(T2)` while the duration branch extrapolates far beyond
 the demand/capacity ratios observed during calibration. The second gate checks:
 
 $$
+\begin{aligned}
 r_{\mathrm{ext}}
-=
-\frac{\widehat x_{\mathrm{holdout}}}
-     {\displaystyle\max_{i\in\mathcal E_{\mathrm{train}}}x_i}
-\leq1.25.
+  &= \frac{\widehat x_{\mathrm{holdout}}}
+           {\max_{i\in\mathcal E_{\mathrm{train}}}x_i}
+  \leq 1.25.
+\end{aligned}
 $$
 
 Thus the inferred holdout `D/C` may be at most 25% above the largest `D/C`
