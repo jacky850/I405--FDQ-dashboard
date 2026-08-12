@@ -1,0 +1,153 @@
+{
+  "case_id": "nvta_31800_2025-10-08",
+  "tmc": "110-04178",
+  "net_link_id": 31800,
+  "date": "2025-10-08",
+  "estimated_qmax_veh": {
+    "median": 292.7181773991563,
+    "min": 251.1528471334767,
+    "max": 343.09848772160603
+  },
+  "estimated_peak_time_clock_min": {
+    "median": 480.0,
+    "min": 470.0,
+    "max": 485.0
+  },
+  "queue_at_reporting_boundaries_veh": {
+    "AM->MD 09:00": {
+      "median": 212.20635959220056,
+      "min": 180.7030951251761,
+      "max": 249.83070982482855
+    },
+    "MD->PM 15:00": {
+      "median": 195.914367671841,
+      "min": 166.14784167629477,
+      "max": 225.2809423565508
+    },
+    "PM->NT 19:00": {
+      "median": 0.0,
+      "min": 0.0,
+      "max": 2.7711215468528962
+    }
+  },
+  "end_of_day_queue_veh": {
+    "median": 2.7755575615628914e-17,
+    "min": 0.0,
+    "max": 0.20498760042710523
+  },
+  "measurement_residual_rmse_veh": {
+    "median": 23.76498886674691,
+    "min": 20.512359808736985,
+    "max": 27.034005411431824
+  },
+  "sensitivity_cases": 36,
+  "sensitivity_inputs": {
+    "free_speed_mph": [
+      62.0,
+      66.59649999999999,
+      68.99982850155094,
+      70.0
+    ],
+    "capacity_vphpl": [
+      1900.0,
+      2000.0,
+      2200.0
+    ],
+    "capacity_drop_fraction": [
+      0.05,
+      0.1,
+      0.15
+    ],
+    "initial_queue_veh": 0.0
+  },
+  "gates": {
+    "G1_vehicle_conservation": {
+      "verdict": "pass",
+      "min_queue_veh": 0.0,
+      "reset_at_any_period_boundary": false,
+      "queue_produced_only_by_recurrence": true,
+      "note": "Q(t) is generated solely by the recurrence from a smooth arrival profile, so it carries Q(t-1) by construction and no period boundary resets it. Conservation holds structurally; it is not evidence about queue magnitude, because both boundaries are inferred, not observed."
+    },
+    "G2_speed_consistency": {
+      "verdict": "pass",
+      "peak_clock_min": 485.0,
+      "peak_inside_speed_episode": true,
+      "max_queue_outside_episode_veh": 43.88056196720223,
+      "max_queue_outside_episode_share": 0.1612481284299153,
+      "max_queue_during_night_veh": 0.0123636734689777,
+      "night_mean_speed_mph": 63.02113636363637,
+      "measurement_residual_veh": {
+        "rmse": 22.37097827596941,
+        "mae": 11.349864097379854,
+        "max_abs": 91.27492261210737
+      },
+      "residual_note": "RMSE between the recurrence queue and the speed-implied queue. This is the real test of Branch B: how much of the observed speed a physically smooth arrival process explains."
+    },
+    "G3_spatial_storage": {
+      "verdict": "pass",
+      "storage_veh": 835.6648,
+      "jam_density_vehpmipl": 200.0,
+      "qmax_worst_case_veh": 343.09848772160603,
+      "spillback_indicated": false
+    },
+    "G4_occupancy_consistency": {
+      "verdict": "not_testable",
+      "reason": "INRIX/RITIS provides speed only. No occupancy series exists for this link."
+    },
+    "G5_boundary_flow_quality": {
+      "verdict": "not_testable",
+      "reason": "The PeMS version of this gate checks detector coverage, ramp completeness, flow units and drift. NVTA has no flow measurement at any boundary, so the gate has no input. Speed completeness is reported instead.",
+      "speed_bins_present": 288,
+      "speed_bins_missing": 0
+    },
+    "G6_temporal_persistence": {
+      "verdict": "pass",
+      "largest_single_bin_change_share": 0.1732997189993301,
+      "largest_single_bin_change_veh": {
+        "smoothed": 47.160169438828845,
+        "unsmoothed": 164.86634404794225
+      },
+      "implied_flow_imbalance_vph": 565.9220332659462,
+      "arrival_knot_spacing_min": 60.0,
+      "episode_count": 2,
+      "shortest_episode_h": 4.041080713888889,
+      "note": "The recurrence supplies the stock inertia the pointwise formula lacked, so the estimate no longer needs speed smoothing. The measurement column shows the swing the raw speed alone would have produced."
+    },
+    "G7_cross_method_agreement": {
+      "verdict": "fail",
+      "branch_a_qmax_veh": 5494.39678495043,
+      "branch_b_qmax_veh": 272.1306745974074,
+      "peak_time_gap_min": 650.0,
+      "branch_a_admissible_capacity_window_vphpl": [
+        2200.0,
+        2200.0
+      ],
+      "reason": "Branch A carries no independent information for this link. Its arrival rate is an S3 inversion of speed, which returns served flow and is capped at capacity by construction, so lambda and mu are two scalings of the same assumed capacity. The queue therefore follows the capacity assumption, not the data: over the sweep Qmax spans 0 to 35548 vehicles and only one assumed capacity is physically admissible."
+    }
+  },
+  "gate_tally": {
+    "pass": 4,
+    "review": 0,
+    "fail": 1,
+    "not_testable": 2
+  },
+  "cross_period_continuity": {
+    "carried_across_boundary": {
+      "AM->MD 09:00": true,
+      "MD->PM 15:00": true,
+      "PM->NT 19:00": false
+    },
+    "verdict": "pass",
+    "note": "The PM episode begins at 14:20, inside MD, so the 15:00 boundary also carries a queue that a period-by-period run would start from zero."
+  },
+  "overall_status": "preliminary_speed_driven_estimate",
+  "confidence": "low_to_moderate",
+  "what_this_is_not": "Not an accuracy validation. NVTA has no observed flow, so both lambda and mu are inferred and no independent measurement of queue exists. Branch B is an internal consistency result; the reported range reflects assumption spread, not measurement error.",
+  "abstentions": [
+    "G4 occupancy consistency: no occupancy data on INRIX links.",
+    "G5 boundary flow quality: no flow measurement at any boundary.",
+    "G7 cross-method agreement failed, so no second independent estimate exists.",
+    "Free-flow bins: arrivals are not identifiable from speed alone (183 of 288 bins).",
+    "QVDF parameters are a week average applied to a single observed day."
+  ]
+}

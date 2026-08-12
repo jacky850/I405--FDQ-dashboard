@@ -1,0 +1,62 @@
+{
+  "source": "outputs\\i405_multiweek_average_holdout\\leave_one_week_out_qvdf_results.csv",
+  "definitions": {
+    "D": "peak one-hour demand rate, veh/h",
+    "V": "period volume, vehicles",
+    "P": "congestion duration, hours; observed only, and an input to the inversion",
+    "note_on_V": "V_inferred = D_inferred / PLF, where PLF is a per-link peak-load factor calibrated on the training weeks. V and D are therefore not independent estimates; they are one estimate reported in two units."
+  },
+  "coverage": {
+    "total_cases": 168,
+    "episode_identified": 31,
+    "supported_both_gates": 21,
+    "supported_pct": 12.5,
+    "abstained": 147
+  },
+  "supported_cases": {
+    "demand_D": {
+      "cases": 21,
+      "mae": 1370.865401825826,
+      "rmse": 1873.1694058651863,
+      "bias": -425.8173375464387,
+      "mape_pct": 16.00193369194882,
+      "median_ape_pct": 13.300953181325713
+    },
+    "volume_V": {
+      "cases": 21,
+      "mae": 4915.856335491273,
+      "rmse": 6389.520873667411,
+      "bias": -1465.4574658300155,
+      "mape_pct": 16.514808200631713,
+      "median_ape_pct": 14.709778423639166
+    },
+    "d_over_c": {
+      "cases": 21,
+      "mae": 0.19752916294977024,
+      "rmse": 0.24931964740575455,
+      "bias": -0.16438666766609505,
+      "mape_pct": 17.28788148493056,
+      "median_ape_pct": 16.239501549852324
+    },
+    "vT2_mae_mph": 2.206231038836448
+  },
+  "all_episode_cases": {
+    "demand_D": {
+      "cases": 31,
+      "mae": 2877.2266574071045,
+      "rmse": 4957.541296381297,
+      "bias": 573.9398917537061,
+      "mape_pct": 30.083920919602274,
+      "median_ape_pct": 16.296935194367776
+    },
+    "volume_V": {
+      "cases": 31,
+      "mae": 10406.5960294947,
+      "rmse": 17874.795558301823,
+      "bias": 2173.5552695567117,
+      "mape_pct": 31.376371329891466,
+      "median_ape_pct": 18.625196330902906
+    }
+  },
+  "reading": "Accuracy is conditional on the supported subset. The method declines the remaining cases rather than guessing, so the error figures and the coverage figure must be quoted together."
+}

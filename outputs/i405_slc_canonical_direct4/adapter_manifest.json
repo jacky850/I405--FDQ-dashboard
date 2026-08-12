@@ -1,0 +1,24 @@
+{
+  "adapter": "scripts/build_i405_slc_canonical_adapter.py",
+  "source_observations": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\I405--FDQ-dashboard-github\\data\\jinxi_i405_week_2025-06-16_to_22\\raw_observed_fdqbench.csv",
+  "source_observations_sha256": "57708fb5336ff82dc842e5fb5474cbdc99923cd22ab43c2e6e51fbf5580594d3",
+  "corridor_root": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\I210E_corridor_data_package\\multicorridor_2026_pilot\\trafficflowbench_five_corridors\\data_public\\kaggle_release\\corridors\\D12_I405_S",
+  "keys": [
+    "L405S-001|1222782",
+    "L405S-001|1223027",
+    "L405S-020|1201419",
+    "L405S-061|1201350"
+  ],
+  "timezone": "America/Los_Angeles",
+  "interval_min": 5,
+  "weekday_only": true,
+  "observation_rows": 5760,
+  "period_state_rows": 100,
+  "important_limit": "The adapter does not identify k_mu, f_d, n, f_p, or s.",
+  "outputs": {
+    "canonical_observations_5min.csv": "e44522f075da5ebb73e1468f3f42f26a8eb1ebb6f6233fba4fea941ae499dc4c",
+    "canonical_link_sensor_metadata.csv": "06ff1b2bae8523f259c0a1d4a441f9cfc4d4c2967df3981861b5505287aab267",
+    "canonical_sensor_to_link_mapping.csv": "bef9e0939676468a136c72406286b3c9fe1023ec671959320084f5a05a6511dd",
+    "canonical_daily_period_states.csv": "e804c665e2ef703ec74594ce6c96578cf8d4be902b06413387f4129e25a448f1"
+  }
+}

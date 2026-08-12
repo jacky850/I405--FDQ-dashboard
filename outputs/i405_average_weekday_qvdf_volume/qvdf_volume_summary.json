@@ -1,0 +1,16 @@
+{
+  "formula": "P=f_d*(D/C)^n; D=k_d*V/Tp; inverse V=Tp*C*(P/f_d)^(1/n)/k_d",
+  "stress_basis": "D_over_C",
+  "n_status": "assumed_frozen_from_mentor_gold",
+  "n": 1.1,
+  "holdout_cases": 12,
+  "holdout_MAE_veh": 13341.359424478715,
+  "holdout_MAPE_pct": 48.12346033755179,
+  "holdout_median_APE_pct": 15.658712523108132,
+  "holdout_structural_failure_cases_gt100pct": 1,
+  "canonical_cases": 3,
+  "canonical_MAE_veh": 1529.3342987368499,
+  "canonical_MAPE_pct": 5.21766894457036,
+  "identifiability_note": "C, k_d, and f_d are calibrated from observed flow; mu is observed-flow-derived. Neither is identified from speed alone.",
+  "decision": "average-weekday in-sample closure passes provisionally, but held-out volume transfer fails and must be improved before release"
+}

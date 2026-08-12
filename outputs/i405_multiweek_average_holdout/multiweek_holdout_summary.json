@@ -1,0 +1,23 @@
+{
+  "calendar_weeks_found": 13,
+  "holiday_weeks_excluded": {
+    "2025-06-30": "contains_2025-07-04"
+  },
+  "links": 7,
+  "periods": [
+    "AM",
+    "PM"
+  ],
+  "ordinary_complete_weeks_per_link_period": 12,
+  "link_week_cases": 168,
+  "episode_weeks": 31,
+  "supported_weeks": 21,
+  "no_episode_weeks": 137,
+  "speed_gate_failures": 7,
+  "duration_extrapolation_gate_failures": 3,
+  "final_identified_coverage_pct": 12.5,
+  "volume_MAPE_supported_pct": 16.514808200631713,
+  "volume_median_APE_supported_pct": 14.709778423639166,
+  "duration_extrapolation_limit": 1.25,
+  "protocol": "train on other weekly average-weekday profiles; hide all holdout-week flow during P/vT2 inference; score after inference"
+}

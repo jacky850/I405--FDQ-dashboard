@@ -1,0 +1,92 @@
+{
+  "case_id": "nvta_31800_2025-10-08",
+  "tmc": "110-04178",
+  "date": "2025-10-08",
+  "timezone": "America/New_York",
+  "clock": {
+    "convention": "continuous minutes, anchored 360 (06:00), no midnight reset",
+    "start_min": 360,
+    "end_min": 1800,
+    "bins": 288,
+    "source": "whole_day_DTA/docs/03_PERIOD_HANDLING_AM_MD_PM_NT.md"
+  },
+  "data_completeness": {
+    "bins_present": 288,
+    "bins_expected": 288,
+    "missing_speed_bins": 0
+  },
+  "link": {
+    "tmc": "110-04178",
+    "net_link_id": 31800,
+    "corridor": "I-66 EB",
+    "direction": "EASTBOUND",
+    "facility": "GP",
+    "county": "FAIRFAX",
+    "length_mi": 1.044581,
+    "lanes": 4,
+    "free_speed_mph": {
+      "observed_p95": 66.59649999999999,
+      "inrix_reference": 62.0,
+      "network_attribute": 68.99982850155094,
+      "qvdf_calibration_constant": 70.0
+    },
+    "capacity_vphpl": {
+      "network_attribute": 2000.0,
+      "qvdf_calibration_constant": 2200.0
+    },
+    "qvdf_cutoff_mph": 49.0,
+    "qvdf_periods": {
+      "AM": {
+        "P": 5.339053786529759,
+        "demand": 10170.173719506349,
+        "DC": 4.622806236139249,
+        "v_t2": 21.92,
+        "t2": 7.75,
+        "t0": 6.311679058240396,
+        "t3": 11.650732844770154,
+        "qdf": 0.2979054944600605,
+        "m": 0.2693962262355243
+      },
+      "PM": {
+        "P": 5.666343561891466,
+        "demand": 11268.789963547862,
+        "DC": 5.122177256158119,
+        "v_t2": 29.176666666666662,
+        "t2": 14.75,
+        "t0": 13.331209031318282,
+        "t3": 18.99755259320975,
+        "qdf": 0.3300862442121825,
+        "m": 0.2503891536375734
+      }
+    },
+    "qvdf_provenance": "observed_t2_dataset week average (date='SelectedWeekAverage', 2025-10-06..10); capacity and free speed are hardcoded constants (1800/2200 vphpl by HOV flag) and demand is S3-inverted from speed, not observed"
+  },
+  "by_period": {
+    "AM": {
+      "bins": 36,
+      "mean_speed_mph": 28.126944444444444,
+      "min_speed_mph": 16.36,
+      "bins_below_cutoff": 32
+    },
+    "MD": {
+      "bins": 72,
+      "mean_speed_mph": 47.29972222222222,
+      "min_speed_mph": 21.45,
+      "bins_below_cutoff": 29
+    },
+    "PM": {
+      "bins": 48,
+      "mean_speed_mph": 28.351041666666664,
+      "min_speed_mph": 21.59,
+      "bins_below_cutoff": 47
+    },
+    "NT": {
+      "bins": 132,
+      "mean_speed_mph": 63.02113636363637,
+      "min_speed_mph": 49.92,
+      "bins_below_cutoff": 0
+    }
+  },
+  "episodes_detected": 2,
+  "stage": "1_input_preparation_only_no_queue_computed"
+}

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NVTA Speed-Only Queue Continuity</title>
+  <link rel="stylesheet" href="nvta_full_day_queue.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-top"><b>FDQBench</b><span>NVTA / INRIX speed-only transfer</span></div>
+    <p class="eyebrow">ONE LINK · ONE FULL DAY · NO OBSERVED FLOW</p>
+    <h1>Queue continuity when<br><em>only speed is measured</em></h1>
+    <p class="lede">On PeMS the queue is counted at both boundaries. NVTA has no flow measurement anywhere, so arrivals and discharge are both inferred. The queue below is produced only by the recurrence, carries across every reporting boundary, and is published with the assumptions it depends on.</p>
+  </header>
+
+  <main>
+    <section class="card period-card">
+      <div class="section-head">
+        <div><p>CONTINUOUS CLOCK</p><h2>Four periods, one non-resetting queue state</h2></div>
+        <span id="clockNote">minutes 360–1800 · America/New_York</span>
+      </div>
+      <div class="period-strip" aria-label="Whole-day reporting periods">
+        <div class="am"><b>AM</b><span>06:00–09:00</span></div>
+        <div class="md"><b>MD</b><span>09:00–15:00</span></div>
+        <div class="pm"><b>PM</b><span>15:00–19:00</span></div>
+        <div class="nt"><b>NT</b><span>19:00–30:00</span></div>
+      </div>
+      <p class="period-note">Boundaries follow the whole-day DTA period spec: the clock never resets at midnight, and 09:00, 15:00 and 19:00 organize reporting without initializing or clearing <i>Q(t)</i>.</p>
+    </section>
+
+    <section class="metrics" id="metrics"></section>
+
+    <section class="card chart-card queue-focus">
+      <div class="section-head">
+        <div><p>PRIMARY RESULT</p><h2>Residual queue carried across two reporting boundaries</h2></div>
+        <span>vehicles · 288 five-minute states</span>
+      </div>
+      <div id="queueChart" class="chart queue-chart"></div>
+      <div class="chart-key">
+        <span class="k-band">band = 36 assumption combinations</span>
+        <span class="k-line">line = recurrence estimate</span>
+        <span class="k-dot">dots = speed-implied measurement</span>
+      </div>
+      <div class="handoff-callout"><span>Boundary handoff</span><b id="boundarySentence"></b></div>
+    </section>
+
+    <section class="card chart-card">
+      <div class="section-head">
+        <div><p>WHY THE QUEUE NEEDS A STATE</p><h2>A pointwise read of speed cannot be a queue</h2></div>
+        <span>vehicles · adjacent-bin change</span>
+      </div>
+      <div id="inertiaChart" class="chart inertia-chart"></div>
+      <p class="period-note">Reading <i>Q</i> straight off each bin's speed gives swings of <b id="measuredSwing"></b> vehicles between adjacent bins, because <i>1/v</i> amplifies speed noise at low speed and the formula never uses <i>Q(t−1)</i>. Driving the recurrence with a smooth arrival profile brings the largest step down to <b id="recurrenceSwing"></b> vehicles without smoothing anything.</p>
+    </section>
+
+    <section class="card chart-card">
+      <div class="section-head">
+        <div><p>SPEED-DEFINED EPISODES</p><h2>Observed speed with T0, T2, T3 and duration P</h2></div>
+        <span>mph · asymmetric by construction</span>
+      </div>
+      <div id="speedChart" class="chart speed-chart"></div>
+      <div id="episodeKey" class="parameter-key"></div>
+    </section>
+
+    <section class="card chart-card">
+      <div class="section-head">
+        <div><p>CROSS-METHOD GATE</p><h2>The QVDF prior has no resolution on this link</h2></div>
+        <span>peak queue vs assumed capacity</span>
+      </div>
+      <div id="sweepChart" class="chart sweep-chart"></div>
+      <p class="period-note">The QVDF arrival rate is an S3 inversion of speed, which returns served flow and is capped at capacity by construction. Arrivals and discharge therefore become two scalings of the same assumed capacity, and the queue follows the assumption rather than the data.</p>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div><p>PHYSICAL GATES</p><h2>What was tested, what failed, what cannot be tested here</h2></div>
+        <span id="gateTally"></span>
+      </div>
+      <div id="gateGrid" class="gate-grid"></div>
+    </section>
+
+    <section class="method-line">
+      <b>Scope:</b>
+      <span id="scopeLine"></span>
+    </section>
+  </main>
+
+  <footer>
+    <span>FDQBench · NVTA speed-only single-link case</span>
+    <span id="footerNote"></span>
+  </footer>
+
+  <div class="tooltip" id="tooltip"></div>
+  <script src="nvta_full_day_data.js"></script>
+  <script src="nvta_full_day_queue.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "stage": "C_predeclared_episode_sensitivity_v1",
+  "baseline_episodes": 28,
+  "variants": 40,
+  "deterministic_variants": 10,
+  "noise_variants": 30,
+  "stable_speed_only_episodes": 16,
+  "baseline_strict_paq_candidates": 7,
+  "stable_paq_qvdf_candidates": 7,
+  "stable_rule": "quality=accepted; deterministic match>=0.8 and median IoU>=0.5; both 10/15-min sampling IoU>=0.5; noise match>=0.8 and median IoU>=0.5",
+  "free_speed_policy": "link p95 frozen from unperturbed 5-min observations",
+  "seed": 20260810
+}

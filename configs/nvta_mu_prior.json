@@ -1,0 +1,46 @@
+{
+  "description": "Replaceable service-rate prior for the speed-only NVTA full-day queue case. NVTA has no observed flow, so mu is an assumption, not a measurement. Every field carries its provenance so a later corrected calibration can be swapped in without touching the code.",
+  "capacity_vphpl": 1900.0,
+  "capacity_vphpl_range": [
+    1700.0,
+    2400.0
+  ],
+  "capacity_source": "HCM freeway basic segment, assumption",
+  "capacity_drop_fraction": 0.1,
+  "capacity_drop_fraction_range": [
+    0.05,
+    0.15
+  ],
+  "capacity_drop_source": "literature range for queue-discharge capacity drop",
+  "pems_cross_check": {
+    "mu_e_vphpl_median": 1135.0,
+    "mu_e_vphpl_range": [
+      707.0,
+      1532.0
+    ],
+    "status": "not_used_as_input",
+    "reason": "The PeMS per-lane audit (branch audit/i405-perlane-gate) added a physical-plausibility gate and returned 14 of 35 link-periods as review_required: FD capacity reaches 2870 vphpl on L405S-018 and 5418 vphpl on L405S-115, and six discharge values fall below 1200 vphpl. The gate is diagnostic only and does not rewrite the calibration, so the root cause (lane count, FD capacity fit, or flow units) is still open. These values stay out of the NVTA service rate and are kept only to flag order-of-magnitude disagreement."
+  },
+  "capacity_sweep_vphpl": [
+    1200,
+    1400,
+    1600,
+    1700,
+    1800,
+    1850,
+    1900,
+    1950,
+    2000,
+    2050,
+    2100,
+    2150,
+    2200,
+    2250,
+    2300,
+    2400
+  ],
+  "physically_plausible_capacity_vphpl": [
+    1900.0,
+    2400.0
+  ]
+}
