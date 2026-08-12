@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>I-405 FDQ Ground-Truth Dashboard</title><link rel="stylesheet" href="styles.css">
+  <title>I-405 FDQ Ground-Truth Dashboard</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="site-nav.css">
 </head>
 <body>
+<nav class="site-nav" aria-label="Dashboards"><div><span class="site-brand">FDQBench</span><ul><li><a href="dashboard_I405.html" aria-current="page">Ground-truth explorer</a></li><li><a href="full_day_residual_queue.html">PeMS queue continuity</a></li><li><a href="nvta_full_day_queue.html">NVTA speed-only queue</a></li><li><a href="qvdf_multiweek.html">QVDF holdout · D and V</a></li></ul></div></nav>
 <header class="hero"><div><p class="eyebrow">FDQBench · Stage 1</p><h1>I-405 Ground-Truth Link Explorer</h1><p class="subtitle">Observed PeMS flow is used for λ(t) and constant-μ queue validation. Speed-derived flow is shown separately as an FD diagnostic.</p></div><div class="source-badge"><span class="dot"></span> Ground truth available</div></header>
 <main>
   <section class="controls card"><label for="linkSelect">Link / TMC</label><select id="linkSelect"></select><span class="note">Normal-link screening set · D12 I-405 Southbound · 5-minute average weekday profile · LA time</span></section>
