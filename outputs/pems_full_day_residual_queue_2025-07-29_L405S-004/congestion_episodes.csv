@@ -1,0 +1,2 @@
+episode_id,t0_la,t2_la,t3_la,duration_min,minimum_speed_mph,speed_delay_diagnostic_queue_max_veh,count_queue_max_veh,count_queue_peak_time_la,speed_queue_vs_count_queue_mae_veh,speed_queue_vs_count_queue_correlation,queue_peak_time_gap_min
+1,2025-07-29T07:25:00-07:00,2025-07-29T09:55:00-07:00,2025-07-29T10:25:00-07:00,185,10.7,404.5398752285632,354.1361212219778,2025-07-29T09:00:00-07:00,81.72098181611125,0.4851590594309566,60.0

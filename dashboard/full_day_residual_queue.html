@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I-405 Full-Day Single-Link Queue Reconstruction</title>
+  <link rel="stylesheet" href="full_day_residual_queue.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-top"><b>FDQBench</b><span>PEMS FULL-DAY REFERENCE · I-405 SOUTH</span></div>
+    <div class="hero-copy compact">
+      <div>
+        <p class="eyebrow">PEMS COUNT-BASED REFERENCE · 5-MINUTE RESOLUTION</p>
+        <h1>I-405 Full-Day<br><em>Single-Link Queue Reconstruction</em></h1>
+        <p class="lede">One continuous day for L405S-041 → L405S-004. The queue is carried across the 10:00 AM→MD boundary.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="metrics" id="metrics"></section>
+
+    <section class="card chart-card">
+      <div class="section-head"><div><p>01 · OBSERVED SPEED</p><h2>Full-day speed profile and congestion episode</h2></div><span>mph · Los Angeles time</span></div>
+      <div id="speedChart" class="chart"></div>
+    </section>
+
+    <section class="card chart-card queue-card">
+      <div class="section-head"><div><p>02 · RESIDUAL QUEUE</p><h2>Count-based queue carried from AM into MD</h2></div><span>vehicles · 5-minute states</span></div>
+      <div id="queueChart" class="chart"></div>
+      <div class="callout"><b>10:00 boundary:</b> <span id="boundarySentence"></span></div>
+    </section>
+
+    <section class="method-line">
+      <b>Reference definition:</b>
+      <span>Q(t) is the drift-corrected cumulative difference between upstream + on-ramp arrivals and downstream discharge. Speed is used only to identify the congestion episode.</span>
+    </section>
+  </main>
+  <footer><span>PeMS ground-truth reference prototype</span><span>5-minute resolution · America/Los_Angeles</span></footer>
+  <div id="tooltip" class="tooltip"></div>
+  <script src="full_day_residual_data.js"></script>
+  <script src="full_day_residual_queue.js"></script>
+</body>
+</html>

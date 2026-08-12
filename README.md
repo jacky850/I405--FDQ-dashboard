@@ -1,296 +1,292 @@
-# I-405 FDQ Ground-Truth Dashboard
+# I-405 Full-Day Single-Link Queue Reconstruction
 
-This repository contains the reproducible Stage-1 single-link benchmark used to build the I-405 FDQ dashboard.
+This branch is a focused Stage-A prototype for recovering a **continuous
+full-day residual queue** on one freeway link. It uses PeMS because PeMS
+provides speed and flow at the same five-minute resolution: speed is used to
+identify the congestion episode, while observed upstream, ramp, and downstream
+flows provide an independent vehicle-count reference for validating the queue.
 
-Interactive dashboard: https://jacky850.github.io/I405--FDQ-dashboard/dashboard/qvdf_multiweek.html
+The main design requirement is that the 24-hour state is continuous. AM, MD,
+PM, NT1, and NT2 are labels for reporting only; they are not independent queue
+simulations, and the queue is never reset merely because a period boundary is
+crossed.
 
-## Current primary validation: leakage-safe speed-only QVDF inversion
+## Dashboard
 
-The current research question is whether an average-weekday speed profile can
-recover period volume when the target data source provides **speed but no
-flow**, as is expected for a future INRIX deployment. PeMS is used here because
-it provides both speed and flow: flow is available for calibration weeks, is
-completely hidden for the holdout week during inference, and is opened only
-afterward to score the inferred volume.
+- [Open the branch dashboard](https://raw.githack.com/jacky850/I405--FDQ-dashboard/agent/single-link-full-day-queue/dashboard/full_day_residual_queue.html)
+- [Dashboard source](dashboard/full_day_residual_queue.html)
 
-This is a conditional estimator. It returns a volume only when a canonical
-congestion episode is visible in speed and both independent support gates pass.
-It abstains rather than fabricate a point estimate for free-flow or
-out-of-calibration cases.
+The dashboard intentionally shows only the main evidence: the observed
+full-day speed profile and the count-based residual queue. The vertical 10:00
+line marks the AM-to-MD boundary. A nonzero queue at that line demonstrates
+that the state is carried into the next period.
 
-### Data source and declared scope
+## Current case
 
-The source is the public TrafficFlowBench/PeMS I-405 South detector-state file:
+| Item | Value |
+|---|---:|
+| Date | 2025-07-29 |
+| Time zone | America/Los_Angeles |
+| Resolution | 5 minutes, 288 bins |
+| Target/downstream link | L405S-004 |
+| Upstream link | L405S-041 |
+| Upstream mainline detector | 1201497 |
+| On-ramp detector | 1201517 |
+| Downstream detector | 1201525 |
+| Segment length | 1.480596 km |
 
-```text
-I405/S/train_detector_states.csv
-```
+This is one **observed Tuesday**, not an average-weekday profile. A real day was
+selected deliberately because the present task is to demonstrate whether a
+physical queue can survive a reporting-period boundary. Average-weekday and
+multi-day tests should be added after this single-day conservation test is
+stable.
 
-The required source fields are `timestamp`, `station_id`, `link_id`, `speed`,
-`flow`, `is_observed`, and `is_missing`. Only rows explicitly marked observed
-and not missing are used. Detector speed is converted from km/h to mph; flow is
-retained in veh/h. Multiple mapped stations on the same link and timestamp are
-averaged to form a link observation. The source builder wrote a literal `Z`
-without converting the clock to UTC, so these timestamps are deliberately
-interpreted as Los Angeles local wall-clock time.
-
-Seven I-405 South links are evaluated:
-
-```text
-L405S-012, L405S-018, L405S-028, L405S-030,
-L405S-058, L405S-098, L405S-115
-```
-
-The raw date window is 2025-06-02 through 2025-08-29. 13 complete
-Monday--Friday weeks are present. The week beginning 2025-06-30 is excluded by
-a predeclared calendar rule because it contains Independence Day. The twelve
-ordinary weeks used in leave-one-week-out validation begin on:
+The repository contains a minimal reproducible PeMS input containing only the
+three selected detectors for this date:
 
 ```text
-2025-06-02, 2025-06-09, 2025-06-16, 2025-06-23,
-2025-07-07, 2025-07-14, 2025-07-21, 2025-07-28,
-2025-08-04, 2025-08-11, 2025-08-18, 2025-08-25
+data/pems_single_link_2025-07-29_L405S-004.csv.gz
 ```
 
-For each link and week, Monday--Friday observations are averaged by the same
-5-minute LA-time bin, yielding one 288-bin average-weekday profile. AM is
-06:00--10:00 and PM is 15:00--19:00. One validation case is therefore one
-`link x period x holdout week` combination:
+Each detector has all 288 five-minute records. The input follows the original
+PeMS station five-minute layout and includes timestamp, detector metadata,
+five-minute flow, occupancy, speed, and percent observed. Flow is converted
+from vehicles per five-minute bin to veh/h inside the script; speed is already
+in mph.
 
-```text
-7 links x 2 periods x 12 holdout weeks = 168 cases
+## Computational pipeline
+
+```mermaid
+flowchart LR
+    S["Downstream speed"] --> E["Detect T0, T2, T3"]
+    U["Time-shifted upstream flow"] --> A["Observed arrival lambda(t)"]
+    R["On-ramp flow"] --> A
+    D["Downstream flow"] --> M["Observed discharge mu(t)"]
+    A --> C["Cumulative vehicle conservation"]
+    M --> C
+    C --> Q["Drift-corrected residual queue Q(t)"]
+    E --> Q
+    Q --> B["Carry Q across AM, MD, PM boundaries"]
 ```
 
-### Leave-one-week-out design
+### 1. Build a single 24-hour clock
 
-There is no permanently designated test week. Each of the 12 weeks takes
-one turn as the holdout week; the other 11 weeks are its training set. This
-prevents a favorable week from being selected manually and gives every week an
-out-of-sample prediction.
-
-```text
-11 training weekly profiles: speed + flow
-    -> calibrate C, k_d, f_d, and f_p
-    -> freeze C, k_d, f_d, f_p, n, and s
-
-1 holdout weekly profile: speed only
-    -> detect canonical episode and recover P, T2, v(T2), and v_c
-    -> infer D/C and period volume V_hat
-    -> apply speed-consistency gate
-    -> apply duration-extrapolation gate
-
-after inference is complete
-    -> reveal holdout PeMS flow
-    -> compare V_hat with observed period volume V_obs
-```
-
-Here `D` is the QVDF peak demand rate, `C` is capacity, and `P` is congestion
-duration in hours; `D` must not be confused with duration. $T_p=4\,\mathrm{h}$ for both
-declared periods. The exponents are frozen to the mentor-model values
-$n=1.10$ and $s=1.40$.
-
-For the 11 training weeks, the implementation estimates:
+All three detector series must contain the same 288 timestamps. The upstream
+mainline flow is shifted by the approximate free-flow travel time from the
+upstream detector to the downstream detector. The observed arrival and service
+rates are then
 
 $$
-\begin{aligned}
-C
-  &= \mathrm{median}_{w}\left(Q^{\mathrm{obs}}_{0.95,w}\right), \\
-k_d
-  &= \mathrm{median}_{w}\left(\frac{D_w}{V_w/T_p}\right), \\
-x_i
-  &= \frac{D_i}{C}, \\
-f_d
-  &= \mathrm{median}_{i\in\mathcal E_{\mathrm{train}}}
-     \left(\frac{P_i}{x_i^n}\right), \\
-z_i
-  &= \frac{v_{c,i}}{v_i(T_2)}-1, \\
-f_p
-  &= \mathrm{median}_{i\in\mathcal E_{\mathrm{train}}}
-     \left(\frac{z_i}{P_i^s}\right).
-\end{aligned}
-$$
-
-Here $w$ indexes all training weeks, while
-$\mathcal E_{\mathrm{train}}$ contains only training weeks with an identified
-canonical episode. $Q^{\mathrm{obs}}_{0.95,w}$ is the weekly 95th-percentile
-observed flow.
-
-The holdout flow is not used in these estimates. From the holdout speed-only
-episode, the duration branch computes:
-
-$$
-\begin{aligned}
-\widehat{x}
-  &= \left(\frac{P}{f_d}\right)^{1/n},
-  && \widehat{x}=\widehat{D/C}, \\
-\widehat D
-  &= C\widehat{x}, \\
-\widehat V
-  &= \frac{T_p\widehat D}{k_d}.
-\end{aligned}
-$$
-
-The held-out observed volume is calculated only for final scoring:
-
-For supported case $j$, and for the final supported set $\mathcal S$:
-
-$$
-\begin{aligned}
-\mathrm{APE}_j
-  &= \frac{\left|\widehat V_j-V^{\mathrm{obs}}_j\right|}
-          {V^{\mathrm{obs}}_j}\times100\%, \\
-\mathrm{MAPE}_{\mathcal S}
-  &= \frac{1}{|\mathcal S|}\sum_{j\in\mathcal S}\mathrm{APE}_j.
-\end{aligned}
-$$
-
-### Canonical speed episode
-
-Episode identification uses only speed, persistence, and recovery. `t0` and
-`t3` are the asymmetric episode boundaries, `T2` is the robust minimum-speed
-time, `P=t3-t0`, and `v_c` is the recovery cutoff used by the severity branch.
-
-![Representative weekly average-weekday speed episode](outputs/i405_multiweek_average_holdout/figures/representative_weekly_speed_episode.png)
-
-### Gate 1: speed consistency
-
-The frozen severity branch predicts the minimum speed:
-
-$$
-\begin{aligned}
-\widehat z
-  &= f_pP^s, \\
-\widehat v(T_2)
-  &= \frac{v_c}{1+\widehat z}, \\
-z^{\mathrm{obs}}
-  &= \frac{v_c}{v^{\mathrm{obs}}(T_2)}-1.
-\end{aligned}
-$$
-
-The case passes only when both conditions hold:
-
-$$
-0.50\leq\frac{z^{\mathrm{obs}}}{\widehat z}\leq2.00,
+\lambda_{\mathrm{obs}}(t)
+=q_{\mathrm{upstream}}(t-\tau)+q_{\mathrm{ramp}}(t),
 \qquad
-\left|\widehat v(T_2)-v^{\mathrm{obs}}(T_2)\right|
-\leq10\ \mathrm{mph}.
+\mu_{\mathrm{obs}}(t)=q_{\mathrm{downstream}}(t).
 $$
 
-This gate asks whether the calibrated QVDF severity branch can explain the
-holdout week's observed speed minimum. It does not inspect holdout flow.
+For this test, the ramp has observed flow, so no ramp imputation is used.
 
-### Gate 2: duration extrapolation
+### 2. Identify the congestion episode from speed
 
-A case may reproduce `v(T2)` while the duration branch extrapolates far beyond
-the demand/capacity ratios observed during calibration. The second gate checks:
+The downstream speed is smoothed with a centered three-bin median. The
+free-flow reference is the 95th percentile of the full-day smoothed speed.
+Congestion begins when speed falls below 70% of that reference and ends after
+two consecutive bins at or above 75%. Episodes shorter than 20 minutes are
+discarded.
+
+For the selected day:
+
+| Parameter | Result |
+|---|---:|
+| Free-flow speed | 70.465 mph |
+| Entry threshold | 49.326 mph |
+| Exit threshold | 52.849 mph |
+| T0 | 07:25 LA time |
+| T2, minimum-speed time | 09:55 LA time |
+| T3 | 10:25 LA time |
+| Congestion duration | 185 minutes |
+| Minimum speed | 10.7 mph |
+
+The episode is asymmetric: T2 is the observed minimum-speed bin and T0/T3 are
+detected independently. No artificial symmetry around T2 is imposed.
+
+### 3. Recover the count-based reference queue
+
+Vehicle conservation is integrated across the entire day with
+$\Delta t=5/60$ hours:
 
 $$
-\begin{aligned}
-r_{\mathrm{ext}}
-  &= \frac{\widehat x_{\mathrm{holdout}}}
-           {\max_{i\in\mathcal E_{\mathrm{train}}}x_i}
-  \leq 1.25.
-\end{aligned}
+C_{k+1}=C_k+
+\left[\lambda_{\mathrm{obs}}(k)-\mu_{\mathrm{obs}}(k)\right]\Delta t.
 $$
 
-Thus the inferred holdout `D/C` may be at most 25% above the largest `D/C`
-observed in that case's 11-week training set. This gate also uses no
-holdout flow. It rejects the three L405S-018 cases whose extrapolation ratios
-are 2.09, 1.47, and 1.27. The 1.25 threshold is a transparent candidate chosen
-after diagnosing this I-405 sample; it must be frozen and tested on independent
-I-10 or INRIX-compatible data before being claimed as externally validated.
+Upstream and downstream detectors can have a small persistent count mismatch.
+If this detector drift is accumulated for many hours it can look like a large
+queue even during free flow. To avoid that artifact, the implementation uses
+one-hour free-flow windows before and after the detected episode, estimates a
+linear baseline $B_k$ between their median cumulative-count levels, and defines
 
-### Validation result
+$$
+Q_k^{\mathrm{count}}=\max\left(0,\ C_k-B_k\right).
+$$
+
+This correction removes only the measured linear detector drift. It does not
+fit the shape or peak of the queue. Speed determines when an episode is active,
+but AM/MD/PM boundaries do not reset $Q_k$.
+
+### 4. Carry the residual queue across periods
+
+The queue recurrence is one continuous state equation:
+
+$$
+Q_{k+1}=max\left{0,
+Q_k+\left[\lambda_k-y_k\right]\Delta t\right},
+$$
+
+where the realized outflow is bounded by available vehicles and service rate:
+
+$$
+y_k=\min\left\{\mu_k,
+\lambda_k+\frac{Q_k}{\Delta t}\right\}.
+$$
+
+At 10:00, the reporting label changes from AM to MD, but the count-based queue
+is still **255.44 vehicles**. The queue reaches **354.14 vehicles** at 09:00 and
+is cleared only after the speed-recovery gate, not at the period boundary.
+
+## How this result is validated with PeMS
+
+PeMS makes this case especially useful because the model does not need to
+pretend that speed alone is ground truth. It provides three complementary
+checks.
+
+### A. Detector coverage and topology check
+
+The median percent-observed value is 100% for the upstream, ramp, and downstream
+detectors. The arrival boundary contains the upstream mainline plus the on-ramp;
+the discharge boundary is the downstream mainline detector. Omitting the ramp
+would violate conservation for this segment.
+
+### B. Independent cumulative-count queue
+
+The primary queue is calculated directly from observed arrival and discharge
+counts. It is therefore the PeMS reference against which a speed-implied queue
+can be judged. Its maximum is 354.14 vehicles and its value at the AM-to-MD
+boundary is 255.44 vehicles.
+
+### C. Speed-implied diagnostic comparison
+
+The CSV also retains an experimental speed-delay queue:
+
+$$
+Q_k^{\mathrm{speed}}
+=\mu_k\max\left(0,
+\frac{L}{v_k}-\frac{L}{v_k^{\mathrm{baseline}}}
+\right).
+$$
+
+This branch produces a maximum of 404.54 vehicles. During the episode its MAE
+against the count-based queue is 81.72 vehicles, correlation is 0.485, and the
+two peak times differ by 60 minutes. These values show that speed captures the
+broad buildup and dissipation pattern but does **not** yet recover the physical
+queue accurately enough to replace observed counts.
+
+The very small forward-closure error and the 0.176 mph congested reconstructed-
+speed MAE are algebraic consistency checks: the same speed-delay relationship
+is inverted and then run forward. They confirm that the recurrence is coded
+consistently, but they are not independent evidence that the inferred queue is
+correct. The independent evidence is the count-based comparison above.
+
+## Why the speed-implied branch is difficult
+
+Several limitations matter before this method can be transferred to speed-only
+data:
+
+1. **Flow is not uniquely identifiable from free-flow speed.** Many demand
+   levels can produce nearly the same high speed, so a free-flow link needs a
+   prior, assignment volume, or an abstention rule.
+2. **Delay is not identical to the number of queued vehicles.** The simple
+   $\mu\Delta TT$ expression compresses spatial queue propagation and detector
+   location effects into one point-queue approximation.
+3. **Detector drift accumulates.** A small persistent difference between
+   upstream and downstream counts can create a false queue unless conservation
+   is corrected using free-flow baselines.
+4. **Boundary topology matters.** On-ramps, off-ramps, HOV/HOT lanes, and
+   unmatched detector coverage must be included or explicitly modeled.
+5. **Travel-time alignment matters.** Upstream flow must be shifted before it
+   is compared with downstream discharge.
+6. **Inverse/forward reconstruction can be circular.** Reconstructing speed
+   with parameters derived from that same speed is a closure check, not a true
+   holdout validation.
+
+## Expected adaptation for NVTA / INRIX
+
+NVTA/INRIX is expected to provide time-dependent speed but not the same
+upstream, ramp, and downstream flow measurements. Therefore the count-based
+PeMS reference cannot be used directly in deployment. The recommended transfer
+path is:
+
+1. Expand this PeMS experiment across many links, days, link types, and queue
+   shapes.
+2. Calibrate a speed-to-queue/service model against the PeMS count-based
+   reference, using leakage-safe holdout links or dates.
+3. Freeze the calibrated parameters and episode rules before applying them to
+   INRIX speed.
+4. Supply $\mu(t)$ from calibrated capacity/QVDF parameters or trusted network
+   attributes; infer a smooth $\lambda(t)$ under the full-day conservation
+   constraints.
+5. Add a separate free-flow branch using a historical time-of-day or Cube/QVDF
+   volume prior. If no defensible prior exists, return an interval or abstain
+   rather than claim a unique flow.
+6. Audit link matching before inference, especially general-purpose versus
+   HOV/HOT/APV links, ramps, direction, and link length.
+7. Validate corridor-level propagation only after the single-link PeMS holdout
+   tests are stable.
+
+In short, PeMS supplies the ground truth needed to learn and test the mapping;
+INRIX deployment will use the frozen mapping plus network priors, not hidden
+INRIX flow.
+
+## Reproduce the result
+
+From the repository root, run:
+
+```powershell
+python scripts/run_pems_full_day_single_link.py `
+  --raw-file data/pems_single_link_2025-07-29_L405S-004.csv.gz `
+  --output-dir outputs/pems_full_day_residual_queue_2025-07-29_L405S-004
+
+python scripts/build_full_day_residual_dashboard_data.py `
+  --input-dir outputs/pems_full_day_residual_queue_2025-07-29_L405S-004 `
+  --output dashboard/full_day_residual_data.js
+
+python -m http.server 8772
+```
+
+Then open:
 
 ```text
-168 total cases
-|-- 137: no canonical congestion episode in speed
-`--  31: canonical episode identified
-     |-- 7: failed the speed-consistency gate
-     |-- 3: failed the duration-extrapolation gate
-     `-- 21: passed both gates and received a volume estimate
+http://127.0.0.1:8772/dashboard/full_day_residual_queue.html
 ```
 
-Final identified coverage is `21/168 = 12.50%`. Across those 21 supported
-cases, volume MAPE is `16.51%` and median APE is `14.71%`. MAPE is conditional
-on support: it does not imply that the method estimates volume for all 168
-cases. Coverage and conditional error must always be reported together.
+Required Python packages are `numpy` and `pandas`. The dashboard itself is
+static HTML/CSS/JavaScript and uses ECharts from a public CDN.
 
-| Link-period | Supported cases | Coverage | Supported-case MAPE |
-|---|---:|---:|---:|
-| L405S-012 AM | 7/12 | 58.3% | 15.09% |
-| L405S-018 AM | 1/12 | 8.3% | 37.71% |
-| L405S-018 PM | 3/12 | 25.0% | 26.89% |
-| L405S-115 AM | 10/12 | 83.3% | 12.28% |
-| Other ten link-period groups | 0/120 | 0.0% | not identified |
+## Files to continue from
 
-#### Accuracy of every supported case
+| File | Purpose |
+|---|---|
+| `scripts/run_pems_full_day_single_link.py` | Main 24-hour episode, conservation, queue, and validation pipeline |
+| `data/pems_single_link_2025-07-29_L405S-004.csv.gz` | Minimal reproducible three-detector PeMS input |
+| `outputs/pems_full_day_residual_queue_2025-07-29_L405S-004/full_day_timeseries_5min.csv` | Complete 288-bin output with speed, flow, lambda, mu, queue, and diagnostics |
+| `outputs/pems_full_day_residual_queue_2025-07-29_L405S-004/congestion_episodes.csv` | T0, T2, T3, duration, queue peaks, and comparison metrics |
+| `outputs/pems_full_day_residual_queue_2025-07-29_L405S-004/summary.json` | Machine-readable case summary and boundary states |
+| `scripts/build_full_day_residual_dashboard_data.py` | Converts the CSV/JSON outputs into static dashboard data |
+| `dashboard/full_day_residual_queue.html` | Dashboard entry point |
 
-`Observed V` and `Inferred V` are average-weekday period totals in vehicles.
+## Scope and next step
 
-| Link | Period | Holdout week | Observed V | Inferred V | APE |
-|---|---|---|---:|---:|---:|
-| L405S-012 | AM | 2025-06-02 | 26,943 | 33,958 | 26.03% |
-| L405S-012 | AM | 2025-06-09 | 27,383 | 22,833 | 16.62% |
-| L405S-012 | AM | 2025-06-23 | 23,950 | 26,420 | 10.31% |
-| L405S-012 | AM | 2025-07-14 | 25,815 | 22,018 | 14.71% |
-| L405S-012 | AM | 2025-07-21 | 26,074 | 23,932 | 8.22% |
-| L405S-012 | AM | 2025-08-18 | 23,160 | 28,069 | 21.19% |
-| L405S-012 | AM | 2025-08-25 | 24,389 | 26,473 | 8.55% |
-| L405S-018 | AM | 2025-08-11 | 46,701 | 29,088 | 37.71% |
-| L405S-018 | PM | 2025-07-21 | 35,430 | 28,063 | 20.79% |
-| L405S-018 | PM | 2025-08-11 | 37,121 | 45,652 | 22.98% |
-| L405S-018 | PM | 2025-08-18 | 35,147 | 22,183 | 36.88% |
-| L405S-115 | AM | 2025-06-02 | 22,934 | 23,320 | 1.68% |
-| L405S-115 | AM | 2025-06-09 | 25,133 | 18,176 | 27.68% |
-| L405S-115 | AM | 2025-06-23 | 25,049 | 22,355 | 10.76% |
-| L405S-115 | AM | 2025-07-07 | 23,506 | 26,141 | 11.21% |
-| L405S-115 | AM | 2025-07-14 | 23,834 | 25,398 | 6.56% |
-| L405S-115 | AM | 2025-07-21 | 23,506 | 27,205 | 15.73% |
-| L405S-115 | AM | 2025-07-28 | 24,712 | 21,233 | 14.08% |
-| L405S-115 | AM | 2025-08-04 | 23,879 | 23,990 | 0.46% |
-| L405S-115 | AM | 2025-08-11 | 24,696 | 19,255 | 22.03% |
-| L405S-115 | AM | 2025-08-25 | 22,415 | 25,239 | 12.60% |
-
-### Interpretation and current limitation
-
-The validation protocol is leakage-safe and its abstention logic is explicit,
-but the estimator is not yet a general I-405 solution. In free flow, many
-different sub-capacity volumes can produce nearly the same speed. Therefore a
-week with no canonical speed episode does not contain enough information for a
-unique speed-only point estimate under the current duration inverse. Such a
-case is labelled `not_identified_no_speed_episode`; it is not counted as a
-zero-error prediction and no volume is fabricated.
-
-The next research task is a separately validated free-flow branch, likely
-using an interval estimate or a declared prior such as historical time-of-day,
-Cube, or third-party volume. It must remain distinguishable from the pure
-speed-only congested-episode result reported here.
-
-### Reproduce and inspect
-
-From the repository root:
-
-```bash
-python scripts/run_i405_multiweek_average_holdout.py
-```
-
-Principal outputs are:
-
-```text
-outputs/i405_multiweek_average_holdout/
-|-- weekly_average_weekday_profiles_5min.csv
-|-- weekly_data_completeness.csv
-|-- weekly_canonical_states_and_ground_truth.csv
-|-- leave_one_week_out_qvdf_results.csv
-|-- leave_one_week_out_metrics.csv
-|-- supported_case_accuracy.csv
-|-- multiweek_holdout_summary.json
-`-- figures/
-    |-- representative_weekly_speed_episode.png
-    |-- multiweek_holdout_volume_scatter.png
-    `-- multiweek_coverage_matrix.png
-```
-
-The complete method note is in
-[`docs/MULTIWEEK_AVERAGE_HOLDOUT_V1.md`](docs/MULTIWEEK_AVERAGE_HOLDOUT_V1.md).
+This branch proves the full-day state logic for **one PeMS link and one day**.
+It does not yet claim an all-link or NVTA-ready speed-only estimator. The next
+scientific step is to repeat the independent count-based validation on multiple
+PeMS links/days, estimate how error changes with topology and episode shape,
+and then design the calibrated speed-only NVTA branch.

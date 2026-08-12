@@ -1,0 +1,61 @@
+{
+  "date": "2025-07-29",
+  "timezone": "America/Los_Angeles",
+  "resolution_minutes": 5,
+  "bins": 288,
+  "upstream_link": "L405S-041",
+  "downstream_link": "L405S-004",
+  "upstream_detector": 1201497,
+  "ramp_detector": 1201517,
+  "downstream_detector": 1201525,
+  "segment_length_km": 1.480596,
+  "free_speed_mph": 70.465,
+  "entry_threshold_mph": 49.3255,
+  "exit_threshold_mph": 52.84875,
+  "episode_count": 1,
+  "speed_delay_diagnostic_queue_max_veh": 404.5398752285632,
+  "speed_delay_diagnostic_queue_max_time_la": "2025-07-29T10:00:00-07:00",
+  "inferred_arrival_volume_veh": 140663.5,
+  "observed_arrival_volume_veh": 135731.64631222855,
+  "arrival_mae_vph": 578.2113903803562,
+  "arrival_rmse_vph": 816.5575857965819,
+  "arrival_mape_pct": 11.951636885645815,
+  "all_day_speed_mae_mph": 1.2317756831812796,
+  "congested_speed_mae_mph": 0.17612479674909257,
+  "queue_forward_closure_max_abs_veh": 1.4210854715202004e-13,
+  "end_of_day_queue_veh": 0.0,
+  "speed_delay_diagnostic_queue_at_period_boundaries_veh": {
+    "06:00": 0.0,
+    "10:00": 404.53987522856306,
+    "15:00": 0.0,
+    "19:00": 0.0
+  },
+  "count_reference_maximum_queue_veh": 354.1361212219778,
+  "count_reference_maximum_queue_time_la": "2025-07-29T09:00:00-07:00",
+  "count_reference_queue_at_period_boundaries_veh": {
+    "06:00": 0.0,
+    "10:00": 255.44239374945215,
+    "15:00": 0.0,
+    "19:00": 0.0
+  },
+  "independent_count_queue_validation": {
+    "1": {
+      "raw_pre_baseline_veh": -655.9934774857188,
+      "free_flow_pre_level_veh": -655.9934774857188,
+      "free_flow_post_level_veh": -592.9439076571467,
+      "detector_drift_over_validation_window_veh": 63.04956982857209,
+      "count_queue_max_veh": 354.1361212219778,
+      "count_queue_peak_index": "2025-07-29T09:00:00-07:00",
+      "count_queue_at_t3_veh": 106.21587156923113,
+      "speed_queue_vs_count_queue_mae_veh": 81.72098181611125,
+      "speed_queue_vs_count_queue_correlation": 0.4851590594309566,
+      "queue_peak_time_gap_min": 60.0
+    }
+  },
+  "coverage_pct_median": {
+    "upstream": 100.0,
+    "ramp": 100.0,
+    "downstream": 100.0
+  },
+  "method_note": "The primary PeMS reference uses upstream-plus-ramp counts for lambda(t), downstream counts for discharge, and their drift-corrected cumulative difference for Q(t). Speed detects episode recovery but never resets Q at an AM/MD/PM boundary. The older speed-delay Q and its algebraic lambda remain in the CSV only as explicitly named diagnostics."
+}
