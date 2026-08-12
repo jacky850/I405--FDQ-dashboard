@@ -1,0 +1,46 @@
+{
+  "tmc": "110-04178",
+  "net_link_id": 31800,
+  "corridor": "I-66 EB",
+  "direction": "EASTBOUND",
+  "facility": "GP",
+  "county": "FAIRFAX",
+  "length_mi": 1.044581,
+  "lanes": 4,
+  "free_speed_mph": {
+    "observed_p95": 66.59649999999999,
+    "inrix_reference": 62.0,
+    "network_attribute": 68.99982850155094,
+    "qvdf_calibration_constant": 70.0
+  },
+  "capacity_vphpl": {
+    "network_attribute": 2000.0,
+    "qvdf_calibration_constant": 2200.0
+  },
+  "qvdf_cutoff_mph": 49.0,
+  "qvdf_periods": {
+    "AM": {
+      "P": 5.339053786529759,
+      "demand": 10170.173719506349,
+      "DC": 4.622806236139249,
+      "v_t2": 21.92,
+      "t2": 7.75,
+      "t0": 6.311679058240396,
+      "t3": 11.650732844770154,
+      "qdf": 0.2979054944600605,
+      "m": 0.2693962262355243
+    },
+    "PM": {
+      "P": 5.666343561891466,
+      "demand": 11268.789963547862,
+      "DC": 5.122177256158119,
+      "v_t2": 29.176666666666662,
+      "t2": 14.75,
+      "t0": 13.331209031318282,
+      "t3": 18.99755259320975,
+      "qdf": 0.3300862442121825,
+      "m": 0.2503891536375734
+    }
+  },
+  "qvdf_provenance": "observed_t2_dataset week average (date='SelectedWeekAverage', 2025-10-06..10); capacity and free speed are hardcoded constants (1800/2200 vphpl by HOV flag) and demand is S3-inverted from speed, not observed"
+}

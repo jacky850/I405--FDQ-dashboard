@@ -11,10 +11,13 @@ PM, NT1, and NT2 are labels for reporting only; they are not independent queue
 simulations, and the queue is never reset merely because a period boundary is
 crossed.
 
-## Dashboard
+## Dashboards
 
-- [Open the public GitHub Pages dashboard](https://jacky850.github.io/I405--FDQ-dashboard/dashboard/full_day_residual_queue.html)
-- [Dashboard source](dashboard/full_day_residual_queue.html)
+- [PeMS queue continuity (public)](https://jacky850.github.io/I405--FDQ-dashboard/dashboard/full_day_residual_queue.html) · [source](dashboard/full_day_residual_queue.html)
+- [NVTA speed-only queue continuity (public)](https://jacky850.github.io/I405--FDQ-dashboard/dashboard/nvta_full_day_queue.html) · [source](dashboard/nvta_full_day_queue.html)
+
+The NVTA dashboard is the transfer case: one INRIX link, one full day, and no
+flow measurement anywhere. See [NVTA speed-only case](#nvta-speed-only-case).
 
 The dashboard is published through the repository's official GitHub Pages site
 instead of a third-party raw-file preview. Local preview instructions are also
@@ -328,3 +331,80 @@ an NVTA-ready speed-only estimator. The next scientific step is to repeat the
 conservation-based estimate on multiple PeMS links/days, apply the three queue
 validation approaches above, estimate how error changes with topology and
 episode shape, and then design the calibrated speed-only NVTA branch.
+
+## NVTA speed-only case
+
+The PeMS case counts the queue at both boundaries. NVTA/INRIX has **no flow
+measurement anywhere**, so the arrival and discharge boundaries are both
+inferred and the PeMS pipeline does not transfer directly. The NVTA case is
+therefore built and reported differently.
+
+| Item | Value |
+|---|---|
+| Link | TMC `110-04178`, network link `31800`, I-66 EB, Fairfax County |
+| Geometry | 1.045 mi, 4 lanes |
+| Day | 2025-10-08, 288 five-minute bins, zero missing |
+| Clock | continuous minutes 360–1800 (06:00 to 06:00 next morning), no midnight reset |
+| Periods | AM 360–540, MD 540–900, PM 900–1140, NT 1140–1800 |
+
+Two arrival branches are carried side by side:
+
+- **Branch B** parameterises `lambda(t)` as a cubic B-spline in time of day and
+  produces `Q(t)` **only** from the recurrence, so the state always carries
+  `Q(t-1)`. The speed-implied queue is the fitting target rather than the queue
+  itself, which turns the residual into a real measure of how much of the
+  observed speed a physically smooth arrival process explains.
+- **Branch A** takes `lambda(t)` from the week-average QVDF calibration and
+  never looks at the day's speed. Because that demand is an S3 inversion of
+  speed it returns served flow and is capped at capacity by construction, so
+  Branch A is run as a capacity sweep and reported as a falsification test.
+
+### Result
+
+```text
+Peak queue            272 veh   [251-343 over 36 assumption combinations]
+Peak time             08:05     [07:50-08:05]
+Q at 09:00 AM->MD     198 veh   [181-250]
+Q at 15:00 MD->PM     197 veh   [166-225]
+Q at 19:00 PM->NT       0 veh
+Model residual RMSE  22.4 veh   vs the speed-implied queue
+Gates                 4 pass, 1 fail, 2 not testable
+```
+
+The PM episode begins at 14:20, inside MD, so a period-by-period run would
+start PM from zero and lose that queue entirely.
+
+`G7 cross-method agreement` fails: over the capacity sweep the Branch A peak
+spans 0 to 35,548 vehicles against a link storage of 836, and only one assumed
+capacity is physically admissible. `G4 occupancy` and `G5 boundary flow
+quality` are **not testable** on NVTA — there is no occupancy series and no
+flow measurement at any boundary.
+
+This is not an accuracy validation. Both boundaries are inferred, so the
+reported range reflects assumption spread, not measurement error.
+
+### Reproduce
+
+```bash
+python scripts/prepare_nvta_full_day_link.py --speed-file <i66eb_raw_5min.csv> --mapping-file <corridor_tmc_mapping.csv> --qvdf-file <observed_t2_dataset_week_2025-10-06_to_10.csv> --data-dir data/nvta_i66eb_31800_2025-10-08 --output-dir outputs/nvta_full_day_single_link_2025-10-08_31800
+```
+
+```bash
+python scripts/run_nvta_full_day_queue.py --data-dir data/nvta_i66eb_31800_2025-10-08 --output-dir outputs/nvta_full_day_single_link_2025-10-08_31800 --mu-config configs/nvta_mu_prior.json
+```
+
+```bash
+python scripts/run_nvta_full_day_gates.py --data-dir data/nvta_i66eb_31800_2025-10-08 --output-dir outputs/nvta_full_day_single_link_2025-10-08_31800 --mu-config configs/nvta_mu_prior.json
+```
+
+```bash
+python scripts/build_nvta_full_day_dashboard_data.py --input-dir outputs/nvta_full_day_single_link_2025-10-08_31800 --data-dir data/nvta_i66eb_31800_2025-10-08 --output dashboard/nvta_full_day_data.js
+```
+
+`configs/nvta_mu_prior.json` is the replaceable service-rate input. NVTA has no
+observed discharge, so the capacity is an HCM assumption carrying its own
+provenance; swapping in a corrected calibration needs no code change. The PeMS
+per-lane values are recorded there but deliberately **not** used as input,
+because 14 of 35 PeMS link-periods fail a per-lane plausibility gate.
+
+Branch B requires `scipy` in addition to `numpy` and `pandas`.

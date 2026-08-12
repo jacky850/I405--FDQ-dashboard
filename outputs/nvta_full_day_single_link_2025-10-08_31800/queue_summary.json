@@ -1,0 +1,73 @@
+{
+  "case_id": "nvta_31800_2025-10-08",
+  "tmc": "110-04178",
+  "net_link_id": 31800,
+  "lanes": 4,
+  "length_mi": 1.044581,
+  "clock": "continuous minutes 360-1800, no midnight reset, 288 bins",
+  "free_speed_used_mph": 66.59649999999999,
+  "free_speed_source": "observed_p95",
+  "arrival_model": {
+    "form": "cubic B-spline in time of day",
+    "knot_spacing_min": 60.0,
+    "basis_functions": 27,
+    "bins": 288,
+    "note": "lambda is carried by a smooth spline and the queue is produced only by the recurrence, so Q(t) always uses Q(t-1). The speed-implied queue is the fitting target, which makes the residual below a real measure of model adequacy rather than a tautology."
+  },
+  "service_rate": {
+    "capacity_vphpl": 1900.0,
+    "capacity_drop_fraction": 0.1,
+    "mu_free_vph": 7600.0,
+    "mu_queued_vph": 6840.0,
+    "provenance": "HCM freeway basic segment, assumption",
+    "replaceable_input": "configs\\nvta_mu_prior.json"
+  },
+  "branch_b_speed_inversion": {
+    "qmax_veh": 272.1306745974074,
+    "peak_clock_min": 485.0,
+    "queue_at_period_boundaries_veh": {
+      "AM->MD 09:00": 197.87708582663424,
+      "MD->PM 15:00": 196.96152142056778,
+      "PM->NT 19:00": 0.0
+    },
+    "end_of_day_queue_veh": 2.5865336207668104e-05,
+    "measurement_residual_veh": {
+      "rmse": 22.37097827596941,
+      "mae": 11.349864097379854,
+      "max_abs": 91.27492261210737
+    },
+    "largest_single_bin_change_veh": 47.16016943882884,
+    "measurement_largest_single_bin_change_veh": 164.86634404794225,
+    "lambda_identifiable_bins": 117,
+    "lambda_not_identifiable_bins": 171
+  },
+  "branch_a_qvdf_prior": {
+    "lambda_mean_in_episode_vphpl": 1949.6434912711995,
+    "lambda_off_episode_vphpl": 1128.2745217692975,
+    "whole_day_volume_vehpl": 34138.926299225546,
+    "episode_volume_vehpl": 21438.96368305421,
+    "qmax_veh_at_default_capacity": 5494.39678495043,
+    "qmax_range_over_sweep_veh": [
+      0.0,
+      35547.63958635882
+    ],
+    "admissible_capacity_window_vphpl": [
+      2200.0,
+      2200.0
+    ],
+    "physically_plausible_capacity_vphpl": [
+      1900.0,
+      2400.0
+    ],
+    "admissible_window_overlaps_plausible": true,
+    "peak_time_gap_vs_branch_b_min": 650.0,
+    "interpretation": "The admissible window is the set of assumed capacities at which the QVDF prior yields a queue that exists, fits inside the link, and clears by the end of the day. A window that is empty, or that misses the physically plausible capacity range, falsifies the parameter chain for this link. A window that is narrow relative to the sweep shows the result is governed by the capacity assumption rather than by the data."
+  },
+  "spatial_storage": {
+    "storage_veh": 835.6648,
+    "jam_density_vehpmipl": 200.0,
+    "branch_b_exceeds_storage": false,
+    "branch_a_exceeds_storage": true
+  },
+  "scope": "NVTA has no observed flow. Both lambda and mu are inferred, so neither branch is an accuracy validation. Branch B is an internal consistency check; Branch A is a falsification test of the existing QVDF parameters."
+}
