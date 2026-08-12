@@ -57,29 +57,75 @@
     const inside=d.inside_model_window, outside=d.outside_model_window, check=d.outside_window_reality_check;
     $('projectionSplit').innerHTML=`
       <h3>Where the period error actually comes from</h3>
-      <div class="split-bar"><span class="split-in" style="width:${inside.sse_share_pct.toFixed(1)}%">${inside.sse_share_pct.toFixed(0)}%</span><span class="split-out" style="width:${outside.sse_share_pct.toFixed(1)}%">${outside.sse_share_pct.toFixed(0)}%</span></div>
-      <div class="split-legend"><span><i class="in"></i>inside the modelled episode · ${inside.bin_share_pct.toFixed(0)}% of bins · MAE ${inside.mae_mph.toFixed(2)} mph · bias ${inside.bias_mph.toFixed(2)}</span><span><i class="out"></i>outside, where the model asserts free flow · ${outside.bin_share_pct.toFixed(0)}% of bins · MAE ${outside.mae_mph.toFixed(2)} mph · bias +${outside.bias_mph.toFixed(2)}</span></div>
+      <div class="split-bar" style="display:flex;height:30px;border-radius:7px;overflow:hidden;color:#fff;font-size:11px;font-weight:700"><span class="split-in" style="width:${inside.sse_share_pct.toFixed(1)}%;background:#3f7ea8;display:flex;align-items:center;justify-content:center">${inside.sse_share_pct.toFixed(0)}%</span><span class="split-out" style="width:${outside.sse_share_pct.toFixed(1)}%;background:#ee783f;display:flex;align-items:center;justify-content:center">${outside.sse_share_pct.toFixed(0)}%</span></div>
+      <div class="split-legend"><span><i class="in" style="background:#3f7ea8"></i>inside the modelled episode · ${inside.bin_share_pct.toFixed(0)}% of bins · MAE ${inside.mae_mph.toFixed(2)} mph · bias ${inside.bias_mph.toFixed(2)}</span><span><i class="out" style="background:#ee783f"></i>outside, where the model asserts free flow · ${outside.bin_share_pct.toFixed(0)}% of bins · MAE ${outside.mae_mph.toFixed(2)} mph · bias +${outside.bias_mph.toFixed(2)}</span></div>
       <p>Inside its own window the model is essentially unbiased. Outside it, the error is one-sided and large: ${check.bins_below_90pct_free_speed_pct.toFixed(0)}% of those bins are still below 90% of free speed and ${check.bins_below_cutoff_speed_pct.toFixed(0)}% are below the cutoff speed v₍c₎ the model itself uses to define congestion. Across the period, ${d.period_congestion_coverage.period_bins_below_cutoff_speed_pct.toFixed(0)}% of bins are congested by that definition while the modelled episode covers ${d.period_congestion_coverage.model_window_share_of_period_pct.toFixed(0)}%. The boxcar edge, not the depth of the dip, is what limits the speed projection.</p>`;
   })();
 
+  // Two lines and the gap between them: observed speed, reconstructed speed,
+  // and the error shaded in. Every colour is an inline SVG attribute rather
+  // than a CSS class, so the chart still reads correctly if the stylesheet is
+  // stale or missing (an unstyled <path> defaults to a solid black fill).
   function renderProjection(){
     const el=$('projectionChart'),d=state.case;
     const curve=data.projectionCurves[`${d.link_id}|${d.period}|${d.week_start}`];
     if(!curve){el.innerHTML='<div class="empty">No holdout episode: the speed map is never entered for this case.</div>';return}
     const [lo_m,hi_m]=PERIOD_WINDOW[d.period];
     const obs=data.profiles[`${d.link_id}|${d.week_start}`].filter(p=>p[0]>=lo_m&&p[0]<hi_m).map(p=>[p[0],p[1]]);
-    const fwd=curve.map(c=>[c[0],c[1]]), shp=curve.map(c=>[c[0],c[2]]);
-    const vf=d.free_speed_p95_mph;
-    const {w,h,m}=dims(el,{l:50,r:20,t:22,b:44});
-    const all=[...obs.map(p=>p[1]),...fwd.map(p=>p[1]),vf];
-    const lo=Math.floor(Math.min(...all)-3),hi=Math.ceil(Math.max(...all)+3);
+    const fwd=curve.map(c=>[c[0],c[1]]);
+    const {w,h,m}=dims(el,{l:52,r:104,t:26,b:46});
+    const all=[...obs.map(p=>p[1]),...fwd.map(p=>p[1])];
+    const lo=Math.floor(Math.min(...all)-4),hi=Math.ceil(Math.max(...all)+4);
     const x=scale(lo_m,hi_m,m.l,w-m.r),y=scale(lo,hi,h-m.b,m.t);
+
+    // Error ribbon, split where the model is too fast vs too slow. The
+    // observed grid and the model grid share timestamps, so they pair directly.
+    const paired=fwd.map((f,i)=>[f[0],f[1],obs[i]?obs[i][1]:null]).filter(p=>p[2]!==null);
+    const ribbons=[];
+    let run=[];
+    const flush=()=>{
+      if(run.length<2){run=[];return}
+      const top=run.map(p=>[p[0],p[1]]),bottom=[...run].reverse().map(p=>[p[0],p[2]]);
+      const tooFast=run[0][1]>run[0][2];
+      ribbons.push(`<path d="${linePath(top,x,y)} ${linePath(bottom,x,y).replace('M','L')} Z" fill="${tooFast?'#ee783f':'#256fd2'}" fill-opacity=".17" stroke="none"/>`);
+      run=[];
+    };
+    paired.forEach((p,i)=>{
+      if(i&&Math.sign(p[1]-p[2])!==Math.sign(paired[i-1][1]-paired[i-1][2])){const last=run[run.length-1];flush();run.push(last)}
+      run.push(p);
+    });
+    flush();
+
+    // The modelled episode marked on the axis, not as a fill over the plot.
     const win=curve.filter(c=>c[3]===1).map(c=>c[0]);
-    const band=win.length?`<rect class="model-window" x="${x(win[0])}" y="${m.t}" width="${Math.max(1,x(win[win.length-1])-x(win[0]))}" height="${h-m.t-m.b}"/>`:'';
     const t0=minuteFromIso(d.t0_la),t3=minuteFromIso(d.t3_la);
-    const observedSpan=`<line class="episode-span" x1="${x(Math.max(t0,lo_m))}" x2="${x(Math.min(t3,hi_m))}" y1="${h-m.b-4}" y2="${h-m.b-4}"/>`;
+    const baseY=h-m.b;
+    const spanBar=(from,to,offset,colour,label)=>{
+      const x1=x(Math.max(from,lo_m)),x2=x(Math.min(to,hi_m));
+      return `<line x1="${x1}" x2="${x2}" y1="${baseY+offset}" y2="${baseY+offset}" stroke="${colour}" stroke-width="5" stroke-linecap="round"/><text x="${x2+7}" y="${baseY+offset+3.5}" fill="${colour}" font="600 9px 'DM Sans'" font-size="9" font-weight="600">${label}</text>`;
+    };
+    const spans=(win.length?spanBar(win[0],win[win.length-1],11,'#ee783f','modelled episode'):'')
+      + spanBar(t0,t3,22,'#0f8b7f','detected episode');
+
+    const stat=data.projectionMetrics[`${d.link_id}|${d.period}|${d.week_start}`];
+    const endLabel=(pts,colour,text)=>{
+      const last=pts[pts.length-1];
+      return `<text x="${x(last[0])+8}" y="${y(last[1])+4}" fill="${colour}" font-size="11" font-weight="700">${text}</text>`;
+    };
     const ticks=[lo_m,(lo_m+hi_m)/2,hi_m];
-    el.innerHTML=`<svg viewBox="0 0 ${w} ${h}">${axes(w,h,m,ticks,[lo,(lo+hi)/2,hi],x,y,v=>time(v),v=>Math.round(v))}${band}<line class="baseline-line" x1="${m.l}" x2="${w-m.r}" y1="${y(vf)}" y2="${y(vf)}"/><line class="cutoff-line" x1="${m.l}" x2="${w-m.r}" y1="${y(d.cutoff_speed_vc_mph)}" y2="${y(d.cutoff_speed_vc_mph)}"/><path class="shape-line" d="${linePath(shp,x,y)}"/><path class="forward-line" d="${linePath(fwd,x,y)}"/><path class="speed-line" d="${linePath(obs,x,y)}"/>${observedSpan}</svg><div class="chart-legend"><span><i style="background:#256fd2"></i>observed</span><span><i style="background:#ee783f"></i>forward projection</span><span><i style="background:#7858a6"></i>shape only (observed depth)</span><span><i style="background:#9aa8b2"></i>free-flow baseline</span><span><i style="background:#cfe0ea"></i>modelled episode</span></div>`;
+    el.innerHTML=`<svg viewBox="0 0 ${w} ${h}">`
+      + axes(w,h,m,ticks,[lo,(lo+hi)/2,hi],x,y,v=>time(v),v=>Math.round(v))
+      + ribbons.join('')
+      + `<path d="${linePath(fwd,x,y)}" fill="none" stroke="#ee783f" stroke-width="2.6" stroke-linejoin="round"/>`
+      + `<path d="${linePath(obs,x,y)}" fill="none" stroke="#256fd2" stroke-width="2.6" stroke-linejoin="round"/>`
+      + endLabel(fwd,'#ee783f','reconstructed')
+      + endLabel(obs,'#256fd2','observed')
+      + spans
+      + `<text class="axis-label" transform="translate(14 ${(m.t+baseY)/2}) rotate(-90)" text-anchor="middle">Speed (mph)</text>`
+      + `</svg>`
+      + `<div class="chart-legend"><span><i style="background:#256fd2"></i>observed</span><span><i style="background:#ee783f"></i>reconstructed from the inferred state</span><span><i style="background:#ee783f;opacity:.35"></i>model too fast</span><span><i style="background:#256fd2;opacity:.35"></i>model too slow</span>`
+      + (stat?`<span class="chart-stat">this case · MAE ${stat.mae_mph.toFixed(2)} mph · bias ${stat.bias_mph>=0?'+':'−'}${Math.abs(stat.bias_mph).toFixed(2)}</span>`:'')
+      + `</div>`;
   }
 
   function options(){

@@ -7,13 +7,9 @@
 
 .table-note{margin:14px 0 0;color:#65757f;font-size:11.5px;line-height:1.6}
 
-.projection-card .chart.wide-chart{height:340px;margin-top:6px}
+.projection-card .chart.wide-chart{height:360px;margin-top:6px}
+.chart-stat{margin-left:auto;font-weight:600;color:#2c3f4d}
 .projection-card .metrics{margin:16px 0 4px}
-.model-window{fill:#cfe0ea;opacity:.55}
-.baseline-line{stroke:#9aa8b2;stroke-width:1.4;stroke-dasharray:3 4}
-.forward-line{fill:none;stroke:#ee783f;stroke-width:2.6;stroke-linejoin:round}
-.shape-line{fill:none;stroke:#7858a6;stroke-width:1.8;stroke-dasharray:5 4;stroke-linejoin:round}
-.episode-span{stroke:#0f8b7f;stroke-width:4;stroke-linecap:round}
 .decomposition{margin-top:20px;border-top:1px solid var(--line,#dbe3e8);padding-top:18px}
 .decomposition h3{margin:0 0 12px;font:700 15px 'Manrope',sans-serif}
 .decomposition p{margin:12px 0 0;color:#5c6c76;font-size:12.5px;line-height:1.65}
