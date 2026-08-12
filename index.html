@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>I-405 FDQ Ground-Truth Dashboard</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="dashboard/site-nav.css">
+  <title>I-405 FDQ Ground-Truth Dashboard</title><link rel="stylesheet" href="styles.css?v=dee67f76"><link rel="stylesheet" href="dashboard/site-nav.css?v=a31677ee">
 </head>
 <body>
 <nav class="site-nav" aria-label="Dashboards"><div><span class="site-brand">FDQBench</span><ul><li><a href="dashboard/dashboard_I405.html" aria-current="page">Ground-truth explorer</a></li><li><a href="dashboard/full_day_residual_queue.html">PeMS queue continuity</a></li><li><a href="dashboard/nvta_full_day_queue.html">NVTA speed-only queue</a></li><li><a href="dashboard/qvdf_multiweek.html">QVDF holdout · D and V</a></li></ul></div></nav>
@@ -25,5 +25,5 @@
   <section class="card table-card"><div class="card-title"><h2>Data contract</h2><span id="contractStatus"></span></div><table><tbody><tr><th>Time axis</th><td>LA local time (America/Los_Angeles); raw UTC ISO-8601 timestamps are retained</td></tr><tr><th>λ(t) / queue input</th><td>Observed ground-truth flow</td></tr><tr><th>μ(t) baseline</th><td>Constant within NT1 / AM / MD / PM / NT2</td></tr><tr><th>μ(t) candidate</th><td>Period μ values linearly blended across each boundary over 30 minutes; first dynamic-μ sensitivity version</td></tr><tr><th>Queue boundary behavior</th><td>Continuous; no reset at period boundaries</td></tr><tr><th>Speed-derived flow</th><td>Diagnostic only; not used to contaminate the ground-truth queue baseline</td></tr><tr><th>Mentor FD input convention</th><td>Speed mph; flow veh/h/lane; density veh/mi/lane</td></tr></tbody></table></section>
 </main>
 <footer>Generated from the local FDQBench I-405 outputs. Dynamic FDQ is intentionally disabled in this Stage-1 dashboard.</footer>
-<script src="data.js"></script><script src="app.js"></script>
+<script src="data.js?v=d1c6cd48"></script><script src="app.js?v=3f76931c"></script>
 </body></html>

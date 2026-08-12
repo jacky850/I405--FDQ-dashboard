@@ -50,6 +50,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--exit-ratio", type=float, default=0.75)
     parser.add_argument("--minimum-episode-minutes", type=int, default=20)
     parser.add_argument("--baseline-polynomial-degree", type=int, default=4)
+    # NT1 | AM | MD | PM | NT2 cut points in local hours. The AM->MD boundary is
+    # 09:00 per the whole-day spec; it was 10:00 in the first version of this
+    # script, which is why older outputs report a different AM handoff state.
+    parser.add_argument(
+        "--period-boundaries", type=float, nargs=4, default=[6.0, 9.0, 15.0, 19.0],
+        metavar=("NT1_AM", "AM_MD", "MD_PM", "PM_NT2"),
+    )
     return parser.parse_args()
 
 
@@ -283,7 +290,7 @@ def main() -> None:
             "time_bin": np.arange(len(speed)),
             "period": pd.cut(
                 time_h,
-                [-0.001, 6, 10, 15, 19, 24],
+                [-0.001, *args.period_boundaries, 24],
                 labels=["NT1", "AM", "MD", "PM", "NT2"],
                 right=False,
             ).astype(str),
@@ -350,7 +357,101 @@ def main() -> None:
     pd.DataFrame(episode_rows).to_csv(args.output_dir / "congestion_episodes.csv", index=False)
 
     error = lambda_inferred - observed_arrival
-    boundaries = {label: int(hour / DT_H) for label, hour in [("06:00", 6), ("10:00", 10), ("15:00", 15), ("19:00", 19)]}
+    boundaries = {
+        f"{int(hour):02d}:{int(round((hour % 1) * 60)):02d}": int(hour / DT_H)
+        for hour in args.period_boundaries
+    }
+
+    # ------------------------------------------------------------------
+    # Closure test
+    #
+    # Two things are called "closure" and only one of them is evidence.
+    #
+    # Internal: put the same lambda and mu back into the same conservation
+    # equation and check Q reproduces. This is an identity. It verifies the
+    # implementation and nothing about the physics. The speed round-trip is the
+    # same trap: reconstructed speed is L / (baseline_tt + Q/mu) while
+    # Q = mu * (observed_tt - baseline_tt), so the two cancel and the observed
+    # speed is returned by construction. Its small residual is the rolling
+    # median applied to Q, not model skill.
+    #
+    # External: compare the end of the chain against counts that never entered
+    # it. That is the test the advisor asked for.
+    #
+    # One structural caveat has to be stated with the whole-day number: because
+    # lambda_inferred = mu + dQ/dt and Q starts and ends the day at zero, the
+    # whole-day inferred volume is identically the whole-day integral of mu. The
+    # 24-hour comparison therefore scores the assumed service rate, not the
+    # queue. Only the per-period split, where Q carries a non-zero boundary
+    # state, tests the queue itself.
+    # ------------------------------------------------------------------
+    period_labels = output["period"].to_numpy()
+    closure_rows = []
+    for label in ["NT1", "AM", "MD", "PM", "NT2"]:
+        mask = period_labels == label
+        if not mask.any():
+            continue
+        observed_volume = float(observed_arrival[mask].sum() * DT_H)
+        inferred_volume = float(lambda_inferred[mask].sum() * DT_H)
+        index = np.flatnonzero(mask)
+        closure_rows.append({
+            "period": label,
+            "bins": int(mask.sum()),
+            "observed_arrival_volume_veh": observed_volume,
+            "inferred_arrival_volume_veh": inferred_volume,
+            "closure_error_veh": inferred_volume - observed_volume,
+            "closure_error_pct": 100.0 * (inferred_volume - observed_volume) / observed_volume,
+            "service_volume_veh": float(mu[mask].sum() * DT_H),
+            "observed_discharge_volume_veh": float(discharge_raw[mask].sum() * DT_H),
+            "queue_at_period_start_veh": float(queue_forward[index[0]]),
+            "queue_at_period_end_veh": float(queue_forward[index[-1]]),
+        })
+    closure = pd.DataFrame(closure_rows)
+    closure.to_csv(args.output_dir / "closure_by_period.csv", index=False)
+
+    day_observed = float(observed_arrival.sum() * DT_H)
+    day_inferred = float(lambda_inferred.sum() * DT_H)
+    day_service = float(mu.sum() * DT_H)
+    day_discharge = float(discharge_raw.sum() * DT_H)
+    closure_test = {
+        "internal_consistency": {
+            "queue_recurrence_max_abs_veh": float(np.max(np.abs(queue_forward - queue_reference))),
+            "speed_round_trip_mae_mph": float(np.mean(np.abs(reconstructed_speed - speed))),
+            "status": "identity_not_evidence",
+            "note": (
+                "Both quantities are algebraic identities of the construction. They "
+                "verify the implementation and must not be quoted as validation."
+            ),
+        },
+        "external_closure": {
+            "whole_day": {
+                "observed_arrival_volume_veh": day_observed,
+                "inferred_arrival_volume_veh": day_inferred,
+                "closure_error_veh": day_inferred - day_observed,
+                "closure_error_pct": 100.0 * (day_inferred - day_observed) / day_observed,
+                "structurally_pinned_to_service_rate": True,
+                "service_volume_veh": day_service,
+                "inferred_minus_service_veh": day_inferred - day_service,
+                "note": (
+                    "inferred_minus_service is zero by construction because Q opens and "
+                    "closes the day empty. The whole-day figure scores mu, not the queue."
+                ),
+            },
+            "by_period": closure_rows,
+        },
+        "detector_consistency": {
+            "observed_arrival_volume_veh": day_observed,
+            "observed_discharge_volume_veh": day_discharge,
+            "imbalance_veh": day_observed - day_discharge,
+            "imbalance_pct": 100.0 * (day_observed - day_discharge) / day_observed,
+            "note": (
+                "Upstream-plus-ramp counts and downstream counts disagree over a day "
+                "that starts and ends with an empty queue, so they cannot both be "
+                "right. This imbalance is the accuracy floor for every closure figure "
+                "above: no model can close better than the detectors agree."
+            ),
+        },
+    }
     summary = {
         "date": str(downstream["timestamp"].dt.date.iloc[0]),
         "timezone": "America/Los_Angeles",
@@ -401,6 +502,8 @@ def main() -> None:
             }
             for number, diagnostics in count_diagnostics.items()
         },
+        "period_boundaries_h": list(args.period_boundaries),
+        "closure_test": closure_test,
         "coverage_pct_median": {
             "upstream": float(upstream["pct_observed"].median()),
             "ramp": float(ramp["pct_observed"].median()),

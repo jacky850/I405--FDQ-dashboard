@@ -156,15 +156,15 @@ Q_{k+1}=\max(0,\;Q_k+(\lambda_k-y_k)\Delta t),
 y_k=\min(\mu_k,\;\lambda_k+Q_k/\Delta t).
 $$
 
-At 10:00 the reporting label changes from AM to MD, but the count-based queue is
-still **255.44 vehicles**. It peaks at **354.14 vehicles** at 09:00 and clears
-only after the speed-recovery gate, not at the period boundary.
+At 09:00 the reporting label changes from AM to MD, but the count-based queue is
+**354.14 vehicles** — its maximum for the day. It clears only after the
+speed-recovery gate at 10:30, not at the period boundary.
 
-> **Known inconsistency.** Part 1 uses AM 06:00–10:00 and MD 10:00–15:00. The
-> whole-day DTA period spec that Part 2 follows puts the AM→MD boundary at
-> 09:00. The PeMS headline number is therefore quoted at a boundary the current
-> spec does not use. The queue peak happens to fall at 09:00, so re-reporting on
-> the spec boundary would if anything strengthen the result. Not yet changed.
+Both parts now cut AM→MD at 09:00, following the whole-day DTA period spec. The
+boundary is the `--period-boundaries` argument, defaulting to `6 9 15 19`. The
+earlier version cut at 10:00 and reported 255.44 vehicles at the handoff; moving
+to the spec boundary **strengthens** the result, because 09:00 lands on the queue
+peak rather than on its drain-down.
 
 ## What PeMS lets us check
 
@@ -174,7 +174,7 @@ the downstream mainline. Omitting the ramp would violate conservation.
 
 **B. Vehicle conservation and period continuity.** The queue comes directly from
 observed counts, the recurrence uses the previous five-minute state throughout,
-and its value at the AM→MD boundary is 255.44 vehicles — the implementation does
+and its value at the AM→MD boundary is 354.14 vehicles — the implementation does
 not reset state when the label changes.
 
 **C. Speed-implied diagnostic comparison.** The CSV retains an experimental
@@ -193,6 +193,62 @@ the physical queue accurately enough to replace counts.
 That 60-minute gap is the single most valuable number in Part 1, because counts
 and speed are two *independent* witnesses. Part 2 loses that independence — see
 Finding 1.
+
+## D. The closure test
+
+Walk the chain to the end and compare against counts that never entered it.
+
+**Two things are called closure and only one is evidence.**
+
+*Internal closure* puts the same $\lambda$ and $\mu$ back into the same
+conservation equation and checks that $Q$ reproduces. Result:
+$1.42\times10^{-13}$ vehicles. This is an algebraic identity. It verifies the
+implementation and says nothing about the physics.
+
+The speed round-trip is the same trap wearing a different hat. Reconstructed
+speed is $L/(t_{\mathrm{base}}+Q/\mu)$ while $Q=\mu\,(t_{\mathrm{obs}}-t_{\mathrm{base}})$,
+so the two cancel and the observed speed comes back by construction. Its 1.23
+mph residual is the rolling median applied to $Q$, not model skill. **Neither
+number may be quoted as validation.**
+
+*External closure* is the real test:
+
+| Period | Observed arrivals | Back-calculated | Error | | Q at start | Q at end |
+|---|---:|---:|---:|---:|---:|---:|
+| NT1 | 10,881 | 10,890 | +9 | +0.08% | 0 | 0 |
+| AM | 28,494 | 29,119 | +625 | +2.19% | 0 | 116 |
+| MD | 46,458 | 47,879 | +1,420 | +3.06% | 116 | 0 |
+| **PM** | 30,217 | 32,860 | **+2,643** | **+8.75%** | 0 | 0 |
+| NT2 | 19,681 | 19,916 | +235 | +1.20% | 0 | 0 |
+| **Whole day** | **135,732** | **140,664** | **+4,932** | **+3.63%** | 0 | 0 |
+
+**The whole-day row is structurally pinned and must not be read as accuracy.**
+Since $\lambda_{\mathrm{inferred}}=\mu+\mathrm{d}Q/\mathrm{d}t$ and $Q$ opens and
+closes the day empty, the 24-hour inferred volume is *identically* the 24-hour
+integral of $\mu$ — verified at 0.000000 vehicles difference. The whole-day
+figure scores the assumed service rate, not the queue. **Only the per-period
+split tests the queue**, because there $Q$ carries a non-zero boundary state.
+
+Two things stand out. PM is the outlier at +8.75% against 0.08–3.06% elsewhere,
+consistent with S3 reading high free-flow speed as high demand. And every period
+errs in the same direction, so this is a bias, not noise.
+
+### The accuracy floor
+
+| | vehicles |
+|---|---:|
+| Upstream + ramp counted in | 135,732 |
+| Downstream counted out | 140,380 |
+| **Imbalance** | **−4,648 (−3.42%)** |
+
+Over a day that starts and ends with an empty queue these must be equal. They
+are not. **The two witnesses disagree by 3.42%, which is the same size as the
+3.63% whole-day closure gap** — so that gap is largely detector calibration, not
+model error. No closure figure on this case can be trusted below roughly 3.4%
+until the detector imbalance is explained.
+
+This is what a closure test is for: it found a data problem the queue
+mathematics could not have revealed.
 
 ## What Part 1 does not establish
 
@@ -215,11 +271,14 @@ density, and (3) an established CTM/LWR/PAQ method run on the same boundaries.
 ```powershell
 python scripts/run_pems_full_day_single_link.py `
   --raw-file data/pems_single_link_2025-07-29_L405S-004.csv.gz `
-  --output-dir outputs/pems_full_day_residual_queue_2025-07-29_L405S-004
+  --output-dir outputs/pems_full_day_residual_queue_2025-07-29_L405S-004 `
+  --period-boundaries 6 9 15 19
 
 python scripts/build_full_day_residual_dashboard_data.py `
   --input-dir outputs/pems_full_day_residual_queue_2025-07-29_L405S-004 `
   --output dashboard/full_day_residual_data.js
+
+python scripts/stamp_dashboard_assets.py
 
 python -m http.server 8772
 ```
@@ -235,8 +294,10 @@ Requires `numpy` and `pandas`.
 | `data/pems_single_link_2025-07-29_L405S-004.csv.gz` | Minimal three-detector input |
 | `outputs/pems_full_day_residual_queue_.../full_day_timeseries_5min.csv` | 288-bin output with speed, flow, lambda, mu, queue |
 | `outputs/pems_full_day_residual_queue_.../congestion_episodes.csv` | T0, T2, T3, duration, queue peaks |
-| `outputs/pems_full_day_residual_queue_.../summary.json` | Case summary and boundary states |
+| `outputs/pems_full_day_residual_queue_.../closure_by_period.csv` | Closure test: observed vs back-calculated volume per period |
+| `outputs/pems_full_day_residual_queue_.../summary.json` | Case summary, boundary states and closure test |
 | `scripts/build_full_day_residual_dashboard_data.py` | Static dashboard payload |
+| `scripts/stamp_dashboard_assets.py` | Hash-stamps CSS/JS links so browsers cannot mix stale styles with fresh markup |
 | `dashboard/full_day_residual_queue.html` | Dashboard entry point |
 
 ---
@@ -743,8 +804,9 @@ python scripts/build_i405_multiweek_dashboard_data.py
 1. **PeMS per-lane root cause.** The gate on `audit/i405-perlane-gate` flags the
    problem but does not fix it. Until it is resolved, PeMS discharge values
    cannot inform the NVTA service rate.
-2. **Period boundaries differ between the two parts.** Part 1 still uses AM
-   06:00–10:00; Part 2 follows the spec at 09:00.
+2. **The detector imbalance is unexplained.** Upstream + ramp and downstream
+   counts disagree by 4,648 vehicles (3.42%) over a closed day. Until that is
+   resolved it caps the precision of every Part 1 closure figure.
 3. **One link, one day, on each side.** Neither part supports a claim about
    link types, days, or corridors.
 4. **No independent queue measurement anywhere.** Both parts produce estimates

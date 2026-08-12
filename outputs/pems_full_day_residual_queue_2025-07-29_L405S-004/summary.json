@@ -26,7 +26,7 @@
   "end_of_day_queue_veh": 0.0,
   "speed_delay_diagnostic_queue_at_period_boundaries_veh": {
     "06:00": 0.0,
-    "10:00": 404.53987522856306,
+    "09:00": 116.42519991152054,
     "15:00": 0.0,
     "19:00": 0.0
   },
@@ -34,7 +34,7 @@
   "count_reference_maximum_queue_time_la": "2025-07-29T09:00:00-07:00",
   "count_reference_queue_at_period_boundaries_veh": {
     "06:00": 0.0,
-    "10:00": 255.44239374945215,
+    "09:00": 354.1361212219778,
     "15:00": 0.0,
     "19:00": 0.0
   },
@@ -50,6 +50,101 @@
       "speed_queue_vs_count_queue_mae_veh": 81.72098181611125,
       "speed_queue_vs_count_queue_correlation": 0.4851590594309566,
       "queue_peak_time_gap_min": 60.0
+    }
+  },
+  "period_boundaries_h": [
+    6.0,
+    9.0,
+    15.0,
+    19.0
+  ],
+  "closure_test": {
+    "internal_consistency": {
+      "queue_recurrence_max_abs_veh": 1.4210854715202004e-13,
+      "speed_round_trip_mae_mph": 1.2317756831812796,
+      "status": "identity_not_evidence",
+      "note": "Both quantities are algebraic identities of the construction. They verify the implementation and must not be quoted as validation."
+    },
+    "external_closure": {
+      "whole_day": {
+        "observed_arrival_volume_veh": 135731.64631222855,
+        "inferred_arrival_volume_veh": 140663.5,
+        "closure_error_veh": 4931.8536877714505,
+        "closure_error_pct": 3.6335326519406714,
+        "structurally_pinned_to_service_rate": true,
+        "service_volume_veh": 140663.5,
+        "inferred_minus_service_veh": 0.0,
+        "note": "inferred_minus_service is zero by construction because Q opens and closes the day empty. The whole-day figure scores mu, not the queue."
+      },
+      "by_period": [
+        {
+          "period": "NT1",
+          "bins": 72,
+          "observed_arrival_volume_veh": 10880.85506285714,
+          "inferred_arrival_volume_veh": 10889.5,
+          "closure_error_veh": 8.644937142860726,
+          "closure_error_pct": 0.07945089878433417,
+          "service_volume_veh": 10889.5,
+          "observed_discharge_volume_veh": 10943.0,
+          "queue_at_period_start_veh": 0.0,
+          "queue_at_period_end_veh": 0.0
+        },
+        {
+          "period": "AM",
+          "bins": 36,
+          "observed_arrival_volume_veh": 28494.418611657136,
+          "inferred_arrival_volume_veh": 29119.425199911522,
+          "closure_error_veh": 625.0065882543859,
+          "closure_error_pct": 2.193435131182828,
+          "service_volume_veh": 29003.0,
+          "observed_discharge_volume_veh": 28702.0,
+          "queue_at_period_start_veh": 0.0,
+          "queue_at_period_end_veh": 116.47159447705795
+        },
+        {
+          "period": "MD",
+          "bins": 72,
+          "observed_arrival_volume_veh": 46458.487219657145,
+          "inferred_arrival_volume_veh": 47878.57480008848,
+          "closure_error_veh": 1420.0875804313328,
+          "closure_error_pct": 3.05668063128512,
+          "service_volume_veh": 47995.0,
+          "observed_discharge_volume_veh": 47899.0,
+          "queue_at_period_start_veh": 116.42519991152054,
+          "queue_at_period_end_veh": 0.0
+        },
+        {
+          "period": "PM",
+          "bins": 48,
+          "observed_arrival_volume_veh": 30217.357548342858,
+          "inferred_arrival_volume_veh": 32860.0,
+          "closure_error_veh": 2642.6424516571424,
+          "closure_error_pct": 8.74544522110957,
+          "service_volume_veh": 32860.0,
+          "observed_discharge_volume_veh": 32941.0,
+          "queue_at_period_start_veh": 0.0,
+          "queue_at_period_end_veh": 0.0
+        },
+        {
+          "period": "NT2",
+          "bins": 60,
+          "observed_arrival_volume_veh": 19680.527869714275,
+          "inferred_arrival_volume_veh": 19916.0,
+          "closure_error_veh": 235.47213028572514,
+          "closure_error_pct": 1.1964726344971954,
+          "service_volume_veh": 19916.0,
+          "observed_discharge_volume_veh": 19895.0,
+          "queue_at_period_start_veh": 0.0,
+          "queue_at_period_end_veh": 0.0
+        }
+      ]
+    },
+    "detector_consistency": {
+      "observed_arrival_volume_veh": 135731.64631222855,
+      "observed_discharge_volume_veh": 140380.0,
+      "imbalance_veh": -4648.3536877714505,
+      "imbalance_pct": -3.4246646335362865,
+      "note": "Upstream-plus-ramp counts and downstream counts disagree over a day that starts and ends with an empty queue, so they cannot both be right. This imbalance is the accuracy floor for every closure figure above: no model can close better than the detectors agree."
     }
   },
   "coverage_pct_median": {

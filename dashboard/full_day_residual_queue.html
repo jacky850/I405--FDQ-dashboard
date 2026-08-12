@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>I-405 Queue Continuity Across Periods</title>
-  <link rel="stylesheet" href="full_day_residual_queue.css">
-  <link rel="stylesheet" href="site-nav.css">
+  <link rel="stylesheet" href="full_day_residual_queue.css?v=08e8b117">
+  <link rel="stylesheet" href="site-nav.css?v=a31677ee">
 </head>
 <body>
   <nav class="site-nav" aria-label="Dashboards"><div><span class="site-brand">FDQBench</span><ul><li><a href="dashboard_I405.html">Ground-truth explorer</a></li><li><a href="full_day_residual_queue.html" aria-current="page">PeMS queue continuity</a></li><li><a href="nvta_full_day_queue.html">NVTA speed-only queue</a></li><li><a href="qvdf_multiweek.html">QVDF holdout · D and V</a></li></ul></div></nav>
@@ -13,7 +13,7 @@
     <div class="hero-top"><b>FDQBench</b><span>PeMS vehicle-conservation test</span></div>
     <p class="eyebrow">ONE LINK · ONE FULL DAY · FIVE-MINUTE STATES</p>
     <h1>Queue continuity across<br><em>the AM–MD boundary</em></h1>
-    <p class="lede">The reporting period changes at 10:00. The physical queue does not reset: it carries its residual state into midday and dissipates only after traffic recovers.</p>
+    <p class="lede">The reporting period changes at 09:00. The physical queue does not reset: it carries its residual state into midday and dissipates only after traffic recovers.</p>
   </header>
 
   <main>
@@ -24,8 +24,8 @@
       </div>
       <div class="period-strip" aria-label="Full-day reporting periods">
         <div class="nt"><b>NT1</b><span>00:00–06:00</span></div>
-        <div class="am"><b>AM</b><span>06:00–10:00</span></div>
-        <div class="md"><b>MD</b><span>10:00–15:00</span></div>
+        <div class="am"><b>AM</b><span>06:00–09:00</span></div>
+        <div class="md"><b>MD</b><span>09:00–15:00</span></div>
         <div class="pm"><b>PM</b><span>15:00–19:00</span></div>
         <div class="nt"><b>NT2</b><span>19:00–24:00</span></div>
       </div>
@@ -40,7 +40,7 @@
         <span>vehicles · five-minute states</span>
       </div>
       <div id="queueChart" class="chart queue-chart"></div>
-      <div class="handoff-callout"><span>10:00 AM → MD handoff</span><b id="boundarySentence"></b></div>
+      <div class="handoff-callout"><span>09:00 AM → MD handoff</span><b id="boundarySentence"></b></div>
     </section>
 
     <section class="card chart-card">
@@ -57,6 +57,17 @@
       </div>
     </section>
 
+    <section class="card closure-card">
+      <div class="section-head">
+        <div><p>CLOSURE TEST</p><h2>Back-calculated volume against the counts</h2></div>
+        <span>vehicles · per reporting period</span>
+      </div>
+      <div class="closure-split" id="closureIdentity"></div>
+      <div class="table-wrap"><table class="closure-table"><thead><tr><th>Period</th><th>Observed arrivals</th><th>Back-calculated</th><th>Error</th><th>Error %</th><th>Q at start</th><th>Q at end</th></tr></thead><tbody id="closureTable"></tbody></table></div>
+      <p class="closure-note" id="closureNote"></p>
+      <div class="closure-floor" id="closureFloor"></div>
+    </section>
+
     <section class="method-line">
       <b>PeMS reference:</b>
       <span>Q(t) is the drift-corrected cumulative difference between time-shifted upstream + on-ramp arrivals and downstream discharge. Speed identifies T0, T2 and T3; reporting boundaries do not reset the queue.</span>
@@ -65,7 +76,7 @@
 
   <footer><span>L405S-041 → L405S-004 · 2025-07-29</span><span>America/Los_Angeles</span></footer>
   <div id="tooltip" class="tooltip"></div>
-  <script src="full_day_residual_data.js"></script>
-  <script src="full_day_residual_queue.js"></script>
+  <script src="full_day_residual_data.js?v=041bdc14"></script>
+  <script src="full_day_residual_queue.js?v=e2cc0a77"></script>
 </body>
 </html>

@@ -14,8 +14,8 @@
   const t0 = isoMinute(episode.t0_la);
   const t2 = isoMinute(episode.t2_la);
   const t3 = isoMinute(episode.t3_la);
-  const handoff = 600;
-  const qAtHandoff = summary.count_reference_queue_at_period_boundaries_veh['10:00'];
+  const handoff = 540;  // 09:00, the AM->MD cut in the whole-day spec
+  const qAtHandoff = summary.count_reference_queue_at_period_boundaries_veh['09:00'];
   const firstZeroAfterT3 = rows.find((row) => row.minute > t3 && row.queue_ref <= 0.5);
   const clearMinute = firstZeroAfterT3 ? firstZeroAfterT3.minute : t3 + 5;
   const windowStart = Math.max(0, t0 - 25);
@@ -24,11 +24,60 @@
   byId('metrics').innerHTML = [
     ['Queue formation', clock(t0), 'T0 from observed speed'],
     ['Maximum queue', `${number.format(summary.count_reference_maximum_queue_veh)} veh`, `at ${summary.count_reference_maximum_queue_time_la.slice(11, 16)}`, 'accent'],
-    ['Queue at handoff', `${number.format(qAtHandoff)} veh`, '10:00 AM → MD', 'teal'],
+    ['Queue at handoff', `${number.format(qAtHandoff)} veh`, '09:00 AM → MD', 'teal'],
     ['Queue dissipation', clock(clearMinute), `${episode.duration_min}-min speed episode`]
   ].map((item) => `<article><span>${item[0]}</span><strong class="${item[3] || ''}">${item[1]}</strong><small>${item[2]}</small></article>`).join('');
 
   byId('boundarySentence').textContent = `${number.format(qAtHandoff)} vehicles remain. Q(t) continues into MD instead of resetting to zero.`;
+
+  // Closure test. Two quantities carry the name and only one is evidence, so
+  // the identity pair is shown first and labelled, rather than mixed into the
+  // table where it would read as a very good result.
+  (function renderClosure() {
+    const closure = summary.closure_test;
+    if (!closure) return;
+    const identity = closure.internal_consistency;
+    const external = closure.external_closure;
+    const floor = closure.detector_consistency;
+    const signed = (value) => `${value >= 0 ? '+' : '−'}${number.format(Math.abs(value))}`;
+    const pct = (value) => `${value >= 0 ? '+' : '−'}${Math.abs(value).toFixed(2)}%`;
+
+    byId('closureIdentity').innerHTML = `
+      <article class="identity">
+        <span>Internal · identity, not evidence</span>
+        <b>${identity.queue_recurrence_max_abs_veh.toExponential(2)} veh</b>
+        <small>Q rebuilt from the same λ and μ. Near-zero by construction; it verifies the code, not the physics. The ${identity.speed_round_trip_mae_mph.toFixed(2)} mph speed round-trip is the same identity, its residual coming from the median filter on Q.</small>
+      </article>
+      <article class="evidence">
+        <span>External · whole day</span>
+        <b>${pct(external.whole_day.closure_error_pct)}</b>
+        <small>${number.format(external.whole_day.inferred_arrival_volume_veh)} back-calculated vs ${number.format(external.whole_day.observed_arrival_volume_veh)} counted. Because Q opens and closes the day empty, this figure is pinned to the assumed service rate μ and scores μ, not the queue.</small>
+      </article>`;
+
+    byId('closureTable').innerHTML = external.by_period.map((row) => `
+      <tr class="${Math.abs(row.closure_error_pct) >= 5 ? 'closure-high' : ''}">
+        <td><b>${row.period}</b></td>
+        <td>${number.format(row.observed_arrival_volume_veh)}</td>
+        <td>${number.format(row.inferred_arrival_volume_veh)}</td>
+        <td>${signed(row.closure_error_veh)}</td>
+        <td>${pct(row.closure_error_pct)}</td>
+        <td>${number.format(row.queue_at_period_start_veh)}</td>
+        <td>${number.format(row.queue_at_period_end_veh)}</td>
+      </tr>`).join('');
+
+    const worst = external.by_period.reduce((a, b) =>
+      Math.abs(b.closure_error_pct) > Math.abs(a.closure_error_pct) ? b : a);
+    byId('closureNote').textContent =
+      `Only the per-period split tests the queue, because Q carries a non-zero state across `
+      + `the ${clock(handoff)} boundary and the whole-day integral does not. ${worst.period} is the outlier at `
+      + `${pct(worst.closure_error_pct)}; every period errs in the same direction, so the gap is a bias, not noise.`;
+
+    byId('closureFloor').innerHTML =
+      `<span>Accuracy floor</span><b>${signed(floor.imbalance_veh)} veh · ${pct(floor.imbalance_pct)}</b>`
+      + `<small>Upstream + ramp counted ${number.format(floor.observed_arrival_volume_veh)} vehicles in; downstream counted `
+      + `${number.format(floor.observed_discharge_volume_veh)} out, over a day that starts and ends with an empty queue. `
+      + `The two witnesses cannot both be right, and no closure figure above can be trusted below this margin.</small>`;
+  })();
 
   const margin = { left: 62, right: 24, top: 42, bottom: 42 };
 
@@ -49,8 +98,8 @@
 
   function periodBands(x, top, bottom) {
     const periods = [
-      { start: 360, end: 600, className: 'am-band', label: 'AM · 06:00–10:00' },
-      { start: 600, end: 900, className: 'md-band', label: 'MD · 10:00–15:00' }
+      { start: 360, end: 540, className: 'am-band', label: 'AM · 06:00–09:00' },
+      { start: 540, end: 900, className: 'md-band', label: 'MD · 09:00–15:00' }
     ];
     return periods.map((period) => {
       const start = Math.max(windowStart, period.start);
