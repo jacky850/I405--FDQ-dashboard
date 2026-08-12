@@ -13,13 +13,19 @@ crossed.
 
 ## Dashboard
 
-- [Open the branch dashboard](https://raw.githack.com/jacky850/I405--FDQ-dashboard/agent/single-link-full-day-queue/dashboard/full_day_residual_queue.html)
 - [Dashboard source](dashboard/full_day_residual_queue.html)
 
-The dashboard intentionally shows only the main evidence: the observed
-full-day speed profile and the count-based residual queue. The vertical 10:00
-line marks the AM-to-MD boundary. A nonzero queue at that line demonstrates
-that the state is carried into the next period.
+The third-party branch preview was removed because its external-content
+confirmation page can enter a refresh loop in an embedded browser. The public
+GitHub Pages URL will be added after these dashboard assets are synchronized to
+the repository's Pages branch. The local preview instructions are provided
+under [Reproduce the result](#reproduce-the-result).
+
+The dashboard focuses on the main evidence: the full-day reporting-period
+definition, the count-based residual queue from formation to dissipation, and
+the observed speed episode with T0, T2, T3, and P. AM and MD use different
+background colors. The 10:00 line shows the period handoff, where a nonzero
+queue demonstrates that the state is carried into the next period.
 
 ## Current case
 
@@ -138,15 +144,13 @@ but AM/MD/PM boundaries do not reset $Q_k$.
 The queue recurrence is one continuous state equation:
 
 $$
-Q_{k+1}=max\left{0,
-Q_k+\left[\lambda_k-y_k\right]\Delta t\right},
+Q_{k+1}=\max(0,\;Q_k+(\lambda_k-y_k)\Delta t).
 $$
 
 where the realized outflow is bounded by available vehicles and service rate:
 
 $$
-y_k=\min\left\{\mu_k,
-\lambda_k+\frac{Q_k}{\Delta t}\right\}.
+y_k=\min(\mu_k,\;\lambda_k+Q_k/\Delta t).
 $$
 
 At 10:00, the reporting label changes from AM to MD, but the count-based queue
