@@ -32,6 +32,56 @@
       + `P is observed and is an input to the inversion, not a prediction.`;
   })();
 
+  // Forward projection: the inferred state pushed back through the QVDF speed
+  // map. The duration branch round-trips by construction, so what is on trial
+  // here is the frozen severity branch and the (1-tau^2)^2 episode shape.
+  const PERIOD_WINDOW={AM:[360,600],PM:[900,1140]};
+  (function projectionBlock(){
+    const p=data.projection; if(!p) return;
+    const s=p.supported_cases, d=p.period_error_decomposition_supported;
+    $('projectionIntro').textContent=p.what_is_predicted;
+    $('projectionMetrics').innerHTML=[
+      ['Congested window',`${s.model_window.forward.mae_mph.toFixed(2)} mph`,`MAE · bias ${s.model_window.forward.bias_mph.toFixed(2)}`,'teal'],
+      ['Whole period',`${s.period.forward.mae_mph.toFixed(2)} mph`,`MAE · bias +${s.period.forward.bias_mph.toFixed(2)}`,'orange'],
+      ['Skill vs free-flow',s.period.forward.skill_vs_free_flow.toFixed(3),`baseline MAE ${s.period.free_flow_baseline.mae_mph.toFixed(1)} mph`,''],
+      ['Worst 5-min bin',`${s.period.forward.max_abs_error_mph.toFixed(1)} mph`,'largest single-bin error','']
+    ].map(m=>`<article><span>${m[0]}</span><strong class="${m[3]}">${m[1]}</strong><small>${m[2]}</small></article>`).join('');
+    $('projectionNote').textContent=
+      `Scored on the ${p.coverage.supported_cases} supported cases. `
+      + `Handing the model the observed depth instead of the predicted one changes the `
+      + `congested-window MAE only from ${s.model_window.forward.mae_mph.toFixed(2)} to `
+      + `${s.model_window.shape_only.mae_mph.toFixed(2)} mph, so the frozen severity branch is not `
+      + `the binding error. The episode is symmetric about T₂ but the detected one is not: `
+      + `T₂ sits ${Math.abs(p.episode_alignment.T2_minus_episode_midpoint_min_mean).toFixed(1)} min off the `
+      + `episode midpoint on average, up to ${p.episode_alignment.T2_minus_episode_midpoint_min_abs_max.toFixed(0)} min.`;
+    const inside=d.inside_model_window, outside=d.outside_model_window, check=d.outside_window_reality_check;
+    $('projectionSplit').innerHTML=`
+      <h3>Where the period error actually comes from</h3>
+      <div class="split-bar"><span class="split-in" style="width:${inside.sse_share_pct.toFixed(1)}%">${inside.sse_share_pct.toFixed(0)}%</span><span class="split-out" style="width:${outside.sse_share_pct.toFixed(1)}%">${outside.sse_share_pct.toFixed(0)}%</span></div>
+      <div class="split-legend"><span><i class="in"></i>inside the modelled episode · ${inside.bin_share_pct.toFixed(0)}% of bins · MAE ${inside.mae_mph.toFixed(2)} mph · bias ${inside.bias_mph.toFixed(2)}</span><span><i class="out"></i>outside, where the model asserts free flow · ${outside.bin_share_pct.toFixed(0)}% of bins · MAE ${outside.mae_mph.toFixed(2)} mph · bias +${outside.bias_mph.toFixed(2)}</span></div>
+      <p>Inside its own window the model is essentially unbiased. Outside it, the error is one-sided and large: ${check.bins_below_90pct_free_speed_pct.toFixed(0)}% of those bins are still below 90% of free speed and ${check.bins_below_cutoff_speed_pct.toFixed(0)}% are below the cutoff speed v₍c₎ the model itself uses to define congestion. Across the period, ${d.period_congestion_coverage.period_bins_below_cutoff_speed_pct.toFixed(0)}% of bins are congested by that definition while the modelled episode covers ${d.period_congestion_coverage.model_window_share_of_period_pct.toFixed(0)}%. The boxcar edge, not the depth of the dip, is what limits the speed projection.</p>`;
+  })();
+
+  function renderProjection(){
+    const el=$('projectionChart'),d=state.case;
+    const curve=data.projectionCurves[`${d.link_id}|${d.period}|${d.week_start}`];
+    if(!curve){el.innerHTML='<div class="empty">No holdout episode: the speed map is never entered for this case.</div>';return}
+    const [lo_m,hi_m]=PERIOD_WINDOW[d.period];
+    const obs=data.profiles[`${d.link_id}|${d.week_start}`].filter(p=>p[0]>=lo_m&&p[0]<hi_m).map(p=>[p[0],p[1]]);
+    const fwd=curve.map(c=>[c[0],c[1]]), shp=curve.map(c=>[c[0],c[2]]);
+    const vf=d.free_speed_p95_mph;
+    const {w,h,m}=dims(el,{l:50,r:20,t:22,b:44});
+    const all=[...obs.map(p=>p[1]),...fwd.map(p=>p[1]),vf];
+    const lo=Math.floor(Math.min(...all)-3),hi=Math.ceil(Math.max(...all)+3);
+    const x=scale(lo_m,hi_m,m.l,w-m.r),y=scale(lo,hi,h-m.b,m.t);
+    const win=curve.filter(c=>c[3]===1).map(c=>c[0]);
+    const band=win.length?`<rect class="model-window" x="${x(win[0])}" y="${m.t}" width="${Math.max(1,x(win[win.length-1])-x(win[0]))}" height="${h-m.t-m.b}"/>`:'';
+    const t0=minuteFromIso(d.t0_la),t3=minuteFromIso(d.t3_la);
+    const observedSpan=`<line class="episode-span" x1="${x(Math.max(t0,lo_m))}" x2="${x(Math.min(t3,hi_m))}" y1="${h-m.b-4}" y2="${h-m.b-4}"/>`;
+    const ticks=[lo_m,(lo_m+hi_m)/2,hi_m];
+    el.innerHTML=`<svg viewBox="0 0 ${w} ${h}">${axes(w,h,m,ticks,[lo,(lo+hi)/2,hi],x,y,v=>time(v),v=>Math.round(v))}${band}<line class="baseline-line" x1="${m.l}" x2="${w-m.r}" y1="${y(vf)}" y2="${y(vf)}"/><line class="cutoff-line" x1="${m.l}" x2="${w-m.r}" y1="${y(d.cutoff_speed_vc_mph)}" y2="${y(d.cutoff_speed_vc_mph)}"/><path class="shape-line" d="${linePath(shp,x,y)}"/><path class="forward-line" d="${linePath(fwd,x,y)}"/><path class="speed-line" d="${linePath(obs,x,y)}"/>${observedSpan}</svg><div class="chart-legend"><span><i style="background:#256fd2"></i>observed</span><span><i style="background:#ee783f"></i>forward projection</span><span><i style="background:#7858a6"></i>shape only (observed depth)</span><span><i style="background:#9aa8b2"></i>free-flow baseline</span><span><i style="background:#cfe0ea"></i>modelled episode</span></div>`;
+  }
+
   function options(){
     $('linkSelect').innerHTML=data.links.map(v=>`<option>${v}</option>`).join('');
     $('linkSelect').value=state.case.link_id;
@@ -54,7 +104,7 @@
   $('periodSelect').addEventListener('change',()=>{state.case=cases.find(d=>d.link_id===$('linkSelect').value&&d.period===$('periodSelect').value&&d.week_start===$('weekSelect').value)||cases.find(d=>d.link_id===$('linkSelect').value&&d.period===$('periodSelect').value);syncWeeks()});
   $('weekSelect').addEventListener('change',()=>{state.case=cases.find(d=>d.link_id===$('linkSelect').value&&d.period===$('periodSelect').value&&d.week_start===$('weekSelect').value);render()});
 
-  function render(){renderTimeline();renderSummary();renderSpeed();renderVolume();renderCalibration();renderWeeklyVolumes();renderTable()}
+  function render(){renderTimeline();renderSummary();renderSpeed();renderVolume();renderCalibration();renderWeeklyVolumes();renderProjection();renderTable()}
   function renderTimeline(){
     const weeks=[...data.weeks.slice(0,4),'2025-06-30',...data.weeks.slice(4)];
     $('weekTimeline').innerHTML=weeks.map(w=>{

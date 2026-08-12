@@ -613,6 +613,131 @@ assumptions rather than measurements.
 
 ---
 
+# Part 3 — Speed-only QVDF holdout: what the inversion actually predicts
+
+Parts 1 and 2 reconstruct a queue on one day. Part 3 asks a narrower question on
+I-405: **hide a week, keep only its speed, and see which of the QVDF's outputs
+survive contact with the hidden flow.** Twelve ordinary complete weeks, seven
+links, AM and PM: 168 link-week cases, leave-one-week-out.
+
+## What is a prediction and what is not
+
+This distinction decides how every number below should be read.
+
+| Quantity | Source | Status |
+|---|---|---|
+| `P` congestion duration | detected in the holdout speed profile | **input** |
+| `v_c` cutoff speed, `T2` | detected in the holdout speed profile | **input** |
+| `f_d`, `n`, `f_p`, `s`, `C`, `k_d` | median over the eleven training weeks | frozen |
+| `D/C`, `D`, `V` | inverted from `P` | prediction |
+| `v(T2)`, full speed curve | forward severity branch | prediction |
+
+`P` is inverted to obtain `D/C`, so pushing `D/C` back through the duration
+branch returns `P` exactly. **A "predicted duration" would be a tautology and is
+not reported.** The meeting shorthand calls duration "D"; in every equation here
+`D` is the peak demand *rate*, so the columns are named
+`congestion_duration_P_h`, `demand_D_*` and `volume_V_*` to keep them apart.
+
+## A. Observed vs inferred demand and volume
+
+Per case, side by side with the difference:
+
+| | MAPE | MAE | bias |
+|---|---:|---:|---:|
+| Peak demand `D` | **16.00%** | 1,371 veh/h | −426 |
+| Period volume `V` | 16.51% | 4,916 veh | −1,465 |
+| Inferred `D/C` | 17.29% | 0.20 | −0.16 |
+| Minimum speed `v(T2)` | — | 2.21 mph | — |
+
+**Coverage is 21 of 168 cases (12.50%).** The method abstains on the rest: 137
+have no canonical speed episode, 7 fail the speed-consistency gate, 3 fail the
+duration-extrapolation gate. Over all 31 episode cases *before* the gates,
+demand MAPE is 30.08% and volume MAPE 31.38%. The error figure and the coverage
+figure only mean something together.
+
+**`V` and `D` are not two independent checks.** `V_inferred = D_inferred / PLF`
+with a per-link peak-load factor calibrated on the training weeks, so the two
+near-identical percentages are one estimate reported in two units.
+
+## B. Forward projection: the inferred state back through the speed map
+
+The scalars above stop at one speed value, `v(T2)`. The forward projection
+produces a speed for every five-minute bin of the period and scores it against
+the observed profile:
+
+$$
+v(t)=\frac{v_c}{1+z\left(1-\tau^{2}\right)^{2}},
+\qquad \tau=\frac{2\left(t-T_2\right)}{P},
+$$
+
+with `z = f_p · P^s` frozen on the training weeks, and free-flow speed asserted
+outside `|τ| ≤ 1`. A constant free-flow speed is scored alongside as the null
+baseline — without it a speed MAE in mph is not interpretable, because most bins
+of a period are not at the bottom of the dip.
+
+| Window | Forward MAE | Bias | Skill vs free-flow |
+|---|---:|---:|---:|
+| Modelled congestion window | **4.86 mph** | −0.28 | 0.958 |
+| Observed episode `[t0, t3]` | 6.76 mph | +3.94 | 0.882 |
+| Whole period | 8.48 mph | +4.92 | 0.784 |
+
+Free-flow baseline over the whole period: 23.79 mph MAE. Worst single bin: 34.6
+mph.
+
+### The error is at the episode edge, not in the depth of the dip
+
+Two results point the same way.
+
+**The severity branch is not the binding constraint.** Handing the model the
+*observed* depth instead of the predicted one — `z` from the measured `v(T2)`
+rather than from `f_p · P^s` — improves the congested-window MAE only from 4.86
+to 4.47 mph. The frozen severity branch is close to right.
+
+**The boxcar edge is.** Splitting the period error at the model's own episode
+boundary:
+
+| | share of bins | share of squared error | MAE | bias |
+|---|---:|---:|---:|---:|
+| Inside the modelled episode | 62.1% | 27.4% | 5.32 mph | −0.42 |
+| Outside, model asserts free flow | 37.9% | **72.6%** | 13.68 mph | **+13.67** |
+
+Inside its own window the model is essentially unbiased. Outside it the error is
+one-sided and large, because the road is not at free flow there: **79.6% of
+those bins are below 90% of free speed and 32.5% are below the cutoff speed
+`v_c` that the model itself uses to define congestion.** Across the period 67.3%
+of bins are congested by that definition while the modelled episode covers
+62.1%.
+
+A related misalignment: the QVDF episode is symmetric about `T2`, the detected
+one is not. `T2` sits 8.1 minutes off the episode midpoint on average and up to
+64.6 minutes.
+
+So the speed model's weakness is not that it mis-sizes congestion. It is that
+congestion has a hard on/off edge in the model and a long tail in the data.
+
+## Reproduce
+
+```powershell
+python scripts/run_i405_multiweek_average_holdout.py
+python scripts/build_i405_observed_vs_inferred_d_v.py
+python scripts/run_i405_forward_projection_speed.py
+python scripts/build_i405_multiweek_dashboard_data.py
+```
+
+## Files
+
+| File | Purpose |
+|---|---|
+| `scripts/run_i405_multiweek_average_holdout.py` | Leave-one-week-out inversion and gates |
+| `scripts/build_i405_observed_vs_inferred_d_v.py` | Observed vs inferred `D` and `V` per case |
+| `scripts/run_i405_forward_projection_speed.py` | Forward speed projection and error decomposition |
+| `outputs/i405_multiweek_average_holdout/observed_vs_inferred_D_V.csv` | 168 rows with gate status |
+| `outputs/i405_multiweek_average_holdout/forward_projection_speed_5min.csv` | Per-bin observed, forward, shape-only, baseline |
+| `outputs/i405_multiweek_average_holdout/forward_projection_speed_metrics.csv` | Per case × window × variant |
+| `dashboard/qvdf_multiweek.html` | Dashboard entry point |
+
+---
+
 # Open items
 
 1. **PeMS per-lane root cause.** The gate on `audit/i405-perlane-gate` flags the
@@ -627,3 +752,10 @@ assumptions rather than measurements.
 5. **Corridor propagation is untouched.** Multi-detector time-space and
    shockwave work is future scope; with a single link there is nothing honest to
    plot.
+6. **The QVDF episode edge is a boxcar.** Part 3 shows 72.6% of the period speed
+   error sits outside the modelled episode, where the model asserts free flow
+   and the road is still slow. A tapered edge, or an episode definition that
+   does not force symmetry about `T2`, is the obvious next change.
+7. **12.50% coverage on the holdout.** Part 3's accuracy is conditional on the
+   cases that pass both gates. Whether the abstentions are genuinely
+   unidentifiable or merely undetected episodes is not yet established.

@@ -1,0 +1,242 @@
+{
+  "source": {
+    "results": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\I405--FDQ-dashboard-github\\outputs\\i405_multiweek_average_holdout\\leave_one_week_out_qvdf_results.csv",
+    "profiles": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\I405--FDQ-dashboard-github\\outputs\\i405_multiweek_average_holdout\\weekly_average_weekday_profiles_5min.csv"
+  },
+  "what_is_predicted": "The duration branch round-trips by construction: x_hat was inverted from the observed P, so forward-projecting it returns P exactly. The forward projection tests the frozen severity branch z = f_p * P^s and the QVDF episode shape v(t) = vc / (1 + z (1 - tau^2)^2). P, T2 and vc are read from the holdout speed profile and handed to the model.",
+  "variants": {
+    "forward": "z from the frozen severity branch; the genuine prediction",
+    "shape_only": "z from the observed v(T2); isolates shape error",
+    "free_flow_baseline": "constant free-flow speed; the null model"
+  },
+  "coverage": {
+    "episode_cases_scored": 31,
+    "supported_cases": 21
+  },
+  "episode_alignment": {
+    "T2_minus_episode_midpoint_min_mean": -8.078225806451591,
+    "T2_minus_episode_midpoint_min_abs_max": 64.55833333333338,
+    "note": "The QVDF episode is symmetric about T2. The detected episode is not, so the model congestion window is shifted relative to the observed one."
+  },
+  "supported_cases": {
+    "model_window": {
+      "forward": {
+        "cases": 21,
+        "mean_bins_per_case": 29.80952380952381,
+        "mae_mph": 4.864929575991413,
+        "rmse_mph": 6.820631959453515,
+        "bias_mph": -0.27506605027652187,
+        "max_abs_error_mph": 27.602823973843506,
+        "mape_pct": 13.11551315347736,
+        "skill_vs_free_flow": 0.9584144911626906
+      },
+      "shape_only": {
+        "cases": 21,
+        "mean_bins_per_case": 29.80952380952381,
+        "mae_mph": 4.473022534693818,
+        "rmse_mph": 6.750881482659111,
+        "bias_mph": -0.6099291752395235,
+        "max_abs_error_mph": 32.35842323472768,
+        "mape_pct": 11.630636767845951,
+        "skill_vs_free_flow": 0.960687573970187
+      },
+      "free_flow_baseline": {
+        "cases": 21,
+        "mean_bins_per_case": 29.80952380952381,
+        "mae_mph": 28.801961804438015,
+        "rmse_mph": 30.89842130433964,
+        "bias_mph": 28.801961804438015,
+        "max_abs_error_mph": 55.673,
+        "mape_pct": 87.38241593998862,
+        "skill_vs_free_flow": 0.0
+      }
+    },
+    "observed_episode": {
+      "forward": {
+        "cases": 21,
+        "mean_bins_per_case": 30.095238095238095,
+        "mae_mph": 6.764516975504405,
+        "rmse_mph": 9.9940171174038,
+        "bias_mph": 3.9356815713412594,
+        "max_abs_error_mph": 34.56399999999999,
+        "mape_pct": 17.876003055241235,
+        "skill_vs_free_flow": 0.8823203541113769
+      },
+      "shape_only": {
+        "cases": 21,
+        "mean_bins_per_case": 30.095238095238095,
+        "mae_mph": 6.360187714912226,
+        "rmse_mph": 9.862532507420719,
+        "bias_mph": 3.607920868082281,
+        "max_abs_error_mph": 34.56399999999999,
+        "mape_pct": 16.39231730548846,
+        "skill_vs_free_flow": 0.8852293641811831
+      },
+      "free_flow_baseline": {
+        "cases": 21,
+        "mean_bins_per_case": 30.095238095238095,
+        "mae_mph": 29.97704032261176,
+        "rmse_mph": 31.51876720664759,
+        "bias_mph": 29.97704032261176,
+        "max_abs_error_mph": 55.673,
+        "mape_pct": 90.29972355541338,
+        "skill_vs_free_flow": 0.0
+      }
+    },
+    "period": {
+      "forward": {
+        "cases": 21,
+        "mean_bins_per_case": 48.0,
+        "mae_mph": 8.483728481158872,
+        "rmse_mph": 11.102439643873186,
+        "bias_mph": 4.920038646041759,
+        "max_abs_error_mph": 34.56399999999999,
+        "mape_pct": 19.316026900273943,
+        "skill_vs_free_flow": 0.7842502507118384
+      },
+      "shape_only": {
+        "cases": 21,
+        "mean_bins_per_case": 48.0,
+        "mae_mph": 8.233959194134737,
+        "rmse_mph": 11.085581553873189,
+        "bias_mph": 4.649532979215399,
+        "max_abs_error_mph": 34.56399999999999,
+        "mape_pct": 18.31819744148877,
+        "skill_vs_free_flow": 0.7862925901965638
+      },
+      "free_flow_baseline": {
+        "cases": 21,
+        "mean_bins_per_case": 48.0,
+        "mae_mph": 23.787414682539676,
+        "rmse_mph": 27.04120001402328,
+        "bias_mph": 23.78636904761904,
+        "max_abs_error_mph": 55.673,
+        "mape_pct": 68.75226186681539,
+        "skill_vs_free_flow": 0.0
+      }
+    }
+  },
+  "all_episode_cases": {
+    "model_window": {
+      "forward": {
+        "cases": 31,
+        "mean_bins_per_case": 29.741935483870968,
+        "mae_mph": 5.348798805500173,
+        "rmse_mph": 7.493542260909578,
+        "bias_mph": -0.8007951089034703,
+        "max_abs_error_mph": 34.36117310485202,
+        "mape_pct": 13.869621874104988,
+        "skill_vs_free_flow": 0.9352075112271788
+      },
+      "shape_only": {
+        "cases": 31,
+        "mean_bins_per_case": 29.741935483870968,
+        "mae_mph": 4.185283733506332,
+        "rmse_mph": 6.438222629524241,
+        "bias_mph": -0.9379229142195094,
+        "max_abs_error_mph": 32.35842323472768,
+        "mape_pct": 10.496830499245236,
+        "skill_vs_free_flow": 0.957417691555418
+      },
+      "free_flow_baseline": {
+        "cases": 31,
+        "mean_bins_per_case": 29.741935483870968,
+        "mae_mph": 27.79028136251216,
+        "rmse_mph": 29.737861166781396,
+        "bias_mph": 27.79028136251216,
+        "max_abs_error_mph": 57.92599999999999,
+        "mape_pct": 82.17591052791329,
+        "skill_vs_free_flow": 0.0
+      }
+    },
+    "observed_episode": {
+      "forward": {
+        "cases": 31,
+        "mean_bins_per_case": 30.35483870967742,
+        "mae_mph": 7.048985929579198,
+        "rmse_mph": 10.026245568796226,
+        "bias_mph": 3.3563274904354894,
+        "max_abs_error_mph": 34.56399999999999,
+        "mape_pct": 18.23515042046262,
+        "skill_vs_free_flow": 0.8734509363775971
+      },
+      "shape_only": {
+        "cases": 31,
+        "mean_bins_per_case": 30.35483870967742,
+        "mae_mph": 5.987914405140825,
+        "rmse_mph": 9.490986222538087,
+        "bias_mph": 3.1035806233561374,
+        "max_abs_error_mph": 34.56399999999999,
+        "mape_pct": 15.052807550719212,
+        "skill_vs_free_flow": 0.8873853888420159
+      },
+      "free_flow_baseline": {
+        "cases": 31,
+        "mean_bins_per_case": 30.35483870967742,
+        "mae_mph": 28.814920243649922,
+        "rmse_mph": 30.301822883708336,
+        "bias_mph": 28.814920243649922,
+        "max_abs_error_mph": 57.92599999999999,
+        "mape_pct": 84.81018129819415,
+        "skill_vs_free_flow": 0.0
+      }
+    },
+    "period": {
+      "forward": {
+        "cases": 31,
+        "mean_bins_per_case": 48.0,
+        "mae_mph": 8.864425306097731,
+        "rmse_mph": 11.336887602719651,
+        "bias_mph": 4.434060457190056,
+        "max_abs_error_mph": 34.56399999999999,
+        "mape_pct": 19.958978824667877,
+        "skill_vs_free_flow": 0.7499539076329087
+      },
+      "shape_only": {
+        "cases": 31,
+        "mean_bins_per_case": 48.0,
+        "mae_mph": 8.065305074347462,
+        "rmse_mph": 10.895748888730651,
+        "bias_mph": 4.505749676713362,
+        "max_abs_error_mph": 34.56399999999999,
+        "mape_pct": 17.566120785356794,
+        "skill_vs_free_flow": 0.7662985245251771
+      },
+      "free_flow_baseline": {
+        "cases": 31,
+        "mean_bins_per_case": 48.0,
+        "mae_mph": 23.211348118279563,
+        "rmse_mph": 26.19616003194656,
+        "bias_mph": 23.21063978494623,
+        "max_abs_error_mph": 57.92599999999999,
+        "mape_pct": 65.65584756725859,
+        "skill_vs_free_flow": 0.0
+      }
+    }
+  },
+  "period_error_decomposition_supported": {
+    "inside_model_window": {
+      "bins": 626,
+      "bin_share_pct": 62.10317460317461,
+      "sse_share_pct": 27.381004000602942,
+      "mae_mph": 5.315019662952309,
+      "bias_mph": -0.4216342568528826
+    },
+    "outside_model_window": {
+      "bins": 382,
+      "bin_share_pct": 37.89682539682539,
+      "sse_share_pct": 72.61899599939704,
+      "mae_mph": 13.676429319371719,
+      "bias_mph": 13.673670157068054
+    },
+    "outside_window_reality_check": {
+      "bins_below_cutoff_speed_pct": 32.460732984293195,
+      "bins_below_90pct_free_speed_pct": 79.58115183246073,
+      "note": "Bins the model calls free-flow that are in fact still slow. A one-sided positive bias here means the model ends the episode too early or starts it too late, not that it mis-sizes the dip."
+    },
+    "period_congestion_coverage": {
+      "period_bins_below_cutoff_speed_pct": 67.26190476190477,
+      "model_window_share_of_period_pct": 62.10317460317461
+    }
+  }
+}

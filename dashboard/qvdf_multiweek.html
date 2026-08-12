@@ -81,8 +81,17 @@
       </article>
     </section>
 
+    <section class="card projection-card">
+      <div class="section-head"><div><p class="overline">04 · FORWARD PROJECTION</p><h2>Push the inferred state back through the speed map</h2></div><span class="pill">5-minute speed error</span></div>
+      <p class="table-note" id="projectionIntro"></p>
+      <section class="metrics" id="projectionMetrics" aria-label="Forward projection speed error"></section>
+      <div id="projectionChart" class="chart wide-chart"></div>
+      <p class="table-note" id="projectionNote"></p>
+      <div class="decomposition" id="projectionSplit"></div>
+    </section>
+
     <section class="card table-card">
-      <div class="section-head"><div><p class="overline">04 · SUPPORTED RESULTS</p><h2>Accuracy for every case that passed both gates</h2></div><span class="pill">Click a row to inspect</span></div>
+      <div class="section-head"><div><p class="overline">05 · SUPPORTED RESULTS</p><h2>Accuracy for every case that passed both gates</h2></div><span class="pill">Click a row to inspect</span></div>
       <div class="table-wrap"><table><thead><tr><th>Link</th><th>Period</th><th>Holdout week</th><th>P (h)</th><th>Observed D</th><th>Inferred D</th><th>&Delta;D</th><th>Observed V</th><th>Inferred V</th><th>&Delta;V</th><th>APE</th><th>Status</th></tr></thead><tbody id="caseTable"></tbody></table></div>
       <p class="table-note" id="comparisonNote"></p>
     </section>
