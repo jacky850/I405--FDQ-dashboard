@@ -4,7 +4,7 @@ This branch is a focused Stage-A prototype for recovering a **continuous
 full-day residual queue** on one freeway link. It uses PeMS because PeMS
 provides speed and flow at the same five-minute resolution: speed is used to
 identify the congestion episode, while observed upstream, ramp, and downstream
-flows provide an independent vehicle-count reference for validating the queue.
+flows provide the boundary counts for a conservation-based queue estimate.
 
 The main design requirement is that the 24-hour state is continuous. AM, MD,
 PM, NT1, and NT2 are labels for reporting only; they are not independent queue
@@ -156,11 +156,11 @@ At 10:00, the reporting label changes from AM to MD, but the count-based queue
 is still **255.44 vehicles**. The queue reaches **354.14 vehicles** at 09:00 and
 is cleared only after the speed-recovery gate, not at the period boundary.
 
-## How this result is validated with PeMS
+## What is checked with PeMS
 
 PeMS makes this case especially useful because the model does not need to
-pretend that speed alone is ground truth. It provides three complementary
-checks.
+pretend that speed alone determines flow. PeMS provides observed speed and flow
+for three implementation and consistency checks.
 
 ### A. Detector coverage and topology check
 
@@ -169,12 +169,13 @@ detectors. The arrival boundary contains the upstream mainline plus the on-ramp;
 the discharge boundary is the downstream mainline detector. Omitting the ramp
 would violate conservation for this segment.
 
-### B. Independent cumulative-count queue
+### B. Vehicle-conservation and period-continuity check
 
 The primary queue is calculated directly from observed arrival and discharge
-counts. It is therefore the PeMS reference against which a speed-implied queue
-can be judged. Its maximum is 354.14 vehicles and its value at the AM-to-MD
-boundary is 255.44 vehicles.
+counts. The recurrence uses the previous five-minute state throughout the full
+day. Its maximum is 354.14 vehicles and its value at the AM-to-MD boundary is
+255.44 vehicles, confirming that the implementation does not reset the state
+when the reporting label changes.
 
 ### C. Speed-implied diagnostic comparison
 
@@ -191,13 +192,46 @@ This branch produces a maximum of 404.54 vehicles. During the episode its MAE
 against the count-based queue is 81.72 vehicles, correlation is 0.485, and the
 two peak times differ by 60 minutes. These values show that speed captures the
 broad buildup and dissipation pattern but does **not** yet recover the physical
-queue accurately enough to replace observed counts.
+queue estimate accurately enough to replace observed counts.
 
 The very small forward-closure error and the 0.176 mph congested reconstructed-
 speed MAE are algebraic consistency checks: the same speed-delay relationship
 is inverted and then run forward. They confirm that the recurrence is coded
 consistently, but they are not independent evidence that the inferred queue is
-correct. The independent evidence is the count-based comparison above.
+correct.
+
+## Queue accuracy is not yet validated
+
+PeMS provides ground-truth **speed and detector flow**, but it does not directly
+observe the number of queued vehicles on the segment. Therefore this experiment
+does not prove that the maximum queue is exactly 354.14 vehicles or that every
+five-minute value of $Q(t)$ equals the physical queue.
+
+The current result should be described as a **flow-conservation-based queue
+estimate/reference**, not an observed queue ground truth. Its numerical values
+are conditional on the selected detector topology, upstream travel-time shift,
+ramp inclusion, detector-drift correction, and initial queue assumption. The
+near-zero recurrence closure error verifies implementation consistency only;
+it is expected when the same $\lambda(t)$ and $\mu(t)$ are placed back into the
+same conservation equation.
+
+Future queue validation should triangulate the estimate using the following
+three approaches:
+
+1. **Multi-detector time-space analysis.** Build a corridor time-space speed
+   map, identify the upstream and downstream queue boundaries and shockwave
+   movement, and compare the resulting queue duration and spatial extent with
+   the single-link estimate.
+2. **Occupancy, queue length, and jam density.** Estimate spatial queue length
+   from detector occupancy and convert that length into queued vehicles using a
+   defensible jam-density assumption.
+3. **Method cross-validation.** Run an established CTM, LWR, or PAQ queue
+   estimation method on the same detector boundaries and compare queue onset,
+   dissipation, peak time, and magnitude.
+
+Until one or more of these checks are completed, the dashboard demonstrates
+vehicle conservation and cross-period state continuity, not independently
+validated queue accuracy.
 
 ## Why the speed-implied branch is difficult
 
@@ -245,9 +279,9 @@ path is:
 7. Validate corridor-level propagation only after the single-link PeMS holdout
    tests are stable.
 
-In short, PeMS supplies the ground truth needed to learn and test the mapping;
-INRIX deployment will use the frozen mapping plus network priors, not hidden
-INRIX flow.
+In short, PeMS supplies observed speed and flow for building the conservation
+reference and testing future mappings; INRIX deployment will use the frozen
+mapping plus network priors, not hidden INRIX flow.
 
 ## Reproduce the result
 
@@ -272,13 +306,13 @@ http://127.0.0.1:8772/dashboard/full_day_residual_queue.html
 ```
 
 Required Python packages are `numpy` and `pandas`. The dashboard itself is
-static HTML/CSS/JavaScript and uses ECharts from a public CDN.
+self-contained static HTML/CSS/JavaScript and draws the charts as inline SVG.
 
 ## Files to continue from
 
 | File | Purpose |
 |---|---|
-| `scripts/run_pems_full_day_single_link.py` | Main 24-hour episode, conservation, queue, and validation pipeline |
+| `scripts/run_pems_full_day_single_link.py` | Main 24-hour episode, conservation, queue, and consistency-check pipeline |
 | `data/pems_single_link_2025-07-29_L405S-004.csv.gz` | Minimal reproducible three-detector PeMS input |
 | `outputs/pems_full_day_residual_queue_2025-07-29_L405S-004/full_day_timeseries_5min.csv` | Complete 288-bin output with speed, flow, lambda, mu, queue, and diagnostics |
 | `outputs/pems_full_day_residual_queue_2025-07-29_L405S-004/congestion_episodes.csv` | T0, T2, T3, duration, queue peaks, and comparison metrics |
@@ -288,8 +322,9 @@ static HTML/CSS/JavaScript and uses ECharts from a public CDN.
 
 ## Scope and next step
 
-This branch proves the full-day state logic for **one PeMS link and one day**.
-It does not yet claim an all-link or NVTA-ready speed-only estimator. The next
-scientific step is to repeat the independent count-based validation on multiple
-PeMS links/days, estimate how error changes with topology and episode shape,
-and then design the calibrated speed-only NVTA branch.
+This branch demonstrates the full-day state logic for **one PeMS link and one
+day**. It does not yet claim a validated physical queue, an all-link model, or
+an NVTA-ready speed-only estimator. The next scientific step is to repeat the
+conservation-based estimate on multiple PeMS links/days, apply the three queue
+validation approaches above, estimate how error changes with topology and
+episode shape, and then design the calibrated speed-only NVTA branch.
