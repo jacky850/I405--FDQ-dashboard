@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I-405 Queue Continuity Across Periods</title>
+  <link rel="stylesheet" href="full_day_residual_queue.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-top"><b>FDQBench</b><span>PeMS vehicle-conservation test</span></div>
+    <p class="eyebrow">ONE LINK · ONE FULL DAY · FIVE-MINUTE STATES</p>
+    <h1>Queue continuity across<br><em>the AM–MD boundary</em></h1>
+    <p class="lede">The reporting period changes at 10:00. The physical queue does not reset: it carries its residual state into midday and dissipates only after traffic recovers.</p>
+  </header>
+
+  <main>
+    <section class="card period-card">
+      <div class="section-head">
+        <div><p>REPORTING CLOCK</p><h2>Five connected periods, one continuous queue state</h2></div>
+        <span>Los Angeles time</span>
+      </div>
+      <div class="period-strip" aria-label="Full-day reporting periods">
+        <div class="nt"><b>NT1</b><span>00:00–06:00</span></div>
+        <div class="am"><b>AM</b><span>06:00–10:00</span></div>
+        <div class="md"><b>MD</b><span>10:00–15:00</span></div>
+        <div class="pm"><b>PM</b><span>15:00–19:00</span></div>
+        <div class="nt"><b>NT2</b><span>19:00–24:00</span></div>
+      </div>
+      <p class="period-note">Period labels organize outputs; they never initialize or clear <i>Q(t)</i>.</p>
+    </section>
+
+    <section class="metrics" id="metrics"></section>
+
+    <section class="card chart-card queue-focus">
+      <div class="section-head">
+        <div><p>PRIMARY RESULT</p><h2>Residual queue from formation to dissipation</h2></div>
+        <span>vehicles · five-minute states</span>
+      </div>
+      <div id="queueChart" class="chart queue-chart"></div>
+      <div class="handoff-callout"><span>10:00 AM → MD handoff</span><b id="boundarySentence"></b></div>
+    </section>
+
+    <section class="card chart-card">
+      <div class="section-head">
+        <div><p>SPEED-DEFINED EPISODE</p><h2>Observed speed with T0, T2, T3 and duration P</h2></div>
+        <span>mph · same event window</span>
+      </div>
+      <div id="speedChart" class="chart speed-chart"></div>
+      <div class="parameter-key">
+        <span><b>T0</b> congestion begins</span>
+        <span><b>T2</b> minimum-speed time</span>
+        <span><b>T3</b> speed recovery</span>
+        <span><b>P</b> T3 − T0</span>
+      </div>
+    </section>
+
+    <section class="method-line">
+      <b>PeMS reference:</b>
+      <span>Q(t) is the drift-corrected cumulative difference between time-shifted upstream + on-ramp arrivals and downstream discharge. Speed identifies T0, T2 and T3; reporting boundaries do not reset the queue.</span>
+    </section>
+  </main>
+
+  <footer><span>L405S-041 → L405S-004 · 2025-07-29</span><span>America/Los_Angeles</span></footer>
+  <div id="tooltip" class="tooltip"></div>
+  <script src="full_day_residual_data.js"></script>
+  <script src="full_day_residual_queue.js"></script>
+</body>
+</html>
