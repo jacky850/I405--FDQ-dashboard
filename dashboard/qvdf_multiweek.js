@@ -6,6 +6,31 @@
   const hour=m=>m/60, time=m=>`${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`;
   const minuteFromIso=s=>{const m=String(s||'').match(/T(\d\d):(\d\d):(\d\d)/);return m?+m[1]*60 + +m[2] + +m[3]/60:null};
   const apeClass=v=>v<15?'ape-low':v<30?'ape-mid':'ape-high';
+  const pct=v=>`${v.toFixed(2)}%`;
+
+  // Peak demand D and period volume V are the same estimate in two units:
+  // V_inferred = D_inferred / PLF with a per-link peak-load factor calibrated on
+  // the training weeks. Both are shown because the advisor asked for the D
+  // triple, but they are not two independent checks.
+  (function comparisonBlock(){
+    const c=data.comparison; if(!c) return;
+    const s1=c.supported_cases, all=c.all_episode_cases;
+    $('dvMetrics').innerHTML=[
+      ['Peak demand D',pct(s1.demand_D.mape_pct),`MAE ${fmt.format(s1.demand_D.mae)} veh/h · bias ${fmt.format(s1.demand_D.bias)}`,'orange'],
+      ['Period volume V',pct(s1.volume_V.mape_pct),`MAE ${fmt.format(s1.volume_V.mae)} veh · bias ${fmt.format(s1.volume_V.bias)}`,'orange'],
+      ['Inferred D/C',pct(s1.d_over_c.mape_pct),`MAE ${s1.d_over_c.mae.toFixed(2)} · bias ${s1.d_over_c.bias.toFixed(2)}`,''],
+      ['Minimum speed v(T2)',`${s1.vT2_mae_mph.toFixed(2)} mph`,'MAE on supported cases','teal']
+    ].map(m=>`<article><span>${m[0]}</span><strong class="${m[3]}">${m[1]}</strong><small>${m[2]}</small></article>`).join('');
+    $('comparisonNote').textContent=
+      `Errors are conditional on the ${c.coverage.supported_both_gates} supported cases `
+      + `(${c.coverage.supported_pct.toFixed(2)}% of ${c.coverage.total_cases}); the method `
+      + `abstains on the other ${c.coverage.abstained}. Across all `
+      + `${all.demand_D.cases} episode cases, before the support gates, demand MAPE is `
+      + `${pct(all.demand_D.mape_pct)} and volume MAPE ${pct(all.volume_V.mape_pct)}. `
+      + `V and D are one estimate in two units: V = D / PLF with a per-link peak-load `
+      + `factor from the training weeks, so they are not independent checks. `
+      + `P is observed and is an input to the inversion, not a prediction.`;
+  })();
 
   function options(){
     $('linkSelect').innerHTML=data.links.map(v=>`<option>${v}</option>`).join('');
@@ -107,7 +132,8 @@
     el.innerHTML=`<svg viewBox="0 0 ${w} ${h}">${axes(w,h,m,[],[0,max/2,max],v=>v,y,v=>v,v=>fmt.format(v))}${marks}</svg><div class="chart-legend"><span><i style="background:#74a0bf"></i>observed</span><span><i style="background:#ee783f"></i>supported V̂</span><span style="color:#c84d4d">× speed fail</span><span style="color:#7858a6">◆ duration fail</span><span>○ no episode</span></div>`;
   }
   function renderTable(){
-    $('caseTable').innerHTML=supported.map(d=>`<tr data-key="${d.link_id}|${d.period}|${d.week_start}" class="${d===state.case?'active':''}"><td>${d.link_id}</td><td>${d.period}</td><td>${d.week_start}</td><td>${fmt.format(d.observed_average_period_volume_veh)}</td><td>${fmt.format(d.V_hat_veh)}</td><td class="${apeClass(d.absolute_percentage_error_pct)}">${d.absolute_percentage_error_pct.toFixed(2)}%</td><td class="status-pass">Passed</td></tr>`).join('');
+    const delta=(inferred,observed)=>{const diff=inferred-observed;const sign=diff>=0?'+':'−';return `${sign}${fmt.format(Math.abs(diff))}`;};
+    $('caseTable').innerHTML=supported.map(d=>`<tr data-key="${d.link_id}|${d.period}|${d.week_start}" class="${d===state.case?'active':''}"><td>${d.link_id}</td><td>${d.period}</td><td>${d.week_start}</td><td>${d.P_h.toFixed(2)}</td><td>${fmt.format(d.observed_peak_1h_demand_veh_h)}</td><td>${fmt.format(d.D_hat_veh_h)}</td><td>${delta(d.D_hat_veh_h,d.observed_peak_1h_demand_veh_h)}</td><td>${fmt.format(d.observed_average_period_volume_veh)}</td><td>${fmt.format(d.V_hat_veh)}</td><td>${delta(d.V_hat_veh,d.observed_average_period_volume_veh)}</td><td class="${apeClass(d.absolute_percentage_error_pct)}">${d.absolute_percentage_error_pct.toFixed(2)}%</td><td class="status-pass">Passed</td></tr>`).join('');
     [...$('caseTable').querySelectorAll('tr')].forEach(tr=>tr.addEventListener('click',()=>{const [l,p,w]=tr.dataset.key.split('|');state.case=supported.find(d=>d.link_id===l&&d.period===p&&d.week_start===w);$('linkSelect').value=l;syncPeriods();$('periodSelect').value=p;syncWeeks();$('weekSelect').value=w;state.case=supported.find(d=>d.link_id===l&&d.period===p&&d.week_start===w);render();window.scrollTo({top:$('linkSelect').getBoundingClientRect().top+window.scrollY-30,behavior:'smooth'})}));
   }
   window.addEventListener('resize',()=>render());

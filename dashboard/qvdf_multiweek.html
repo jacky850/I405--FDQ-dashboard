@@ -29,6 +29,8 @@
       <article><span>Median APE</span><strong>14.71%</strong><small>supported cases only</small></article>
     </section>
 
+    <section class="metrics" id="dvMetrics" aria-label="Demand and volume comparison"></section>
+
     <section class="card protocol-card">
       <div class="section-head"><div><p class="overline">01 · EVALUATION DESIGN</p><h2>Every week takes a turn as holdout</h2></div><span class="pill">Flow hidden during inference</span></div>
       <div id="weekTimeline" class="week-timeline"></div>
@@ -79,7 +81,8 @@
 
     <section class="card table-card">
       <div class="section-head"><div><p class="overline">04 · SUPPORTED RESULTS</p><h2>Accuracy for every case that passed both gates</h2></div><span class="pill">Click a row to inspect</span></div>
-      <div class="table-wrap"><table><thead><tr><th>Link</th><th>Period</th><th>Holdout week</th><th>Observed V</th><th>Inferred V</th><th>APE</th><th>Status</th></tr></thead><tbody id="caseTable"></tbody></table></div>
+      <div class="table-wrap"><table><thead><tr><th>Link</th><th>Period</th><th>Holdout week</th><th>P (h)</th><th>Observed D</th><th>Inferred D</th><th>&Delta;D</th><th>Observed V</th><th>Inferred V</th><th>&Delta;V</th><th>APE</th><th>Status</th></tr></thead><tbody id="caseTable"></tbody></table></div>
+      <p class="table-note" id="comparisonNote"></p>
     </section>
 
     <section class="note-card">

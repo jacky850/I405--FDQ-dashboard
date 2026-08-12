@@ -37,6 +37,9 @@ def main() -> None:
     results = pd.read_csv(SOURCE / "leave_one_week_out_qvdf_results.csv")
     profiles = pd.read_csv(SOURCE / "weekly_average_weekday_profiles_5min.csv")
     summary = json.loads((SOURCE / "multiweek_holdout_summary.json").read_text(encoding="utf-8"))
+    comparison = json.loads(
+        (SOURCE / "observed_vs_inferred_D_V_summary.json").read_text(encoding="utf-8")
+    )
 
     case_columns = [
         "link_id", "period", "week_start", "episode_identified", "P_h",
@@ -49,6 +52,9 @@ def main() -> None:
         "vT2_error_mph", "speed_branch_supported",
         "duration_extrapolation_ratio", "duration_branch_supported",
         "final_supported", "inverse_status", "observed_peak_1h_demand_veh_h",
+        # Peak demand D alongside period volume V, so the dashboard can show the
+        # observed/inferred/difference triple the advisor asked for.
+        "D_hat_veh_h", "k_d_observed",
     ]
 
     profile_payload: dict[str, list[list[float]]] = {}
@@ -60,6 +66,7 @@ def main() -> None:
 
     payload = {
         "summary": summary,
+        "comparison": comparison,
         "weeks": sorted(results["week_start"].unique().tolist()),
         "links": sorted(results["link_id"].unique().tolist()),
         "cases": records(results.sort_values(["link_id", "period", "week_start"]), case_columns),
