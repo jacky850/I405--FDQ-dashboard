@@ -13,13 +13,12 @@ crossed.
 
 ## Dashboard
 
+- [Open the public GitHub Pages dashboard](https://jacky850.github.io/I405--FDQ-dashboard/dashboard/full_day_residual_queue.html)
 - [Dashboard source](dashboard/full_day_residual_queue.html)
 
-The third-party branch preview was removed because its external-content
-confirmation page can enter a refresh loop in an embedded browser. The public
-GitHub Pages URL will be added after these dashboard assets are synchronized to
-the repository's Pages branch. The local preview instructions are provided
-under [Reproduce the result](#reproduce-the-result).
+The dashboard is published through the repository's official GitHub Pages site
+instead of a third-party raw-file preview. Local preview instructions are also
+provided under [Reproduce the result](#reproduce-the-result).
 
 The dashboard focuses on the main evidence: the full-day reporting-period
 definition, the count-based residual queue from formation to dissipation, and
