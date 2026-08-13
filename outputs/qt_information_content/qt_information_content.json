@@ -1,0 +1,126 @@
+{
+  "question": "does speed-inferred q(t) carry demand information outside congestion?",
+  "spread": {
+    "i405_measured": {
+      "links": 7,
+      "observations": 2016,
+      "free_flow_band_min": 0.044,
+      "free_flow_band_max": 1.0,
+      "free_flow_band_ratio": 22.8,
+      "daily_mean_over_daily_peak_median": 0.57,
+      "by_speed_band": {
+        "25-35": {
+          "n": 33,
+          "min": 0.528,
+          "max": 0.867
+        },
+        "35-45": {
+          "n": 26,
+          "min": 0.599,
+          "max": 0.938
+        },
+        "45-55": {
+          "n": 133,
+          "min": 0.584,
+          "max": 1.0
+        },
+        "55-60": {
+          "n": 203,
+          "min": 0.265,
+          "max": 1.0
+        },
+        "60-65": {
+          "n": 680,
+          "min": 0.044,
+          "max": 1.0
+        },
+        "65-70": {
+          "n": 821,
+          "min": 0.045,
+          "max": 1.0
+        }
+      }
+    },
+    "nvta_handoff": {
+      "links": 23,
+      "observations": 1564,
+      "free_flow_band_min": 0.665,
+      "free_flow_band_max": 1.0,
+      "free_flow_band_ratio": 1.5,
+      "daily_mean_over_daily_peak_median": 0.935,
+      "by_speed_band": {
+        "25-35": {
+          "n": 143,
+          "min": 0.707,
+          "max": 0.947
+        },
+        "35-45": {
+          "n": 208,
+          "min": 0.838,
+          "max": 1.0
+        },
+        "45-55": {
+          "n": 398,
+          "min": 0.894,
+          "max": 1.0
+        },
+        "55-60": {
+          "n": 387,
+          "min": 0.909,
+          "max": 1.0
+        },
+        "60-65": {
+          "n": 246,
+          "min": 0.794,
+          "max": 0.975
+        },
+        "65-70": {
+          "n": 18,
+          "min": 0.665,
+          "max": 0.833
+        }
+      }
+    },
+    "reading": "At free-flow speeds the measured I-405 flow spans 22.8x, because one speed is consistent with many flows. The handoff series spans 1.5x, so it is essentially a fundamental diagram evaluated at the observed speed and carries no independent flow information there."
+  },
+  "volume_error_i405": {
+    "note": "speed-only inversion scored against measured counts on the same links",
+    "by_period": {
+      "AM": {
+        "links": 7,
+        "bias_pct": 19.0,
+        "mape_pct": 20.2,
+        "worst_pct": 40.0
+      },
+      "MD": {
+        "links": 7,
+        "bias_pct": 28.8,
+        "mape_pct": 32.6,
+        "worst_pct": 53.2
+      },
+      "PM": {
+        "links": 7,
+        "bias_pct": 34.1,
+        "mape_pct": 29.6,
+        "worst_pct": 40.0
+      },
+      "NT": {
+        "links": 7,
+        "bias_pct": 57.6,
+        "mape_pct": 56.8,
+        "worst_pct": 94.6
+      },
+      "FULL DAY": {
+        "links": 7,
+        "bias_pct": 52.7,
+        "mape_pct": 54.9,
+        "worst_pct": 61.5
+      }
+    },
+    "reading": "The error is a one-sided overstatement and grows as congestion recedes: about +19% in AM, +58% at night, +53% over the full day."
+  },
+  "conclusion": {
+    "D": "defensible - restricted to bins below the cutoff, where the inversion is well posed",
+    "V": "not defensible from speed alone - it sums free-flow bins, and that is the quantity the assignment comparison needs"
+  }
+}

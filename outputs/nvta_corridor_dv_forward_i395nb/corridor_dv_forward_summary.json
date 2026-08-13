@@ -1,0 +1,142 @@
+{
+  "corridor": "I-395 NB",
+  "method": "D = sum of q(t) for v < v_cutoff; V = sum of q(t) over the period",
+  "units": {
+    "D": "veh per period",
+    "V": "veh per period",
+    "D_over_C_h": "period volume / hourly capacity, units of hours"
+  },
+  "source": {
+    "profile": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\I405--FDQ-dashboard-github\\data\\nvta_i395nb_handoff\\handoff_avgweekday_timedependent.csv",
+    "params": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\I405--FDQ-dashboard-github\\data\\nvta_i395nb_handoff\\handoff_link_qvdf_params.csv"
+  },
+  "coverage": {
+    "links": 23,
+    "link_periods": 92,
+    "corridor_length_mi": 10.840000000000002,
+    "congested_link_periods": 51,
+    "uncongested_link_periods": 41
+  },
+  "period_clock_min": {
+    "AM": [
+      300,
+      600
+    ],
+    "MD": [
+      600,
+      840
+    ],
+    "PM": [
+      840,
+      1200
+    ],
+    "NT": [
+      1200,
+      1320
+    ]
+  },
+  "by_period": {
+    "AM": {
+      "period_hours": 5.0,
+      "links": 23,
+      "congested_links": 20,
+      "V_median_veh": 9894.900000000001,
+      "V_corridor_total_veh": 224443.40000000002,
+      "D_median_veh": 6203.900000000001,
+      "D_over_C_median_h": 2.8199545454545456,
+      "V_over_C_median_h": 4.497681818181819,
+      "P_median_h": 3.25,
+      "qbar_over_C_median": 0.8795713286713287,
+      "duration_branch_check": {
+        "D_over_C_branch_median": 2.9635240458126657,
+        "mape_pct": 7.382839178522554,
+        "corr": 0.9817407218333118
+      }
+    },
+    "MD": {
+      "period_hours": 4.0,
+      "links": 23,
+      "congested_links": 9,
+      "V_median_veh": 8283.8,
+      "V_corridor_total_veh": 188471.59999999998,
+      "D_median_veh": 7634.9,
+      "D_over_C_median_h": 3.4704090909090906,
+      "V_over_C_median_h": 3.7653636363636362,
+      "P_median_h": 4.0,
+      "qbar_over_C_median": 0.9398181818181818,
+      "duration_branch_check": "no calibrated parameters for this period"
+    },
+    "PM": {
+      "period_hours": 6.0,
+      "links": 23,
+      "congested_links": 16,
+      "V_median_veh": 12346.400000000001,
+      "V_corridor_total_veh": 264970.19999999995,
+      "D_median_veh": 7860.6,
+      "D_over_C_median_h": 3.573,
+      "V_over_C_median_h": 5.612000000000001,
+      "P_median_h": 4.75,
+      "qbar_over_C_median": 0.8593378787878787,
+      "duration_branch_check": {
+        "D_over_C_branch_median": 4.389412606674208,
+        "mape_pct": 19.85249782381447,
+        "corr": 0.9354092799860461
+      }
+    },
+    "NT": {
+      "period_hours": 2.0,
+      "links": 23,
+      "congested_links": 6,
+      "V_median_veh": 4140.5,
+      "V_corridor_total_veh": 94454.99999999999,
+      "D_median_veh": 4097.75,
+      "D_over_C_median_h": 1.8626136363636363,
+      "V_over_C_median_h": 1.8820454545454546,
+      "P_median_h": 2.0,
+      "qbar_over_C_median": 0.9586590909090908,
+      "duration_branch_check": "no calibrated parameters for this period"
+    }
+  },
+  "s3_vs_handoff": {
+    "AM": {
+      "V_mape_pct": 4.184890957201431,
+      "D_mape_pct": 5.438549423064874
+    },
+    "MD": {
+      "V_mape_pct": 2.3762032896581524,
+      "D_mape_pct": 4.269156235092588
+    },
+    "PM": {
+      "V_mape_pct": 3.5109366027534272,
+      "D_mape_pct": 6.409482434043036
+    },
+    "NT": {
+      "V_mape_pct": 1.0910334898722207,
+      "D_mape_pct": 2.576892216791209
+    }
+  },
+  "branch_error_vs_flow_during_congestion": {
+    "AM": {
+      "qbar_over_C_min": 0.769,
+      "qbar_over_C_max": 0.966,
+      "corr_qbar_over_C_with_branch_error": -0.848
+    },
+    "PM": {
+      "qbar_over_C_min": 0.595,
+      "qbar_over_C_max": 0.973,
+      "corr_qbar_over_C_with_branch_error": -0.932
+    }
+  },
+  "censored_episodes": {
+    "AM": 1,
+    "MD": 6,
+    "NT": 4,
+    "PM": 6
+  },
+  "caveat": {
+    "q_is_speed_derived": "count_total_15min is not an independent count: it reproduces an S3 evaluation of speed_smoothed to 3.3% (R2 0.94), and at a given speed it varies only 1.5x across the day where measured I-405 flow varies 22.8x. Its daily mean/peak ratio is 0.94 against 0.57 for measured I-405 flow.",
+    "D_is_defensible": "D sums bins below the cutoff, where the congested branch is steep and the speed-to-flow inversion is well posed.",
+    "V_is_not": "V sums free-flow bins too, where one speed is consistent with a wide band of flows. Scored against measured counts on I-405 the same speed-only inversion overstates period volume by +19% (AM), +29% (MD), +34% (PM), +58% (NT), +53% full day. V here should be treated as an upper bound.",
+    "period_clock_mismatch": "The handoff clock (AM 5h, MD 4h, PM 6h, NT 2h) differs from the assignment clock implied by dc_dta_vol/dc_dta_doc (AM 3h, MD 6h, PM 4h). V must be re-cut to the assignment periods before the two are compared."
+  }
+}
