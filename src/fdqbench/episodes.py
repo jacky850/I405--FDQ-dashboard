@@ -49,9 +49,9 @@ def _period_of(timestamp: pd.Timestamp) -> str:
     hour = timestamp.hour + timestamp.minute / 60.0
     if 0 <= hour < 6:
         return "NT1"
-    if 6 <= hour < 10:
+    if 6 <= hour < 9:
         return "AM"
-    if 10 <= hour < 15:
+    if 9 <= hour < 15:
         return "MD"
     if 15 <= hour < 19:
         return "PM"

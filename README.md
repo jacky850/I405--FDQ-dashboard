@@ -683,6 +683,11 @@ links, AM and PM: 168 link-week cases, leave-one-week-out.
 
 ## What is a prediction and what is not
 
+AM is 06:00–09:00 and PM 15:00–19:00, the whole-day DTA period spec, matching
+Parts 1 and 2. No episode moved period when the AM cut changed from 10:00 to
+09:00 — every detected T2 falls between 06:50 and 08:35 — so coverage is
+unchanged at 21 of 168 and the two runs are directly comparable.
+
 This distinction decides how every number below should be read.
 
 | Quantity | Source | Status |
@@ -705,15 +710,15 @@ Per case, side by side with the difference:
 
 | | MAPE | MAE | bias |
 |---|---:|---:|---:|
-| Peak demand `D` | **16.00%** | 1,371 veh/h | −426 |
-| Period volume `V` | 16.51% | 4,916 veh | −1,465 |
-| Inferred `D/C` | 17.29% | 0.20 | −0.16 |
+| Peak demand `D` | **15.96%** | 1,360 veh/h | −415 |
+| Period volume `V` | 16.88% | 4,110 veh | −1,210 |
+| Inferred `D/C` | 17.15% | 0.20 | −0.16 |
 | Minimum speed `v(T2)` | — | 2.21 mph | — |
 
 **Coverage is 21 of 168 cases (12.50%).** The method abstains on the rest: 137
 have no canonical speed episode, 7 fail the speed-consistency gate, 3 fail the
 duration-extrapolation gate. Over all 31 episode cases *before* the gates,
-demand MAPE is 30.08% and volume MAPE 31.38%. The error figure and the coverage
+demand MAPE is 29.82% and volume MAPE 32.06%. The error figure and the coverage
 figure only mean something together.
 
 **`V` and `D` are not two independent checks.** `V_inferred = D_inferred / PLF`
@@ -738,12 +743,12 @@ of a period are not at the bottom of the dip.
 
 | Window | Forward MAE | Bias | Skill vs free-flow |
 |---|---:|---:|---:|
-| Modelled congestion window | **4.86 mph** | −0.28 | 0.958 |
-| Observed episode `[t0, t3]` | 6.76 mph | +3.94 | 0.882 |
-| Whole period | 8.48 mph | +4.92 | 0.784 |
+| Modelled congestion window | **4.74 mph** | −0.69 | 0.961 |
+| Observed episode `[t0, t3]` | 5.17 mph | +1.80 | 0.925 |
+| Whole period | 6.92 mph | +2.35 | 0.847 |
 
-Free-flow baseline over the whole period: 23.79 mph MAE. Worst single bin: 34.6
-mph.
+Free-flow baseline over the whole period: 25.37 mph MAE. Worst single bin:
+29.3 mph.
 
 ### The error is at the episode edge, not in the depth of the dip
 
@@ -751,23 +756,23 @@ Two results point the same way.
 
 **The severity branch is not the binding constraint.** Handing the model the
 *observed* depth instead of the predicted one — `z` from the measured `v(T2)`
-rather than from `f_p · P^s` — improves the congested-window MAE only from 4.86
-to 4.47 mph. The frozen severity branch is close to right.
+rather than from `f_p · P^s` — improves the congested-window MAE only from 4.74
+to 4.33 mph. The frozen severity branch is close to right.
 
 **The boxcar edge is.** Splitting the period error at the model's own episode
 boundary:
 
 | | share of bins | share of squared error | MAE | bias |
 |---|---:|---:|---:|---:|
-| Inside the modelled episode | 62.1% | 27.4% | 5.32 mph | −0.42 |
-| Outside, model asserts free flow | 37.9% | **72.6%** | 13.68 mph | **+13.67** |
+| Inside the modelled episode | 72.9% | 42.4% | 5.15 mph | −1.02 |
+| Outside, model asserts free flow | 27.1% | **57.6%** | 11.80 mph | **+11.79** |
 
 Inside its own window the model is essentially unbiased. Outside it the error is
-one-sided and large, because the road is not at free flow there: **79.6% of
-those bins are below 90% of free speed and 32.5% are below the cutoff speed
-`v_c` that the model itself uses to define congestion.** Across the period 67.3%
+one-sided and large, because the road is not at free flow there: **67.9% of
+those bins are below 90% of free speed and 28.4% are below the cutoff speed
+`v_c` that the model itself uses to define congestion.** Across the period 71.8%
 of bins are congested by that definition while the modelled episode covers
-62.1%.
+72.9%. Per bin the outside region carries 2.1x its share of the error.
 
 A related misalignment: the QVDF episode is symmetric about `T2`, the detected
 one is not. `T2` sits 8.1 minutes off the episode midpoint on average and up to
@@ -814,7 +819,7 @@ python scripts/build_i405_multiweek_dashboard_data.py
 5. **Corridor propagation is untouched.** Multi-detector time-space and
    shockwave work is future scope; with a single link there is nothing honest to
    plot.
-6. **The QVDF episode edge is a boxcar.** Part 3 shows 72.6% of the period speed
+6. **The QVDF episode edge is a boxcar.** Part 3 shows 57.6% of the period speed
    error sits outside the modelled episode, where the model asserts free flow
    and the road is still slow. A tapered edge, or an episode definition that
    does not force symmetry about `T2`, is the obvious next change.

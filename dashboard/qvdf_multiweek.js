@@ -35,7 +35,7 @@
   // Forward projection: the inferred state pushed back through the QVDF speed
   // map. The duration branch round-trips by construction, so what is on trial
   // here is the frozen severity branch and the (1-tau^2)^2 episode shape.
-  const PERIOD_WINDOW={AM:[360,600],PM:[900,1140]};
+  const PERIOD_WINDOW={AM:[360,540],PM:[900,1140]};
   (function projectionBlock(){
     const p=data.projection; if(!p) return;
     const s=p.supported_cases, d=p.period_error_decomposition_supported;

@@ -49,7 +49,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-PERIODS = {"AM": (6.0, 10.0), "PM": (15.0, 19.0)}
+PERIODS = {"AM": (6.0, 9.0), "PM": (15.0, 19.0)}
 VARIANTS = ("forward", "shape_only", "free_flow_baseline")
 WINDOWS = ("model_window", "observed_episode", "period")
 

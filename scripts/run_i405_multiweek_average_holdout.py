@@ -23,7 +23,8 @@ TARGET_LINKS = [
     "L405S-012", "L405S-018", "L405S-028", "L405S-030",
     "L405S-058", "L405S-098", "L405S-115",
 ]
-PERIODS = {"AM": (6.0, 10.0), "PM": (15.0, 19.0)}
+# AM ends at 09:00 per the whole-day DTA period spec, matching Parts 1 and 2.
+PERIODS = {"AM": (6.0, 9.0), "PM": (15.0, 19.0)}
 LA = "America/Los_Angeles"
 KM_TO_MI = 0.621371192237334
 N_FROZEN = 1.10
