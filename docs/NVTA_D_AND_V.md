@@ -90,6 +90,17 @@ below them are diagnostic, and show where the error lives.
 | **PM** | 4 | 45.1% | +42.9% | 82 | **18.6%** | −12.7% |
 | **NT** | 1 | — | — | 82 | **40.9%** | +36.1% |
 
+One observation is one link-week-period. Seven links across twelve weeks gives 84
+link-weeks, less two where the maximum-flow bin sat above the 95th-percentile
+speed and the diagram could not be fitted, so **V is scored on all 82 in every
+period**. **D is scored only on those containing a congestion episode of at least
+half an hour** — 26 of 82 in AM, 4 in PM — which is why its sample varies. An
+observation with two episodes still counts once; D sums across both.
+
+Errors are per observation, `(inferred − measured) / measured`. MAPE is the mean
+of the absolute values; **bias is the median**, taken rather than the mean so a
+single 200% case cannot set it.
+
 For reference, the same data per 5-minute bin: 20.7% MAPE on congested bins,
 84.6% on free-flow bins. The gap to the period rows is the bin errors
 cancelling — they are scatter rather than a consistent lean, so summing 36–72 of
