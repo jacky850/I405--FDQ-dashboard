@@ -83,24 +83,36 @@ profiles, S3 with the standard exponent `m = 4`. **D and V are delivered per
 period, so those are the rows that describe the deliverable**; the per-bin rows
 below them are diagnostic, and show where the error lives.
 
-| | Unit | n | MAPE | median bias |
-|---|---|---:|---:|---:|
-| **D** | **period** | 48 | **16.6%** | +3.6% |
-| **V** | **period** | 328 | **23.1%** | −6.4% |
-| Congested bins | 5-min bin | 890 | 20.7% | +5.4% |
-| Free-flow bins | 5-min bin | 22,726 | 84.6% | −4.2% |
+| Period | **D** n | **D** MAPE | **D** bias | **V** n | **V** MAPE | **V** bias |
+|---|---:|---:|---:|---:|---:|---:|
+| **AM** | 26 | **6.1%** | +0.4% | 82 | **16.1%** | −14.7% |
+| **MD** | 17 | **14.5%** | +9.2% | 82 | **16.8%** | −11.9% |
+| **PM** | 4 | 45.1% | +42.9% | 82 | **18.6%** | −12.7% |
+| **NT** | 1 | — | — | 82 | **40.9%** | +36.1% |
 
-The gap between 84.6% per bin and 23.1% per period is the per-bin errors
-cancelling: they are scatter rather than a consistent lean, so summing 36–72 of
-them into a period total leaves far less. What survives is concentrated in the
-free-flow bins, which are **40–94% of V** depending on corridor and period — the
-right panel above. Only I-395 NB in AM gets below half.
+For reference, the same data per 5-minute bin: 20.7% MAPE on congested bins,
+84.6% on free-flow bins. The gap to the period rows is the bin errors
+cancelling — they are scatter rather than a consistent lean, so summing 36–72 of
+them leaves far less.
 
-I would not call V a bound in either direction. Against measured counts it is
-close to unbiased and simply imprecise. Against the DTA assignment it does read
-high — 1.09–1.15× where congestion is heaviest, 1.3–1.9× where it is lighter —
-but neither series is ground truth there, so that gap is a question rather than a
+**Two things this table says that a pooled number would hide.**
+
+**V is steady at 16–19% through AM, MD and PM, and only breaks down at night**
+(40.9%). Its bias also changes sign — around −13% in the day, +36% at night — so
+a pooled bias would average to near zero and imply an accuracy that is not there.
+The daytime lean is mildly *low*, not high, which is why I would not describe V
+as a bound in either direction. It does read high against the DTA assignment
+(1.09–1.15× where congestion is heaviest, 1.3–1.9× where lighter), but neither
+series is ground truth there, so that gap is an open question rather than a
 correction.
+
+**D is well tested in AM and barely tested in PM.** 26 AM cases at 6.1% is a
+solid result. But these seven I-405 links are 97% free-flow bins in PM, so only
+4 congestion episodes exist to score there and one at night — too few to conclude
+anything, and the 45.1% should be read as an absence of evidence rather than
+evidence of error. **That is a real gap, because PM is where the NVTA numbers are
+largest** (I-66 EB is congested on 31 of 36 links in PM). Confirming D in a PM
+peak needs a corridor that actually has one and has counts.
 
 ### D, checked the same way
 
