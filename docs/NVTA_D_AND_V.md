@@ -78,91 +78,58 @@ of how many others are on the road, so one speed is consistent with a wide band
 of flows: 65 mph at 03:00 and 65 mph at 06:30 are completely different traffic.
 The diagram returns one answer anyway.
 
-Scored against measured counts on I-405 — 7 links × 12 weekly average-weekday
-profiles, S3 with the standard exponent `m = 4`. **D and V are delivered per
-period, so those are the rows that describe the deliverable**; the per-bin rows
-below them are diagnostic, and show where the error lives.
+Scored against measured counts on **ten PeMS corridor-directions** — both ways on
+I-405, I-5, I-10 and I-210, 824 links, average-weekday profiles over roughly nine
+months of weekdays, `is_observed` only so nothing imputed enters a comparison
+against measurement. S3 with the standard exponent `m = 4`.
 
 | Period | **D** n | **D** MAPE | **D** bias | **V** n | **V** MAPE | **V** bias |
 |---|---:|---:|---:|---:|---:|---:|
-| **AM** | 26 | **6.1%** | +0.4% | 82 | **16.1%** | −14.7% |
-| **MD** | 17 | **14.5%** | +9.2% | 82 | **16.8%** | −11.9% |
-| **PM** | 4 | 45.1% | +42.9% | 82 | **18.6%** | −12.7% |
-| **NT** | 1 | — | — | 82 | **40.9%** | +36.1% |
-
-One observation is one link-week-period. Seven links across twelve weeks gives 84
-link-weeks, less two where the maximum-flow bin sat above the 95th-percentile
-speed and the diagram could not be fitted, so **V is scored on all 82 in every
-period**. **D is scored only on those containing a congestion episode of at least
-half an hour** — 26 of 82 in AM, 4 in PM — which is why its sample varies. An
-observation with two episodes still counts once; D sums across both.
-
-Errors are per observation, `(inferred − measured) / measured`. MAPE is the mean
-of the absolute values; **bias is the median**, taken rather than the mean so a
-single 200% case cannot set it.
-
-For reference, the same data per 5-minute bin: 20.7% MAPE on congested bins,
-84.6% on free-flow bins. The gap to the period rows is the bin errors
-cancelling — they are scatter rather than a consistent lean, so summing 36–72 of
-them leaves far less.
-
-**Two things this table says that a pooled number would hide.**
-
-**V is steady at 16–19% through AM, MD and PM and only breaks down at night**
-(40.9%). More usefully, comparing `|bias|` against MAPE says what kind of error
-it is:
-
-| | MAPE | bias | `\|bias\|` ÷ MAPE |
-|---|---:|---:|---:|
-| Per 5-minute bin | 82.2% | −3.2% | **0.04** |
-| Per period, AM | 16.1% | −14.7% | **0.91** |
-| Per period, MD | 16.8% | −11.9% | 0.71 |
-| Per period, PM | 18.6% | −12.7% | 0.68 |
-| Per period, NT | 40.9% | +36.1% | 0.88 |
-
-Per bin the error is almost pure scatter — the bias accounts for 4% of it. That
-scatter is what cancels on summing, taking 82% down to 16%. **What survives at
-period level is not scatter but a systematic lean**: 68–91% of the remaining
-error is direction, running about 13% low through the day and 36% high at night.
-
-That is better news than a 16% error band, because a consistent lean is
-correctable in a way that scatter is not. It is also why the pooled bias of
-−6.4% was meaningless: it averaged a daytime lean against an opposite night one.
-I have not applied a correction here, because it would be calibrated on I-405 and
-transferring it to NVTA is exactly the kind of assumption this note is trying to
-avoid — but if you want V adjusted, this is the number to adjust it by.
-
-For the same reason I would not call V a bound. It leans low against counts, yet
-reads high against the DTA assignment (1.09–1.15× where congestion is heaviest,
-1.3–1.9× where lighter). Neither series is ground truth, so that gap is an open
-question rather than a correction.
-
-**D is well tested in AM and barely tested in PM.** 26 AM cases at 6.1% is a
-solid result. But these seven I-405 links are 97% free-flow bins in PM, so only
-4 congestion episodes exist to score there and one at night — too few to conclude
-anything, and the 45.1% should be read as an absence of evidence rather than
-evidence of error. **That is a real gap, because PM is where the NVTA numbers are
-largest** (I-66 EB is congested on 31 of 36 links in PM). Confirming D in a PM
-peak needs a corridor that actually has one and has counts.
-
-### D, checked the same way
+| **AM** | 189 | **10.0%** | +7.4% | 856 | **9.5%** | −4.9% |
+| **MD** | 317 | **8.6%** | +7.3% | 856 | **7.6%** | +1.7% |
+| **PM** | 285 | **8.8%** | +5.6% | 856 | **8.2%** | +1.0% |
+| **NT** | 132 | **10.9%** | +8.4% | 856 | **29.0%** | +16.4% |
 
 ![D and V against measured counts](figures/d_vs_counts.png)
 
-Congestion episodes must last at least half an hour — the `MIN_EPISODE_H` rule
-in `config.py`, which matters because a brief dip is not congestion and the
-diagram reads any low speed as high density however few vehicles are behind it.
+One observation is one link-period. **V is scored on every link-period; D only on
+those holding a congestion episode of at least half an hour** — the
+`MIN_EPISODE_H` rule in `config.py`, which matters because a brief dip is not
+congestion and the diagram reads any low speed as high density however few
+vehicles are behind it. That is why D's sample varies and V's does not. Errors
+are `(inferred − measured) / measured` per observation; MAPE is the mean of the
+absolute values, **bias is the median**, taken rather than the mean so a single
+extreme case cannot set it.
 
-Pooling the weekly profiles above with 5 individual weekdays widens the sample to
-**82 episodes across 23 links**, where D lands at **14.2% MAPE, +1.2% median
-bias, 83% of cases within ±20%** — consistent with the 16.6% in the table, which
-is the 7-link weekly subset alone.
+**D holds between 8.6% and 10.9% across all four periods**, 90% of cases within
+±20%. It leans consistently high, by 5.6–8.4%, and `|bias|` is 63–84% of MAPE —
+so most of D's error is a correctable direction rather than scatter.
 
-![One speed, how many flows](figures/flow_information.png)
+**V is 7.6–9.5% through AM, MD and PM and breaks down only at night** (29.0%,
++16.4%). In MD and PM its bias is 1–2% and `|bias|` is only 12–23% of MAPE, so
+there the error really is scatter. Night is the exception in both size and
+direction, which is where the free-flow problem should show: **40–94% of V comes
+from free-flow bins** depending on corridor and period, and NT is the period made
+almost entirely of them.
 
-*Left: measured I-405 detector flow. At 65 mph the road carries anywhere from 4%
-to 100% of that link's daily peak. Right: the NVTA series, which traces a single
-curve because it is the diagram evaluated at the observed speed.*
+I would not call V a bound. It is close to unbiased against counts in daylight
+and simply imprecise. It does read high against the DTA assignment — 1.09–1.15×
+where congestion is heaviest, 1.3–1.9× where lighter — but neither series is
+ground truth there, so that gap is an open question rather than a correction.
+
+**A caveat on all of the above.** These are average-weekday profiles, so both the
+speed and the counts are smoothed across many days. That is the same construction
+the NVTA deliverable uses, which makes it the right comparison — but it describes
+accuracy on an average weekday, not on any individual day. An earlier version of
+this note reported 14.2% for D and 16–19% for V from a single corridor of 23
+links; the numbers above supersede those, and the difference is mostly sample
+size and cleanliness rather than method.
+
+**On the earlier PM gap.** A previous version of this table had only 4 PM
+episodes and a 45.1% PM error for D. The cause was direction, not method: every
+link then available was I-405 southbound, the local AM commute, whose PM median
+speed is 66–72 mph. There was no PM congestion there to score. With both
+directions of four corridors, PM has 285 episodes and lands at 8.8%.
 
 ## The question
 
