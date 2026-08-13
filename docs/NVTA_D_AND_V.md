@@ -78,6 +78,13 @@ of how many others are on the road, so one speed is consistent with a wide band
 of flows: 65 mph at 03:00 and 65 mph at 06:30 are completely different traffic.
 The diagram returns one answer anyway.
 
+![One speed, how many flows](figures/flow_information.png)
+
+*Hold the speed at 60–65 mph and ask what flow was measured. On I-405 the answer
+spans 23×, from 4% to 100% of that link's daily peak — the same speed is 06:35
+traffic and 02:00 traffic. In the NVTA series it spans 1.2×, because there q(t)
+is the diagram evaluated at the observed speed rather than a measurement.*
+
 Scored against measured counts on **ten PeMS corridor-directions** — both ways on
 I-405, I-5, I-10 and I-210, 824 links, average-weekday profiles over roughly nine
 months of weekdays, `is_observed` only so nothing imputed enters a comparison
