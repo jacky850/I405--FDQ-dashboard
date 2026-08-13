@@ -29,7 +29,7 @@
   function falsifyChart() {
     const el = $('falsifyChart');
     const bars = [
-      { label: 'Observed delay queue, peak', value: F.observed_delay_queue_max_veh, colour: TEAL },
+      { label: 'Delay queue implied by observed speed, peak', value: F.observed_delay_queue_max_veh, colour: TEAL },
       { label: 'Corridor storage at jam density', value: F.storage_at_jam_density_veh, colour: SLATE },
       { label: 'AM · implied by duration branch', value: F.AM.implied_queue_accumulation_veh, colour: ORANGE },
       { label: 'PM · implied by duration branch', value: F.PM.implied_queue_accumulation_veh, colour: RED },
@@ -58,7 +58,7 @@
       ${fmt.format(F.PM.implied_queue_accumulation_veh)} in PM. The corridor is ${F.corridor_length_mi.toFixed(2)} miles and holds
       ${fmt.format(F.storage_at_jam_density_veh)} vehicles bumper to bumper — so the implied accumulation exceeds the physical
       storage by ${F.AM.times_larger_than_corridor_storage.toFixed(1)}× and ${F.PM.times_larger_than_corridor_storage.toFixed(1)}×,
-      and the queue actually observed by ${F.AM.times_larger_than_observed_queue.toFixed(0)}× and
+      and the delay queue implied by the observed speed by ${F.AM.times_larger_than_observed_queue.toFixed(0)}× and
       ${F.PM.times_larger_than_observed_queue.toFixed(0)}×. No calibration choice rescues a demand that cannot fit on the road.`;
   }
 
