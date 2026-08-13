@@ -32,6 +32,7 @@ strictly weaker claim attached.
 - [PeMS queue continuity](https://jacky850.github.io/I405--FDQ-dashboard/dashboard/full_day_residual_queue.html) · [source](dashboard/full_day_residual_queue.html)
 - [NVTA speed-only queue continuity](https://jacky850.github.io/I405--FDQ-dashboard/dashboard/nvta_full_day_queue.html) · [source](dashboard/nvta_full_day_queue.html)
 - [Speed-only QVDF holdout, observed vs inferred D and V](https://jacky850.github.io/I405--FDQ-dashboard/dashboard/qvdf_multiweek.html) · [source](dashboard/qvdf_multiweek.html)
+- [I-395 NB corridor, inferred D and V two ways](https://jacky850.github.io/I405--FDQ-dashboard/dashboard/nvta_corridor_d_v.html) · [source](dashboard/nvta_corridor_d_v.html)
 
 Both are self-contained static HTML/CSS/JavaScript and draw their charts as
 inline SVG. Local preview instructions are in each part's *Reproduce* section.

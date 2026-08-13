@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I-395 NB Inferred Demand and Volume</title>
+  <link rel="stylesheet" href="nvta_corridor_d_v.css?v=73d2749a">
+  <link rel="stylesheet" href="site-nav.css?v=a31677ee">
+</head>
+<body>
+  <nav class="site-nav" aria-label="Dashboards"><div><span class="site-brand">FDQBench</span><ul><li><a href="dashboard_I405.html">Ground-truth explorer</a></li><li><a href="full_day_residual_queue.html">PeMS queue continuity</a></li><li><a href="nvta_full_day_queue.html">NVTA speed-only queue</a></li><li><a href="qvdf_multiweek.html">QVDF holdout · D and V</a></li><li><a href="nvta_corridor_d_v.html" aria-current="page">I-395 NB corridor</a></li></ul></div></nav>
+  <header class="hero">
+    <div class="hero-top"><b>FDQBench</b><span>NVTA I-395 northbound · 23 links · average weekday</span></div>
+    <p class="eyebrow">INFERRED DEMAND AND VOLUME, TWO WAYS</p>
+    <h1>Where would<br><em>36,464 vehicles</em> go?</h1>
+    <p class="lede">The QVDF duration branch and a conservation queue read the same speed profile and disagree about demand by a factor of three to five. One of them implies a vehicle accumulation larger than the corridor can physically hold, and that settles it without appealing to either model.</p>
+  </header>
+
+  <main>
+    <section class="metrics" id="headline"></section>
+
+    <section class="card">
+      <div class="section-head"><div><p>THE DECIDING TEST</p><h2>Demand held at D must deposit vehicles somewhere</h2></div><span>vehicles · log scale</span></div>
+      <p class="lede-note">Sustained demand above capacity accumulates: <i>(D&nbsp;−&nbsp;μ)&nbsp;×&nbsp;P</i> vehicles, by conservation alone. No fundamental diagram, no power law, no calibration enters this comparison — only the arithmetic of vehicles entering faster than they leave, set against how many the road can hold.</p>
+      <div id="falsifyChart" class="chart"></div>
+      <div class="verdict" id="verdict"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-head"><div><p>CONSERVATION ROUTE</p><h2>Corridor queue and the demand it implies</h2></div><span>415 veh peak · 15-minute states</span></div>
+      <div id="queueChart" class="chart"></div>
+      <p class="lede-note" id="queueNote"></p>
+    </section>
+
+    <section class="card">
+      <div class="section-head"><div><p>CONVERGENT EVIDENCE</p><h2>Three routes to D/C, one outlier</h2></div><span>peak-hour demand over capacity</span></div>
+      <div id="convergeChart" class="chart short"></div>
+      <p class="lede-note">The first three use different data and different mathematics. The PeMS figure is the only one built on measured counts taken ahead of a bottleneck, where arrivals are not capped by what the bottleneck can discharge.</p>
+    </section>
+
+    <section class="card table-card">
+      <div class="section-head"><div><p>DELIVERABLE</p><h2>Inferred D and V for every link</h2></div><span>36 link-periods with an episode</span></div>
+      <div class="table-wrap"><table><thead><tr><th>Link</th><th>Period</th><th>P (h)</th><th>v(T₂)</th><th>D/C</th><th>D duration branch</th><th>V duration branch</th><th>D conservation</th><th>Ratio</th></tr></thead><tbody id="linkTable"></tbody></table></div>
+      <p class="lede-note" id="tableNote"></p>
+    </section>
+
+    <section class="card caveat-card">
+      <div class="section-head"><div><p>WHAT THIS IS NOT</p><h2>Limits of both routes</h2></div></div>
+      <div class="caveat-grid" id="caveats"></div>
+    </section>
+  </main>
+
+  <footer><span>I-395 NB · advisor QVDF handoff · average weekday 2025-10-06 to 10-10</span><span>America/New_York</span></footer>
+  <div id="tooltip" class="tooltip"></div>
+  <script src="nvta_corridor_data.js?v=ac7aaa28"></script>
+  <script src="nvta_corridor_d_v.js?v=f1cf9c67"></script>
+</body>
+</html>
