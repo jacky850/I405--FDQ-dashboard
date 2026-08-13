@@ -30,9 +30,7 @@ rate, so the quantity it tested does not exist.
 
 Built forward from q(t) as you asked, not by inverting the duration branch:
 
-$$D_{\text{period}} = \sum_{t\,:\,v(t) < v_{\text{cutoff}}} q(t)
-\qquad\qquad
-V_{\text{period}} = \sum_{t \in \text{period}} q(t)$$
+$$D_{\text{period}} = \sum_{t \,:\, v(t) \lt v_{\text{cutoff}}} q(t) \qquad\qquad V_{\text{period}} = \sum_{t \in \text{period}} q(t)$$
 
 both in vehicles. `data_private/nvta/qvdf/` contains only `NVTA_NB`, so this is
 **I-395 NB only**: 23 links, 10.84 mi, average weekday 2025-10-06 to 10-10,
