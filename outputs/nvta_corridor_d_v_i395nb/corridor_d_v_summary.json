@@ -1,0 +1,79 @@
+{
+  "corridor": "I-395 NB",
+  "source": {
+    "profile": "data\\nvta_i395nb_handoff\\handoff_avgweekday_timedependent.csv",
+    "params": "data\\nvta_i395nb_handoff\\handoff_link_qvdf_params.csv"
+  },
+  "parameters_by_period": {
+    "AM": {
+      "f_d": 1.0847,
+      "n": 1.0101,
+      "f_p": 0.015,
+      "s": 3.3773
+    },
+    "PM": {
+      "f_d": 1.1913,
+      "n": 0.9351,
+      "f_p": 0.1212,
+      "s": 1.1484
+    }
+  },
+  "conventions": {
+    "episode": "longest contiguous run below the advisor's fixed cutoff speed",
+    "periods_min": {
+      "AM": [
+        300,
+        600
+      ],
+      "MD": [
+        600,
+        840
+      ],
+      "PM": [
+        840,
+        1200
+      ],
+      "NT": [
+        1200,
+        1320
+      ]
+    },
+    "n_and_s": "from the advisor's parameter file, not the I-405 frozen 1.10 / 1.40"
+  },
+  "coverage": {
+    "link_periods": 46,
+    "episode_identified": 36,
+    "links": 23
+  },
+  "inferred": {
+    "AM": {
+      "link_periods": 20,
+      "D_median_vph": 6519.752900787865,
+      "D_min_vph": 3032.470766605135,
+      "D_max_vph": 9987.27707033071,
+      "V_median_veh": 30184.459883960866,
+      "x_hat_median": 2.9635240458126657,
+      "P_median_h": 3.25
+    },
+    "PM": {
+      "link_periods": 16,
+      "D_median_vph": 9656.70773468326,
+      "D_min_vph": 414.2664597971536,
+      "D_max_vph": 12396.059936908272,
+      "V_median_veh": 56399.13507012557,
+      "x_hat_median": 4.389412606674208,
+      "P_median_h": 4.75
+    }
+  },
+  "self_consistency_against_speed_derived_counts": {
+    "AM": {
+      "demand_D_mape_pct": 202.28503524988182,
+      "volume_V_mape_pct": 202.2850352498818
+    },
+    "PM": {
+      "demand_D_mape_pct": 334.5745508978074,
+      "volume_V_mape_pct": 334.57455089780746
+    }
+  },
+  "provenance_warning": "count_total_15min is speed-derived, not measured: it is a single-valued unimodal function of speed peaking at the cutoff, no bin of 1,564 exceeds capacity (max 99.64%), an S3 inversion reproduces it to 2.73%, and every link reports one lane. The comparison above is a self-consistency check between two speed-derived quantities, not a validation against counts."
+}
