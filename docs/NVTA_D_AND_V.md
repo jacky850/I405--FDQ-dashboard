@@ -85,9 +85,16 @@ spans 23×, from 4% to 100% of that link's daily peak — the same speed is 06:3
 traffic and 02:00 traffic. In the NVTA series it spans 1.2×, because there q(t)
 is the diagram evaluated at the observed speed rather than a measurement.*
 
-Scored against measured counts on **ten PeMS corridor-directions, 824 links** —
-both directions of I-405, I-5, I-10 and I-210, with I-405 appearing twice because
-D7 and D12 cover different stretches of it.
+Scored against measured counts on **ten PeMS corridor-directions, 824 links**.
+Not every freeway appears in both districts, so this is what the ten are rather
+than a 4 × 2 × 2 grid:
+
+| District | Corridors | Directions each |
+|---|---|---|
+| D12 | I-405, I-5 | 2 |
+| D7 | I-405, I-10, I-210 | 2 |
+
+I-405 appears in both because D7 and D12 cover different stretches of it.
 
 Profiles are weekday averages over **about nine months**, 2025-06 to 2026-02,
 using observed rows only so nothing imputed enters a comparison against
