@@ -1,0 +1,458 @@
+{
+  "corridors": [
+    "I-66 EB",
+    "I-66 WB",
+    "I-395 SB",
+    "I-395 NB"
+  ],
+  "method": "D = sum of q(t) for v < cutoff; V = sum of q(t) over the period; q(t) from S3(speed)",
+  "conventions": {
+    "source": "qvdf_selfdemo/config.py",
+    "cutoff_ratio": 0.7,
+    "dt_min": 15,
+    "smoothing_bins": 3,
+    "s3_m": 4.0,
+    "free_speed_mph": {
+      "general": 70.0,
+      "hov": 65.0
+    },
+    "capacity_vphpl": {
+      "general": 2200.0,
+      "hov": 1800.0
+    },
+    "no_calibrated_parameters_used": true
+  },
+  "clocks": {
+    "pipeline": {
+      "AM": [
+        300,
+        600
+      ],
+      "MD": [
+        600,
+        840
+      ],
+      "PM": [
+        840,
+        1200
+      ],
+      "NT": [
+        1200,
+        1320
+      ]
+    },
+    "assignment": {
+      "AM": [
+        360,
+        540
+      ],
+      "MD": [
+        540,
+        900
+      ],
+      "PM": [
+        900,
+        1140
+      ],
+      "NT": [
+        1140,
+        1800
+      ]
+    }
+  },
+  "coverage": {
+    "I-395 NB": {
+      "tmcs": 20,
+      "miles": 9.25,
+      "lanes_median": 4
+    },
+    "I-395 SB": {
+      "tmcs": 21,
+      "miles": 9.94,
+      "lanes_median": 4
+    },
+    "I-66 EB": {
+      "tmcs": 36,
+      "miles": 22.29,
+      "lanes_median": 3
+    },
+    "I-66 WB": {
+      "tmcs": 27,
+      "miles": 20.13,
+      "lanes_median": 3
+    }
+  },
+  "pipeline_clock": {
+    "I-395 NB": {
+      "AM": {
+        "period_hours": 5.0,
+        "tmcs": 20,
+        "congested_tmcs": 20,
+        "P_median_h": 3.0,
+        "D_median_veh_per_lane": 5880.745200225536,
+        "D_over_C_median_h": 2.6730660001025166,
+        "V_median_veh_per_lane": 10113.46785664519,
+        "D_corridor_total_veh": 436003.3061716613,
+        "V_corridor_total_veh": 730597.9122272015
+      },
+      "MD": {
+        "period_hours": 4.0,
+        "tmcs": 20,
+        "congested_tmcs": 9,
+        "P_median_h": 4.0,
+        "D_median_veh_per_lane": 7576.49897612459,
+        "D_over_C_median_h": 3.443863170965723,
+        "V_median_veh_per_lane": 8487.35467422945,
+        "D_corridor_total_veh": 192807.6259525376,
+        "V_corridor_total_veh": 613699.1553744138
+      },
+      "NT": {
+        "period_hours": 2.0,
+        "tmcs": 20,
+        "congested_tmcs": 5,
+        "P_median_h": 2.0,
+        "D_median_veh_per_lane": 4149.923111150374,
+        "D_over_C_median_h": 1.8863286868865337,
+        "V_median_veh_per_lane": 4176.868933048459,
+        "D_corridor_total_veh": 57684.67090598353,
+        "V_corridor_total_veh": 302769.0719689899
+      },
+      "PM": {
+        "period_hours": 6.0,
+        "tmcs": 20,
+        "congested_tmcs": 16,
+        "P_median_h": 5.375,
+        "D_median_veh_per_lane": 8177.795076153608,
+        "D_over_C_median_h": 3.7171795800698217,
+        "V_median_veh_per_lane": 12665.189092139131,
+        "D_corridor_total_veh": 435184.3537428905,
+        "V_corridor_total_veh": 852172.8378217515
+      }
+    },
+    "I-395 SB": {
+      "AM": {
+        "period_hours": 5.0,
+        "tmcs": 21,
+        "congested_tmcs": 5,
+        "P_median_h": 3.75,
+        "D_median_veh_per_lane": 8237.234673483987,
+        "D_over_C_median_h": 3.7441975788563577,
+        "V_median_veh_per_lane": 10179.894136394285,
+        "D_corridor_total_veh": 123576.27216406564,
+        "V_corridor_total_veh": 778931.1416971044
+      },
+      "MD": {
+        "period_hours": 4.0,
+        "tmcs": 21,
+        "congested_tmcs": 4,
+        "P_median_h": 4.0,
+        "D_median_veh_per_lane": 8771.4922182351,
+        "D_over_C_median_h": 3.987041917379591,
+        "V_median_veh_per_lane": 8416.48750398105,
+        "D_corridor_total_veh": 131597.4058737274,
+        "V_corridor_total_veh": 638566.519416708
+      },
+      "NT": {
+        "period_hours": 2.0,
+        "tmcs": 21,
+        "congested_tmcs": 5,
+        "P_median_h": 2.0,
+        "D_median_veh_per_lane": 4386.663163616913,
+        "D_over_C_median_h": 1.9939378016440514,
+        "V_median_veh_per_lane": 4201.717712120097,
+        "D_corridor_total_veh": 67425.50187323647,
+        "V_corridor_total_veh": 318286.16134949663
+      },
+      "PM": {
+        "period_hours": 6.0,
+        "tmcs": 21,
+        "congested_tmcs": 19,
+        "P_median_h": 3.75,
+        "D_median_veh_per_lane": 7887.907032193146,
+        "D_over_C_median_h": 3.585412287360521,
+        "V_median_veh_per_lane": 12805.668376188096,
+        "D_corridor_total_veh": 545542.246824902,
+        "V_corridor_total_veh": 962926.6479743384
+      }
+    },
+    "I-66 EB": {
+      "AM": {
+        "period_hours": 5.0,
+        "tmcs": 36,
+        "congested_tmcs": 24,
+        "P_median_h": 2.75,
+        "D_median_veh_per_lane": 5527.732239009612,
+        "D_over_C_median_h": 2.512605563186187,
+        "V_median_veh_per_lane": 9861.701193050838,
+        "D_corridor_total_veh": 337746.50660173484,
+        "V_corridor_total_veh": 1054828.292064655
+      },
+      "MD": {
+        "period_hours": 4.0,
+        "tmcs": 36,
+        "congested_tmcs": 19,
+        "P_median_h": 1.0,
+        "D_median_veh_per_lane": 2173.0441267273736,
+        "D_over_C_median_h": 0.9877473303306243,
+        "V_median_veh_per_lane": 8289.744902538267,
+        "D_corridor_total_veh": 134104.18028122804,
+        "V_corridor_total_veh": 899623.6371463706
+      },
+      "NT": {
+        "period_hours": 2.0,
+        "tmcs": 36,
+        "congested_tmcs": 5,
+        "P_median_h": 1.25,
+        "D_median_veh_per_lane": 2748.2418117616376,
+        "D_over_C_median_h": 1.249200823528017,
+        "V_median_veh_per_lane": 3943.3467467200508,
+        "D_corridor_total_veh": 23628.955755234056,
+        "V_corridor_total_veh": 421284.6737490454
+      },
+      "PM": {
+        "period_hours": 6.0,
+        "tmcs": 36,
+        "congested_tmcs": 31,
+        "P_median_h": 3.75,
+        "D_median_veh_per_lane": 8087.867328680092,
+        "D_over_C_median_h": 3.676303331218224,
+        "V_median_veh_per_lane": 12344.781886696235,
+        "D_corridor_total_veh": 734042.226489763,
+        "V_corridor_total_veh": 1315012.4880449208
+      }
+    },
+    "I-66 WB": {
+      "AM": {
+        "period_hours": 5.0,
+        "tmcs": 27,
+        "congested_tmcs": 14,
+        "P_median_h": 2.0,
+        "D_median_veh_per_lane": 3899.2594667742633,
+        "D_over_C_median_h": 1.7723906667155742,
+        "V_median_veh_per_lane": 9792.801353021863,
+        "D_corridor_total_veh": 152534.34806853638,
+        "V_corridor_total_veh": 737144.1643422599
+      },
+      "MD": {
+        "period_hours": 4.0,
+        "tmcs": 27,
+        "congested_tmcs": 18,
+        "P_median_h": 1.0,
+        "D_median_veh_per_lane": 2131.056832894811,
+        "D_over_C_median_h": 0.9686621967703687,
+        "V_median_veh_per_lane": 8483.720267971223,
+        "D_corridor_total_veh": 138947.43350426113,
+        "V_corridor_total_veh": 626523.969594451
+      },
+      "NT": {
+        "period_hours": 2.0,
+        "tmcs": 27,
+        "congested_tmcs": 4,
+        "P_median_h": 1.0,
+        "D_median_veh_per_lane": 2199.2574126809814,
+        "D_over_C_median_h": 0.999662460309537,
+        "V_median_veh_per_lane": 4020.182575302352,
+        "D_corridor_total_veh": 22501.335334297113,
+        "V_corridor_total_veh": 297812.4396392606
+      },
+      "PM": {
+        "period_hours": 6.0,
+        "tmcs": 27,
+        "congested_tmcs": 27,
+        "P_median_h": 2.0,
+        "D_median_veh_per_lane": 4082.651946246238,
+        "D_over_C_median_h": 1.855750884657381,
+        "V_median_veh_per_lane": 12218.990034408365,
+        "D_corridor_total_veh": 445058.5626875977,
+        "V_corridor_total_veh": 916678.6512536984
+      }
+    }
+  },
+  "assignment_clock": {
+    "I-395 NB": {
+      "AM": {
+        "period_hours": 3.0,
+        "tmcs": 20,
+        "congested_tmcs": 20,
+        "P_median_h": 2.5,
+        "D_median_veh_per_lane": 4896.700618397379,
+        "D_over_C_median_h": 2.225773008362445,
+        "V_median_veh_per_lane": 6009.800191141048,
+        "D_corridor_total_veh": 338286.90828561666,
+        "V_corridor_total_veh": 437388.3771119612
+      },
+      "MD": {
+        "period_hours": 6.0,
+        "tmcs": 20,
+        "congested_tmcs": 16,
+        "P_median_h": 3.125,
+        "D_median_veh_per_lane": 6491.536256885778,
+        "D_over_C_median_h": 2.9506982985844448,
+        "V_median_veh_per_lane": 12635.221090492676,
+        "D_corridor_total_veh": 339926.6765118944,
+        "V_corridor_total_veh": 908894.7926093629
+      },
+      "NT": {
+        "period_hours": 11.0,
+        "tmcs": 20,
+        "congested_tmcs": 10,
+        "P_median_h": 1.125,
+        "D_median_veh_per_lane": 2290.0634891841196,
+        "D_over_C_median_h": 1.0409379496291453,
+        "V_median_veh_per_lane": 22270.076758911826,
+        "D_corridor_total_veh": 226569.78088723044,
+        "V_corridor_total_veh": 1621249.6171461164
+      },
+      "PM": {
+        "period_hours": 4.0,
+        "tmcs": 20,
+        "congested_tmcs": 16,
+        "P_median_h": 4.0,
+        "D_median_veh_per_lane": 5385.884694675418,
+        "D_over_C_median_h": 2.4481294066706445,
+        "V_median_veh_per_lane": 8491.819018198014,
+        "D_corridor_total_veh": 324665.7159241024,
+        "V_corridor_total_veh": 556756.0160973384
+      }
+    },
+    "I-395 SB": {
+      "AM": {
+        "period_hours": 3.0,
+        "tmcs": 21,
+        "congested_tmcs": 4,
+        "P_median_h": 2.375,
+        "D_median_veh_per_lane": 5219.67736296363,
+        "D_over_C_median_h": 2.3725806195289225,
+        "V_median_veh_per_lane": 6161.810561771209,
+        "D_corridor_total_veh": 80753.14223617438,
+        "V_corridor_total_veh": 469336.6614718179
+      },
+      "MD": {
+        "period_hours": 6.0,
+        "tmcs": 21,
+        "congested_tmcs": 7,
+        "P_median_h": 6.0,
+        "D_median_veh_per_lane": 13139.112312684003,
+        "D_over_C_median_h": 5.972323778492728,
+        "V_median_veh_per_lane": 12658.602126877799,
+        "D_corridor_total_veh": 211354.9615225657,
+        "V_corridor_total_veh": 960100.228077733
+      },
+      "NT": {
+        "period_hours": 11.0,
+        "tmcs": 21,
+        "congested_tmcs": 5,
+        "P_median_h": 4.75,
+        "D_median_veh_per_lane": 10405.671425256309,
+        "D_over_C_median_h": 4.729850647843777,
+        "V_median_veh_per_lane": 22778.86199659789,
+        "D_corridor_total_veh": 188770.10118817232,
+        "V_corridor_total_veh": 1730419.16719442
+      },
+      "PM": {
+        "period_hours": 4.0,
+        "tmcs": 21,
+        "congested_tmcs": 19,
+        "P_median_h": 3.75,
+        "D_median_veh_per_lane": 7357.53459255774,
+        "D_over_C_median_h": 3.344333905708064,
+        "V_median_veh_per_lane": 8556.72371442718,
+        "D_corridor_total_veh": 459684.6571114064,
+        "V_corridor_total_veh": 634534.0095309764
+      }
+    },
+    "I-66 EB": {
+      "AM": {
+        "period_hours": 3.0,
+        "tmcs": 36,
+        "congested_tmcs": 19,
+        "P_median_h": 2.0,
+        "D_median_veh_per_lane": 3817.2132448795783,
+        "D_over_C_median_h": 1.7350969294907175,
+        "V_median_veh_per_lane": 6002.399732197277,
+        "D_corridor_total_veh": 236671.196218438,
+        "V_corridor_total_veh": 642040.0521406247
+      },
+      "MD": {
+        "period_hours": 6.0,
+        "tmcs": 36,
+        "congested_tmcs": 26,
+        "P_median_h": 2.0,
+        "D_median_veh_per_lane": 4367.349661594946,
+        "D_over_C_median_h": 1.9851589370886118,
+        "V_median_veh_per_lane": 12441.11599894824,
+        "D_corridor_total_veh": 329530.7364451022,
+        "V_corridor_total_veh": 1348873.5007407297
+      },
+      "NT": {
+        "period_hours": 11.0,
+        "tmcs": 36,
+        "congested_tmcs": 13,
+        "P_median_h": 0.75,
+        "D_median_veh_per_lane": 1567.515948127492,
+        "D_over_C_median_h": 0.71250724914886,
+        "V_median_veh_per_lane": 21525.042894942864,
+        "D_corridor_total_veh": 196294.1605411276,
+        "V_corridor_total_veh": 2313381.3124653967
+      },
+      "PM": {
+        "period_hours": 4.0,
+        "tmcs": 36,
+        "congested_tmcs": 31,
+        "P_median_h": 3.75,
+        "D_median_veh_per_lane": 6494.234164334999,
+        "D_over_C_median_h": 2.951924620152272,
+        "V_median_veh_per_lane": 8177.751106424585,
+        "D_corridor_total_veh": 591881.385637816,
+        "V_corridor_total_veh": 863550.3977497256
+      }
+    },
+    "I-66 WB": {
+      "AM": {
+        "period_hours": 3.0,
+        "tmcs": 27,
+        "congested_tmcs": 13,
+        "P_median_h": 1.5,
+        "D_median_veh_per_lane": 3090.6657442158585,
+        "D_over_C_median_h": 1.404848065552663,
+        "V_median_veh_per_lane": 5974.1507941724985,
+        "D_corridor_total_veh": 106225.13408955932,
+        "V_corridor_total_veh": 447610.30448535335
+      },
+      "MD": {
+        "period_hours": 6.0,
+        "tmcs": 27,
+        "congested_tmcs": 23,
+        "P_median_h": 2.0,
+        "D_median_veh_per_lane": 4090.778399510557,
+        "D_over_C_median_h": 1.8594447270502532,
+        "V_median_veh_per_lane": 12541.269038330815,
+        "D_corridor_total_veh": 284455.5849559169,
+        "V_corridor_total_veh": 935081.4789879445
+      },
+      "NT": {
+        "period_hours": 11.0,
+        "tmcs": 27,
+        "congested_tmcs": 18,
+        "P_median_h": 0.5,
+        "D_median_veh_per_lane": 1097.139092202152,
+        "D_over_C_median_h": 0.4986995873646145,
+        "V_median_veh_per_lane": 21657.409556929237,
+        "D_corridor_total_veh": 227344.68673244273,
+        "V_corridor_total_veh": 1611495.6061985735
+      },
+      "PM": {
+        "period_hours": 4.0,
+        "tmcs": 27,
+        "congested_tmcs": 20,
+        "P_median_h": 3.75,
+        "D_median_veh_per_lane": 6658.07156671824,
+        "D_over_C_median_h": 3.026396166690109,
+        "V_median_veh_per_lane": 8104.896791758461,
+        "D_corridor_total_veh": 293826.7463973935,
+        "V_corridor_total_veh": 599861.3874266176
+      }
+    }
+  },
+  "caveat": "q(t) is inferred from speed, so D (bins below the cut-off) is well posed and V (all bins) is an upper bound. Scored against measured I-405 counts the same inversion carries 20.8% MAPE on congested bins and 171.5% on free-flow bins."
+}
