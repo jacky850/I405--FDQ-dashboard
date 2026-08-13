@@ -108,14 +108,34 @@ them leaves far less.
 
 **Two things this table says that a pooled number would hide.**
 
-**V is steady at 16–19% through AM, MD and PM, and only breaks down at night**
-(40.9%). Its bias also changes sign — around −13% in the day, +36% at night — so
-a pooled bias would average to near zero and imply an accuracy that is not there.
-The daytime lean is mildly *low*, not high, which is why I would not describe V
-as a bound in either direction. It does read high against the DTA assignment
-(1.09–1.15× where congestion is heaviest, 1.3–1.9× where lighter), but neither
-series is ground truth there, so that gap is an open question rather than a
-correction.
+**V is steady at 16–19% through AM, MD and PM and only breaks down at night**
+(40.9%). More usefully, comparing `|bias|` against MAPE says what kind of error
+it is:
+
+| | MAPE | bias | `\|bias\|` ÷ MAPE |
+|---|---:|---:|---:|
+| Per 5-minute bin | 82.2% | −3.2% | **0.04** |
+| Per period, AM | 16.1% | −14.7% | **0.91** |
+| Per period, MD | 16.8% | −11.9% | 0.71 |
+| Per period, PM | 18.6% | −12.7% | 0.68 |
+| Per period, NT | 40.9% | +36.1% | 0.88 |
+
+Per bin the error is almost pure scatter — the bias accounts for 4% of it. That
+scatter is what cancels on summing, taking 82% down to 16%. **What survives at
+period level is not scatter but a systematic lean**: 68–91% of the remaining
+error is direction, running about 13% low through the day and 36% high at night.
+
+That is better news than a 16% error band, because a consistent lean is
+correctable in a way that scatter is not. It is also why the pooled bias of
+−6.4% was meaningless: it averaged a daytime lean against an opposite night one.
+I have not applied a correction here, because it would be calibrated on I-405 and
+transferring it to NVTA is exactly the kind of assumption this note is trying to
+avoid — but if you want V adjusted, this is the number to adjust it by.
+
+For the same reason I would not call V a bound. It leans low against counts, yet
+reads high against the DTA assignment (1.09–1.15× where congestion is heaviest,
+1.3–1.9× where lighter). Neither series is ground truth, so that gap is an open
+question rather than a correction.
 
 **D is well tested in AM and barely tested in PM.** 26 AM cases at 6.1% is a
 solid result. But these seven I-405 links are 97% free-flow bins in PM, so only
