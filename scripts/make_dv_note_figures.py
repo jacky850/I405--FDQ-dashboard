@@ -80,39 +80,71 @@ def figure_branch_agreement() -> None:
     plt.close(fig)
 
 
+BAND = (60.0, 65.0)   # a free-flow speed slice both datasets populate well
+
+
 def figure_flow_information() -> None:
-    """Flow against speed in both datasets, each normalised by its own peak."""
+    """Hold speed fixed and ask what flow was: a wide answer, or a single one.
+
+    The scatter alone leaves the reader to find the vertical spread, so one
+    free-flow speed slice is drawn out of both panels and put side by side.
+    """
     i405 = pd.read_csv(ROOT / "outputs/i405_average_weekday_canonical_direct7/average_weekday_speed_flow_5min.csv")
     i405 = i405.rename(columns={"average_observed_flow_veh_h": "q", "average_speed_mph": "v"})
     nvta = pd.read_csv(ROOT / "data/nvta_i395nb_handoff/handoff_avgweekday_timedependent.csv")
     nvta["q"] = nvta["count_total_15min"] / 0.25
     nvta["v"] = nvta["speed_smoothed"]
+    for frame in (i405, nvta):
+        frame["norm"] = frame["q"] / frame.groupby("link_id")["q"].transform("max")
 
-    fig, axes = plt.subplots(1, 2, figsize=(9.6, 4.0), sharey=True)
-    panels = [
-        (axes[0], i405, "I-405: measured detector flow", BLUE),
-        (axes[1], nvta, "I-395 NB handoff: count_total_15min", ORANGE),
-    ]
+    fig, axes = plt.subplots(1, 3, figsize=(12.4, 4.0), sharey=True,
+                             gridspec_kw={"width_ratios": [1, 1, 0.62]})
+    panels = [(axes[0], i405, "I-405: measured detector flow", BLUE),
+              (axes[1], nvta, "I-395 NB handoff: count_total_15min", ORANGE)]
+
     for ax, frame, title, colour in panels:
-        norm = frame["q"] / frame.groupby("link_id")["q"].transform("max")
-        ax.scatter(frame["v"], norm, s=7, color=colour, alpha=.30, edgecolors="none")
-        free = norm[frame["v"] >= 55.0]
-        ax.axvspan(55, frame["v"].max() + 2, color=SLATE, alpha=.10)
+        inside = frame["v"].between(*BAND)
+        ax.scatter(frame.loc[~inside, "v"], frame.loc[~inside, "norm"], s=7,
+                   color="#c8d3da", alpha=.55, edgecolors="none")
+        ax.scatter(frame.loc[inside, "v"], frame.loc[inside, "norm"], s=9,
+                   color=colour, alpha=.75, edgecolors="none")
+        ax.axvspan(*BAND, color=colour, alpha=.09)
         ax.set_xlabel("Speed (mph)")
         ax.set_title(title)
-        ax.set_ylim(0, 1.05)
-        ax.text(.04, .06,
-                f"at $v \\geq 55$: flow spans {free.min():.2f}–{free.max():.2f}"
-                f"  ({free.max()/free.min():.1f}×)\n"
-                f"daily mean / daily peak = "
-                f"{(frame.groupby('link_id')['q'].mean() / frame.groupby('link_id')['q'].max()).median():.2f}",
-                transform=ax.transAxes, va="bottom", fontsize=8.5,
-                bbox=dict(boxstyle="round,pad=0.45", fc="white", ec="#cfdae1"))
+        ax.set_ylim(-0.02, 1.08)
+
+    # Name the two extremes of the I-405 slice: same speed, opposite traffic.
+    slice_405 = i405[i405["v"].between(*BAND)]
+    for row, offset, note in [(slice_405.loc[slice_405["norm"].idxmax()], (14, -6), "busiest"),
+                              (slice_405.loc[slice_405["norm"].idxmin()], (14, 10), "quietest")]:
+        axes[0].annotate(f"{note}  {int(row['minute_of_day'])//60:02d}:{int(row['minute_of_day'])%60:02d}",
+                         xy=(row["v"], row["norm"]), xytext=offset, textcoords="offset points",
+                         fontsize=8, color=INK, fontweight="bold",
+                         arrowprops=dict(arrowstyle="-", color=INK, lw=.9))
+
+    # The slice itself, side by side. This is the whole argument.
+    strip = axes[2]
+    for i, (frame, colour, label) in enumerate([(i405, BLUE, "I-405\nmeasured"),
+                                                (nvta, ORANGE, "I-395 NB\nhandoff")]):
+        values = frame.loc[frame["v"].between(*BAND), "norm"].to_numpy()
+        jitter = np.random.default_rng(0).normal(i, .085, len(values))
+        strip.scatter(jitter, values, s=11, color=colour, alpha=.45, edgecolors="none")
+        strip.plot([i - .28, i + .28], [values.min()] * 2, color=colour, lw=2.2)
+        strip.plot([i - .28, i + .28], [values.max()] * 2, color=colour, lw=2.2)
+        strip.annotate("", xy=(i + .36, values.min()), xytext=(i + .36, values.max()),
+                       arrowprops=dict(arrowstyle="<->", color=colour, lw=1.6))
+        strip.text(i + .44, (values.min() + values.max()) / 2,
+                   f"{values.max()/values.min():.1f}×" if values.min() > 0 else "",
+                   color=colour, fontweight="bold", fontsize=11, va="center")
+        strip.text(i, 1.045, f"n={len(values):,}", ha="center", fontsize=8, color="#5d6d78")
+    strip.set_xticks([0, 1]); strip.set_xticklabels(["I-405\nmeasured", "I-395 NB\nhandoff"], fontsize=9)
+    strip.set_xlim(-.55, 1.9)
+    strip.set_title(f"Flow at {BAND[0]:.0f}–{BAND[1]:.0f} mph")
+    strip.grid(axis="x", visible=False)
+
     axes[0].set_ylabel("Flow ÷ that link's daily peak flow")
-    # The right panel has no data below ~0.5, so the band label sits there cleanly.
-    axes[1].text(62, .30, "free flow", ha="center", fontsize=8.5, color="#5d6d78",
-                 bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="none", alpha=.8))
-    fig.suptitle("One speed, how many flows?", fontweight="bold", y=1.02)
+    fig.suptitle("Hold the speed fixed. How many flows are consistent with it?",
+                 fontweight="bold", y=1.02)
     fig.tight_layout()
     fig.savefig(FIG / "flow_information.png", bbox_inches="tight")
     plt.close(fig)
