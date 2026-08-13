@@ -79,37 +79,41 @@ of flows: 65 mph at 03:00 and 65 mph at 06:30 are completely different traffic.
 The diagram returns one answer anyway.
 
 Scored against measured counts on I-405 — 7 links × 12 weekly average-weekday
-profiles, 23,616 five-minute bins, S3 with the standard exponent `m = 4`:
+profiles, S3 with the standard exponent `m = 4`. **D and V are delivered per
+period, so those are the rows that describe the deliverable**; the per-bin rows
+below them are diagnostic, and show where the error lives.
 
-| | n | MAPE | median bias | bins off by >50% |
-|---|---:|---:|---:|---:|
-| Congested bins | 890 | **20.7%** | +5.4% | 11.8% |
-| Free-flow bins | 22,726 | **84.6%** | −4.2% | 30.7% |
+| | Unit | n | MAPE | median bias |
+|---|---|---:|---:|---:|
+| **D** | **period** | 48 | **16.6%** | +3.6% |
+| **V** | **period** | 328 | **23.1%** | −6.4% |
+| Congested bins | 5-min bin | 890 | 20.7% | +5.4% |
+| Free-flow bins | 5-min bin | 22,726 | 84.6% | −4.2% |
 
-The right panel above shows how much that matters: **40–94% of V comes from
-free-flow bins**, depending on corridor and period. Only I-395 NB in AM gets
-below half.
-
-The per-bin errors do largely cancel when summed, so period volume comes out far
-better than 84.6% suggests — **23.1% MAPE at −6.4% bias** on the same profiles.
+The gap between 84.6% per bin and 23.1% per period is the per-bin errors
+cancelling: they are scatter rather than a consistent lean, so summing 36–72 of
+them into a period total leaves far less. What survives is concentrated in the
+free-flow bins, which are **40–94% of V** depending on corridor and period — the
+right panel above. Only I-395 NB in AM gets below half.
 
 I would not call V a bound in either direction. Against measured counts it is
-close to unbiased and simply imprecise: the error is scatter, not a consistent
-lean. Against the DTA assignment it does read high — 1.09–1.15× where congestion
-is heaviest, 1.3–1.9× where it is lighter — but neither series is ground truth
-there, so that gap is a question rather than a correction. **The honest statement
-is that V is an estimate carrying roughly 23% period-level error**, and that the
-error is concentrated in the free-flow bins, which are 40–94% of it.
+close to unbiased and simply imprecise. Against the DTA assignment it does read
+high — 1.09–1.15× where congestion is heaviest, 1.3–1.9× where it is lighter —
+but neither series is ground truth there, so that gap is a question rather than a
+correction.
 
 ### D, checked the same way
 
 ![D and V against measured counts](figures/d_vs_counts.png)
 
-Restricting to congestion episodes of at least half an hour — the
-`MIN_EPISODE_H` rule in `config.py`, which matters because a brief dip is not
-congestion and the diagram reads any low speed as high density — D lands at
-**14.2% MAPE, +1.2% median bias, 83% of cases within ±20%** across 82
-link-periods on 23 links. V on the same links is 41.2% MAPE.
+Congestion episodes must last at least half an hour — the `MIN_EPISODE_H` rule
+in `config.py`, which matters because a brief dip is not congestion and the
+diagram reads any low speed as high density however few vehicles are behind it.
+
+Pooling the weekly profiles above with 5 individual weekdays widens the sample to
+**82 episodes across 23 links**, where D lands at **14.2% MAPE, +1.2% median
+bias, 83% of cases within ±20%** — consistent with the 16.6% in the table, which
+is the 7-link weekly subset alone.
 
 ![One speed, how many flows](figures/flow_information.png)
 
