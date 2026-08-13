@@ -1,186 +1,128 @@
-# The QVDF duration branch cannot be identified from either dataset
+# I-395 NB: inferred demand D and volume V per period
 
-**I-395 NB inferred demand and volume — what I ran, what came out, and what I need.**
-
-Interactive results: [I-395 NB corridor dashboard](https://jacky850.github.io/I405--FDQ-dashboard/dashboard/nvta_corridor_d_v.html)
+**What I ran, what came out, and the one input I still need.**
 
 ---
 
-## 1. What I could run
+## 0. Correction to the earlier version of this note
 
-`data_private/nvta/qvdf/` contains only `NVTA_NB`. There is no `NVTA_SB` and
-nothing for I-66, so this covers **I-395 NB only**: 23 links, 36 link-periods
-with a congestion episode, average weekday 2025-10-06 to 10-10.
+An earlier version of this page argued that the inferred D/C of 3–4 was
+unphysical. That was my error, and it was a unit error: I read D/C as a ratio of
+**flow rates** and multiplied it by an hourly capacity, which turned a period
+volume into an implied 8,500 veh/h.
 
-I used your conventions throughout rather than the I-405 ones, because your
-`f_d` and `n` were fitted against them:
+Your assignment table settles the convention. Taking the ratio of its two D/C
+columns across 208 rows:
 
-| | Value used |
-|---|---|
-| Episode | contiguous span below the 49 mph cutoff |
-| Periods | your clock: AM 05:00–10:00, PM 14:00–20:00 |
-| `n`, `s` | your file: 1.0101 / 3.3773 (AM), 0.9351 / 1.1484 (PM) |
-| Capacity, free speed | your constants: 2200 vph/lane, 70 mph |
+| Period | `dc_dta_vol` ÷ `dc_dta_doc` | Period length |
+|---|---:|---:|
+| AM | 3.000014 | 3 h |
+| MD | 5.999623 | 6 h |
+| PM | 4.000017 | 4 h |
 
-## 2. The result is not usable
+The ratio is the period length in hours, to four decimals. So D/C is a **period
+volume divided by an hourly capacity**, it carries units of hours, and 3–4 is
+ordinary. Everything below is redone on that basis, and the accumulation
+argument from the earlier version is withdrawn: it assumed D was a sustained
+rate, so the quantity it tested does not exist.
 
-Inverting the duration branch
+## 1. Method
 
-$$P = f_d\left(\frac{D}{C}\right)^{n}
-\qquad\Longrightarrow\qquad
-\widehat{\frac{D}{C}} = \left(\frac{P}{f_d}\right)^{1/n}$$
+Built forward from q(t) as you asked, not by inverting the duration branch:
 
-gives a median **D/C of 2.96 in AM and 4.39 in PM** — demand at three to four
-times capacity, sustained for hours. Link 1 in AM: P = 4.25 h gives D/C = 3.86
-and D = 8,503 veh/h on a lane whose capacity is 2,200.
+$$D_{\text{period}} = \sum_{t\,:\,v(t) < v_{\text{cutoff}}} q(t)
+\qquad\qquad
+V_{\text{period}} = \sum_{t \in \text{period}} q(t)$$
 
-## 3. Why it happens: the calibration input
+both in vehicles. `data_private/nvta/qvdf/` contains only `NVTA_NB`, so this is
+**I-395 NB only**: 23 links, 10.84 mi, average weekday 2025-10-06 to 10-10,
+15-minute bins, 92 link-periods of which 51 carry an episode below the 49 mph
+cutoff. Capacity 2,200 vph/lane and free speed 70 mph are your constants.
 
-![Calibration inputs](figures/calibration_inputs.png)
+## 2. Result
 
-**Left — the NVTA calibration table.** D/C there is a linear rescaling of P:
+| Period | Congested links | P median | **D** median (veh) | D/C median (h) | **V** median (veh) |
+|---|---:|---:|---:|---:|---:|
+| AM (5 h) | 20 / 23 | 3.25 h | 6,204 | 2.82 | 9,895 |
+| MD (4 h) | 9 / 23 | 4.00 h | 7,635 | 3.47 | 8,284 |
+| PM (6 h) | 16 / 23 | 4.75 h | 7,861 | 3.57 | 12,346 |
+| NT (2 h) | 6 / 23 | 2.00 h | 4,098 | 1.86 | 4,141 |
 
-$$\frac{D}{C} = 0.78\,P + 0.10, \qquad R^2 = 0.966, \qquad n = 195 \text{ link-periods}$$
+Per-link values are in `outputs/nvta_corridor_dv_forward_i395nb/corridor_dv_forward.csv`.
 
-Fitting $P = f_d (D/C)^n$ on that data is fitting $P$ against itself. Substituting,
+## 3. This agrees with your duration branch
 
-$$P = f_d\,(0.78\,P)^{n}$$
+![Duration branch against the forward sum](figures/branch_agreement.png)
 
-which is satisfied by $n = 1$ and a matching constant — and that is what the
-file contains, $n = 1.0101$ in AM and $0.9351$ in PM. I reproduced it: feeding
-synthetic D/C generated from P through the same fit returns $n = 1.05$,
-$f_d = 1.16$, $R^2 = 0.9998$.
+Inverting $P = f_d (D/C)^n$ with your `f_d` and `n` reproduces the forward sum to
+**7.4% in AM** (r = 0.98) and **19.9% in PM** (r = 0.94).
 
-With $n \approx 1$ the inversion collapses:
+The PM gap has a cause rather than being noise. Writing the forward sum as
+$D/C = \bar q / C \times P$, the branch is equivalent to assuming $\bar q / C$ is
+fixed across links. It is not: it runs 0.77–0.97 in AM but 0.59–0.97 in PM,
+because the worst links drop well below capacity while queued. The error tracks
+that ratio directly, $\mathrm{corr} = -0.89$ — where flow holds up the branch is
+accurate, where flow collapses the branch overstates D. Seven episodes are also
+right-censored, filling their whole period window, so their P is a lower bound.
 
-$$\widehat{\frac{D}{C}} \approx \frac{P}{f_d}, \qquad \mathrm{corr}\left(\widehat{x},\ P/f_d\right) = 0.9926$$
+## 4. The problem is V, not D
 
-**So the quantity I am reporting as D/C is congestion duration in hours, divided
-by 1.08 and relabelled as a ratio.** A 4.25-hour episode gives 3.86 for that
-reason alone.
+D only sums bins below the cutoff. There the congested branch of the fundamental
+diagram is steep and single-valued, so recovering q from v is well posed, and I
+am confident in the D column.
 
-**Right — my I-405 calibration input**, where D/C comes from measured flow
-rather than from P. It fails for the opposite reason: D/C spans 0.65–1.08 while
-P spans 0.57–7.07 hours. A quantity that moves 1.7× cannot explain one that
-moves 12×. Fitting `n` freely there gives $R^2 = 0.119$ and per-link values
-between $+1.4$ and $-11.2$.
+V sums the free-flow bins as well, and there the inversion has nothing to work
+with. `count_total_15min` in the handoff is not an independent measurement: it
+reproduces an S3 evaluation of its own `speed_smoothed` to **3.3%** (R² = 0.94).
 
-**Neither dataset identifies the branch.** One has no independent D/C, the other
-has one that barely varies.
+![One speed, how many flows](figures/flow_information.png)
 
-## 4. A check that uses no model
+**Left** is measured I-405 detector data. At 65 mph the road carries anywhere
+from 4% to 100% of that link's daily peak flow, because free-flow speed barely
+responds to volume — 65 mph at 03:00 and 65 mph at 06:30 are entirely different
+traffic. **Right** is the handoff series, which at free-flow speeds spans only
+1.5× and traces a single curve. Its daily mean-to-peak ratio is 0.94 against
+0.57 for measured I-405, i.e. it has the corridor running at 91% of capacity for
+17 straight hours, with no diurnal profile at all.
 
-Demand held at $D$ for duration $P$ must deposit vehicles somewhere:
+So V here is not a volume, it is a fundamental diagram read backwards. To size
+the consequence I ran the same speed-only inversion on the I-405 links where
+real counts exist and scored it against them:
 
-$$\text{accumulation} = (D - \mu)\,P$$
+![Volume error against measured counts](figures/volume_error.png)
 
-This is conservation only — no fundamental diagram, no power law, no calibration.
+| | AM | MD | PM | NT | Full day |
+|---|---:|---:|---:|---:|---:|
+| Volume error | +19% | +29% | +34% | +58% | +53% |
 
-![Accumulation test](figures/accumulation_test.png)
+One-sided overstatement, growing as congestion recedes. **The V column should be
+read as an upper bound**, which matters because V is the column that goes
+against the Cube and TAP-Lite assignment.
 
-| | Vehicles |
-|---|---:|
-| Delay queue implied by the observed speeds, peak | 415 |
-| Corridor storage at jam density (10.84 mi, 200 veh/mi/ln) | 2,168 |
-| Implied by the duration branch, AM | **14,754** |
-| Implied by the duration branch, PM | **36,464** |
+## 5. What I need
 
-The implied accumulation exceeds what the road can physically hold by **6.8×**
-in AM and **16.8×** in PM.
+1. **Any flow measurement for these corridors.** Detector counts, INRIX volumes,
+   or even an AADT per link I can use to scale the profile. Speed alone cannot
+   produce V, and no choice of parameters changes that — the information is not
+   in the input.
+2. **Which period clock should V be cut on?** The handoff uses AM 5 h / MD 4 h /
+   PM 6 h / NT 2 h, but `dc_dta_vol / dc_dta_doc` implies AM 3 h / MD 6 h /
+   PM 4 h. These have to match before V is compared to the assignment.
+3. **Is there anything for I-395 SB and I-66?** Only `NVTA_NB` is in the repo.
+   If not, I can transfer the NB parameters and label the transfer, though `s`
+   differs by 2.9× and `f_p` by 8× between AM and PM on this one corridor, so I
+   would rather ask.
 
-This does not depend on the service rate assumption. Varying $\mu$ from 1,980
-(capacity with a 10% drop) to 2,400 (the HCM ceiling) leaves the AM ratio
-between 6.2× and 6.8×. To make the accumulation fit, $\mu$ would have to be
-**5,853 veh/h/lane**, 2.7× physical capacity.
-
-## 5. The same test on I-405
-
-I applied the branch to my own data, where D and C come from measured flow.
-
-![I-405 against baselines](figures/pems_vs_baselines.png)
-
-**Left.** The inferred D/C does not track the measured one: correlation 0.14.
-The inference varies 2.3× more than the truth does (sd 0.191 against 0.082), so
-it is adding scatter rather than resolving anything.
-
-**Right.** Leave-one-week-out period volume, 21 supported cases:
-
-| Method | MAPE |
-|---|---:|
-| Duration branch | 16.88% |
-| Assume $D = C$, ignore P entirely | **7.08%** |
-| Average the other weeks, ignore speed entirely | **5.21%** |
-
-**The branch is 2.4× worse than assuming demand equals capacity.** The error
-decomposes cleanly: cases where $\widehat{x}$ lands near 1 carry 8.0% error,
-cases where it strays carry 25.8%, and
-$\mathrm{corr}(|\widehat{x}-1|,\ \text{error}) = 0.814$.
-
-The reason the I-405 numbers stay near capacity rather than reaching 4× is that
-the calibration there is not circular, so $f_d$ lands near the median $P$ and
-anchors $\widehat{x}$ near 1. The anchor, not the branch, is doing the work.
-
-## 6. What does work
-
-Your **severity branch** behaves well on the same episodes: predicted $v(T_2)$
-is within **2.88 mph** in AM (7.00 mph in PM). The problem looks specific to the
-duration branch.
-
-A **conservation estimate** on the same speed data,
-
-$$D = \mu + \frac{\mathrm{d}Q}{\mathrm{d}t}, \qquad Q = \mu\left(\frac{L}{v} - \frac{L}{v_f}\right)$$
-
-gives corridor D/C of 0.99 in AM and 0.94 in PM. I am not offering this as
-ground truth — it is anchored on an assumed capacity, and per link it degenerates
-entirely, because on a 0.34-mile link the delay queue holds ~15 vehicles and
-$\mathrm{d}Q/\mathrm{d}t$ is 0.5% of $\mu$, so $D$ simply returns $\mu$. Only
-the corridor aggregate carries signal, where $\mathrm{d}Q/\mathrm{d}t$ reaches
-15% of $\mu$.
-
-Three routes land near 1.0 — measured I-405 upstream-plus-ramp counts at 1.05,
-this corridor's conservation estimate at 0.94–0.99, and the peak of your own
-speed-derived flow at 0.97 — against 2.96 and 4.39 from the duration branch.
-
-## 7. What I need
-
-1. **Do calibrated parameters exist for I-395 SB and I-66?** Only `NVTA_NB` is in
-   the repo. If not, should I transfer the NB parameters and label the transfer?
-   Given that `s` differs by 2.9× and `f_p` by 8× between AM and PM on a single
-   corridor, I would rather ask than assume.
-2. **For the NVTA meeting, which column do you want?** D and V from your
-   parameters as delivered, and the conservation estimate, are both in the
-   dashboard. I have not substituted one for the other.
-3. **Is there a demand measurement for these corridors that is not capped at
-   capacity** — ramp counts, ODME output, anything upstream of a bottleneck?
-   That is the missing input. Detector flow at the link is throughput, which
-   saturates at capacity, which is why my I-405 D/C sits at 1.0 with sd 0.08 and
-   cannot identify the branch either.
-
-One observation on (3): to land D/C near 1.1, `n` would need to be around 13
-rather than 1.01. A large `n` is what queueing behaviour would suggest, since
-delay grows sharply as D/C approaches 1. `n ≈ 1` states that duration grows
-linearly with demand, which is a different physical claim.
+On (1), note that D is affected too, just far less: it is *served* volume during
+congestion, capped at capacity in every bin, so it is what the corridor
+discharged rather than what wanted to use it. For a bottleneck link those differ.
 
 ---
 
 ## Reproduce
 
 ```powershell
-python scripts/run_nvta_corridor_d_v.py `
-  --profile-file data/nvta_i395nb_handoff/handoff_avgweekday_timedependent.csv `
-  --params-file  data/nvta_i395nb_handoff/handoff_link_qvdf_params.csv
-
-python scripts/run_nvta_corridor_queue_demand.py `
-  --profile-file data/nvta_i395nb_handoff/handoff_avgweekday_timedependent.csv
-
-python scripts/make_duration_branch_figures.py
+python scripts/run_nvta_corridor_dv_forward.py
+python scripts/check_qt_information_content.py
+python scripts/make_dv_note_figures.py
 ```
-
-## A caveat on the handoff counts
-
-`count_total_15min` in `handoff_avgweekday_timedependent.csv` is not an
-independent measurement. Across 1,564 bins it is a single-valued unimodal
-function of speed peaking at the cutoff, no bin exceeds capacity (max 99.64% of
-it), an S3 inversion reproduces it to 2.73%, and every link reports one lane. I
-have treated it as speed-derived throughout, so nothing in this note is a
-validation against counts.
