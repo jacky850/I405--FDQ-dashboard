@@ -86,14 +86,12 @@ traffic and 02:00 traffic. In the NVTA series it spans 1.2×, because there q(t)
 is the diagram evaluated at the observed speed rather than a measurement.*
 
 Scored against measured counts on **ten PeMS corridor-directions, 824 links** —
-four freeways across two Caltrans districts, both directions each: I-405 in D7
-(96 / 109 links) and again in D12 (50 / 44), I-5 in D12 (93 / 100), I-10 in D7
-(101 / 107), I-210 in D7 (75 / 81). The two I-405 entries are different stretches
-of the same freeway, not a duplicate.
+both directions of I-405, I-5, I-10 and I-210, with I-405 appearing twice because
+D7 and D12 cover different stretches of it.
 
-Profiles are the weekday average of **194 weekdays spanning 39 weeks**,
-2025-06-01 to 2026-02-28, taking `is_observed` rows only so nothing imputed
-enters a comparison against measurement. S3 with the standard exponent `m = 4`.
+Profiles are weekday averages over **about nine months**, 2025-06 to 2026-02,
+using observed rows only so nothing imputed enters a comparison against
+measurement. S3 with the standard exponent `m = 4`.
 
 | Period | **D** n | **D** MAPE | **D** bias | **V** n | **V** MAPE | **V** bias |
 |---|---:|---:|---:|---:|---:|---:|
