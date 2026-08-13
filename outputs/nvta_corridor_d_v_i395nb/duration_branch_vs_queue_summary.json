@@ -1,0 +1,78 @@
+{
+  "corridor": "I-395 NB",
+  "method": "D = mu + dQ/dt with a delay-based queue; no duration power law",
+  "capacity_drop_fraction": 0.1,
+  "by_period": {
+    "AM": {
+      "link_periods": 20,
+      "d_over_c_queue_median": 0.9035549922648838,
+      "d_over_c_queue_range": [
+        0.9002798355081961,
+        0.9486993346459365
+      ],
+      "d_over_c_duration_branch_median": 2.9635240458126657,
+      "D_queue_median_vph": 1987.8209829827442,
+      "D_duration_branch_median_vph": 6519.752900787865,
+      "duration_branch_over_queue_median": 3.275910325794455,
+      "queue_max_veh_median": 14.106984375
+    },
+    "PM": {
+      "link_periods": 16,
+      "d_over_c_queue_median": 0.902293854691774,
+      "d_over_c_queue_range": [
+        0.9001627500047963,
+        0.9273558135012427
+      ],
+      "d_over_c_duration_branch_median": 4.389412606674208,
+      "D_queue_median_vph": 1985.0464803219027,
+      "D_duration_branch_median_vph": 9656.707734683258,
+      "duration_branch_over_queue_median": 4.8706368056171305,
+      "queue_max_veh_median": 15.287090649329613
+    }
+  },
+  "corridor_level": {
+    "AM": {
+      "peak_1h_demand_vph": 2185.773610754709,
+      "d_over_c": 0.9935334594339585,
+      "queue_max_veh": 414.5114978937325
+    },
+    "MD": {
+      "peak_1h_demand_vph": 1990.0219470264606,
+      "d_over_c": 0.9045554304665729,
+      "queue_max_veh": 120.90735051161877
+    },
+    "NT": {
+      "peak_1h_demand_vph": 1975.4536196082954,
+      "d_over_c": 0.8979334634583162,
+      "queue_max_veh": 72.55611724513285
+    },
+    "PM": {
+      "peak_1h_demand_vph": 2062.777498685705,
+      "d_over_c": 0.9376261357662294,
+      "queue_max_veh": 353.0691422372548
+    }
+  },
+  "falsification_by_accumulation": {
+    "corridor_length_mi": 10.840000000000002,
+    "lanes": 1,
+    "storage_at_jam_density_veh": 2168.0000000000005,
+    "observed_delay_queue_max_veh": 414.5114978937325,
+    "AM": {
+      "duration_branch_D_vph": 6519.752900787865,
+      "median_P_h": 3.25,
+      "implied_queue_accumulation_veh": 14754.19692756056,
+      "times_larger_than_observed_queue": 35.5941801434494,
+      "times_larger_than_corridor_storage": 6.80544138725118
+    },
+    "PM": {
+      "duration_branch_D_vph": 9656.707734683258,
+      "median_P_h": 4.75,
+      "implied_queue_accumulation_veh": 36464.36173974547,
+      "times_larger_than_observed_queue": 87.96948196861301,
+      "times_larger_than_corridor_storage": 16.819355046008056
+    }
+  },
+  "link_level_caveat": "The per-link estimate degenerates: on a 0.34-mile median link the delay queue holds about 15 vehicles and dQ/dt is 0.5% of mu, so D collapses to the assumed service rate. Only the corridor aggregate carries signal, where dQ/dt reaches 15% of mu. Read the corridor numbers, not the per-link ones.",
+  "reading": "The queue route uses the same speed profile but no power law. Where the two disagree by a factor of three or more, the disagreement is in the duration branch's scale, not in the episode timing, because both read P from the same curve.",
+  "limitation": "The queue is delay-based rather than counted. Against the counted queue on the PeMS case it correlates 0.485 with peaks 60 minutes apart, so its level is an order of magnitude, not a measurement."
+}
