@@ -1,0 +1,121 @@
+{
+  "raw": {
+    "free_flow_bins": {
+      "n": 22829,
+      "mape": 84.4,
+      "bias": -4.0
+    },
+    "congested_bins": {
+      "n": 787,
+      "mape": 18.8,
+      "bias": 4.0
+    },
+    "period_volume_V": {
+      "n": 328,
+      "mape": 23.1,
+      "bias": -6.4
+    }
+  },
+  "smooth-3": {
+    "free_flow_bins": {
+      "n": 22829,
+      "mape": 84.1,
+      "bias": -3.4
+    },
+    "congested_bins": {
+      "n": 787,
+      "mape": 18.8,
+      "bias": 3.9
+    },
+    "period_volume_V": {
+      "n": 328,
+      "mape": 23.6,
+      "bias": -6.4
+    }
+  },
+  "smooth-5": {
+    "free_flow_bins": {
+      "n": 22829,
+      "mape": 83.9,
+      "bias": -3.1
+    },
+    "congested_bins": {
+      "n": 787,
+      "mape": 18.9,
+      "bias": 4.1
+    },
+    "period_volume_V": {
+      "n": 328,
+      "mape": 23.9,
+      "bias": -6.3
+    }
+  },
+  "smooth-9": {
+    "free_flow_bins": {
+      "n": 22829,
+      "mape": 83.4,
+      "bias": -2.4
+    },
+    "congested_bins": {
+      "n": 787,
+      "mape": 18.9,
+      "bias": 4.5
+    },
+    "period_volume_V": {
+      "n": 328,
+      "mape": 24.6,
+      "bias": -6.3
+    }
+  },
+  "smooth-15": {
+    "free_flow_bins": {
+      "n": 22829,
+      "mape": 82.5,
+      "bias": -1.4
+    },
+    "congested_bins": {
+      "n": 787,
+      "mape": 19.1,
+      "bias": 5.5
+    },
+    "period_volume_V": {
+      "n": 328,
+      "mape": 25.6,
+      "bias": -6.1
+    }
+  },
+  "qvdf": {
+    "free_flow_bins": {
+      "n": 22829,
+      "mape": 95.4,
+      "bias": -97.6
+    },
+    "congested_bins": {
+      "n": 787,
+      "mape": 20.1,
+      "bias": 2.7
+    },
+    "period_volume_V": {
+      "n": 328,
+      "mape": 91.6,
+      "bias": -97.8
+    }
+  },
+  "qvdf-blend": {
+    "free_flow_bins": {
+      "n": 22829,
+      "mape": 94.1,
+      "bias": -97.6
+    },
+    "congested_bins": {
+      "n": 787,
+      "mape": 20.1,
+      "bias": 2.7
+    },
+    "period_volume_V": {
+      "n": 328,
+      "mape": 89.4,
+      "bias": -97.8
+    }
+  }
+}
