@@ -78,19 +78,33 @@ of how many others are on the road, so one speed is consistent with a wide band
 of flows: 65 mph at 03:00 and 65 mph at 06:30 are completely different traffic.
 The diagram returns one answer anyway.
 
-Scored against measured counts on our I-405 links, per 5-minute bin:
+Scored against measured counts on I-405 — 7 links × 12 weekly average-weekday
+profiles, 23,616 five-minute bins, S3 with the standard exponent `m = 4`:
 
-| | MAPE | bins off by >50% |
-|---|---:|---:|
-| Congested bins | **20.8%** | 3.9% |
-| Free-flow bins | **171.5%** | 46.0% |
+| | n | MAPE | median bias | bins off by >50% |
+|---|---:|---:|---:|---:|
+| Congested bins | 890 | **20.7%** | +5.4% | 11.8% |
+| Free-flow bins | 22,726 | **84.6%** | −4.2% | 30.7% |
 
-The right panel above shows how much this matters: **40–94% of V comes from
+The right panel above shows how much that matters: **40–94% of V comes from
 free-flow bins**, depending on corridor and period. Only I-395 NB in AM gets
 below half.
 
-So V is usable as a ceiling — the corridor carried *no more than* this — but it
-is not a volume, and it will read high against an assignment.
+The per-bin errors do largely cancel when summed, so period volume comes out far
+better than 84.6% suggests — **23.1% MAPE at −6.4% bias** on the same profiles.
+V is usable at the period level with that error attached. It is still not a
+measurement, and against the DTA assignment it reads 1.09–1.15× high where
+congestion is heaviest and 1.3–1.9× high where it is lighter.
+
+### D, checked the same way
+
+![D and V against measured counts](figures/d_vs_counts.png)
+
+Restricting to congestion episodes of at least half an hour — the
+`MIN_EPISODE_H` rule in `config.py`, which matters because a brief dip is not
+congestion and the diagram reads any low speed as high density — D lands at
+**14.2% MAPE, +1.2% median bias, 83% of cases within ±20%** across 82
+link-periods on 23 links. V on the same links is 41.2% MAPE.
 
 ![One speed, how many flows](figures/flow_information.png)
 
