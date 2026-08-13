@@ -64,7 +64,7 @@ link definition. And the directional pattern is right: NB is 20/20 congested in
 AM, SB is 19/21 in PM; on I-66 the AM queue sits 20–40 mi out on EB while the PM
 queue is corridor-wide on WB.
 
-## D is solid. V is an upper bound.
+## D is solid. V carries a much wider error band.
 
 Both come from the same q(t), but the inversion behaves differently on the two
 branches of the fundamental diagram.
@@ -92,9 +92,14 @@ below half.
 
 The per-bin errors do largely cancel when summed, so period volume comes out far
 better than 84.6% suggests — **23.1% MAPE at −6.4% bias** on the same profiles.
-V is usable at the period level with that error attached. It is still not a
-measurement, and against the DTA assignment it reads 1.09–1.15× high where
-congestion is heaviest and 1.3–1.9× high where it is lighter.
+
+I would not call V a bound in either direction. Against measured counts it is
+close to unbiased and simply imprecise: the error is scatter, not a consistent
+lean. Against the DTA assignment it does read high — 1.09–1.15× where congestion
+is heaviest, 1.3–1.9× where it is lighter — but neither series is ground truth
+there, so that gap is a question rather than a correction. **The honest statement
+is that V is an estimate carrying roughly 23% period-level error**, and that the
+error is concentrated in the free-flow bins, which are 40–94% of it.
 
 ### D, checked the same way
 
@@ -129,8 +134,8 @@ on-ramps peak above 100 vph, their time shapes are mutually uncorrelated
 −0.67 rather than tracking it. If those are measured, conservation gives V
 without the fundamental diagram at all. `departure_profile.csv` would settle it.
 
-Failing that, an AADT or daily count per link would let me rescale the profile,
-which is cruder but would turn V from a ceiling into an estimate.
+Failing that, an AADT or daily count per link would let me anchor the profile,
+which is cruder but would pull most of the free-flow scatter out of V.
 
 ---
 
