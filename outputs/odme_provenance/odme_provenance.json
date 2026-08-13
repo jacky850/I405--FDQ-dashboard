@@ -1,0 +1,62 @@
+{
+  "measurement_files": {
+    "md5_nb_am": "4635d1e20358",
+    "md5_sb_pm": "e56d21b4f273",
+    "identical": false,
+    "rows_nb_am": 71,
+    "rows_sb_pm": 71,
+    "nb_count_median": 106.79999999999995,
+    "sb_count_median": 66.80000000000018,
+    "reading": "two distinct files, NB AM and SB PM"
+  },
+  "odme_target_vs_handoff_peak": {
+    "matched_links": 23,
+    "identical_within_0.05": 1,
+    "mape_pct": 5.781825499429042,
+    "count_min": 1758.8,
+    "count_max": 2170.4,
+    "reading": "the static target is close to but not identical to the speed-derived AM peak (5.8% apart), so it may have a separate origin. It is one number per link for the whole period, though, so it cannot supply the time profile V needs -- only a level check on the peak."
+  },
+  "odme_observed_vs_handoff": {
+    "matched_link_bins": 460,
+    "identical_within_0.05": 460,
+    "mape_pct": 0.0,
+    "max_abs_diff_vph": 0.0,
+    "correlation": 1.0,
+    "reading": "the ODME's observed mainline flow IS count_total_15min, which is the S3 fundamental diagram evaluated at the smoothed speed"
+  },
+  "odme_fit_quality": {
+    "geh_median": 0.16,
+    "geh_p99": 1.6604999999999972,
+    "geh_max": 4.31,
+    "share_geh_below_1_pct": 93.45070422535211,
+    "reading": "the ODME reproduced its own input, so assigned_odme adds no new information"
+  },
+  "od_matrix": {
+    "t_min_range": [
+      300,
+      585
+    ],
+    "bins": 20,
+    "zones": 23,
+    "total_veh": 20123.9273,
+    "od_vs_onramp_inflow_pct": -1.7176746722536602,
+    "reading": "the OD totals track the on-ramp inflows, i.e. it is the OD that reproduces the flows above, not an independent demand measurement"
+  },
+  "ramp_flows": {
+    "onramps": 24,
+    "peak_above_100_vph": 19,
+    "mean_pairwise_shape_corr": 0.02149008398725126,
+    "corr_total_inflow_with_corridor_speed": -0.6678671723746652,
+    "reading": "ramps have distinct time shapes and plausible magnitudes, and their inflow correlates negatively with speed rather than tracking it deterministically -- the one place an independent count could still sit, but provenance needs departure_profile.csv to confirm"
+  },
+  "coverage_gaps": {
+    "linkflow_period": "AM only, t_min 300-585, I-395 NB only",
+    "still_missing": [
+      "I-395 SB measurement",
+      "I-66 anything",
+      "MD / PM / NT"
+    ]
+  },
+  "conclusion": "The ODME files do not break the circularity for mainline flow. They close it exactly: what was previously an inference from a 3.3% S3 reproduction is now a row-for-row identity. V therefore remains an upper bound, and D remains the defensible column."
+}
