@@ -105,8 +105,8 @@ Priority order when sources conflict:
 
 ### 6. Run the queue
 
-$$\text{out}(t) = \min\!\Big(\mu(t),\ \lambda(t) + \tfrac{Q(t)}{\Delta t}\Big)$$
-$$Q(t+\Delta t) = \max\!\Big(0,\ Q(t) + \big[\lambda(t) - \text{out}(t)\big]\,\Delta t\Big)$$
+$$\text{out}(t) = \min\Big(\mu(t),\ \lambda(t) + \tfrac{Q(t)}{\Delta t}\Big)$$
+$$Q(t+\Delta t) = \max\Big(0,\ Q(t) + \big[\lambda(t) - \text{out}(t)\big]\,\Delta t\Big)$$
 
 **One continuous recurrence over all 288 bins.** AM / MD / PM / NT are labels;
 nothing resets at a boundary, so residual queue carries across periods by
