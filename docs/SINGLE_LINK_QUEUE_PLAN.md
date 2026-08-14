@@ -91,7 +91,7 @@ also pour five-minute measurement noise into a quantity that is physically flat.
 **The capacity drop then falls out as `1 − μ_queued / μ_free`** rather than being
 assumed at 10%.
 
-### Two estimation details that matter
+#### Two estimation details that matter
 
 **Measure per day, then average — not the other way round.** Breakdown time
 varies between days, so averaging the profiles first smears the peak into a
@@ -105,7 +105,7 @@ they agree within noise, pool them for a more stable estimate; if they differ,
 keep them apart and report the difference, because it points at different
 bottleneck mechanisms or traffic composition rather than at noise.
 
-### Where μ matters, and where it does not
+#### Where μ matters, and where it does not
 
 Deep in free flow its exact value is irrelevant — with `λ < μ`, `min(μ, λ) = λ`
 whatever μ is. But near the onset it decides whether a queue forms at all, and
