@@ -207,6 +207,44 @@ Priority order when sources conflict:
    finding to report, not something to force.
 3. **Speed — shape only.** Never the level.
 
+#### The tolerance is computed, not chosen
+
+`V_assign` is not an observation. The OD matrix is survey data, but the link
+volume is a routing model's output, several assumptions downstream of it. And
+static assignment is **not capacity-constrained**: BPR stays defined at
+`V/C = 2`, inflating the travel time while still loading the link with more
+vehicles than it could pass. Producing volumes a link cannot physically carry is
+a known property of the method, not a rare failure — and it is the reason this
+work exists, so treating that same volume as ground truth would assume away the
+problem.
+
+Two bounds follow directly, and **neither comes from the assignment**, so this is
+a genuine cross-check rather than the model validating itself.
+
+**Lower bound — what was already observed to discharge.** Over an episode with
+`Q(t₀) = Q(t₃) = 0`, arrivals must equal departures, so the episode's share of
+the total is fixed by the data:
+
+$$V_{\text{assign}} \ \geq\ \int_{t_0}^{t_3} q\,\mathrm{d}t$$
+
+Below this, the free-flow bins would need a negative number of vehicles: the
+assignment would be claiming fewer vehicles over the whole period than were seen
+discharging during the queue alone.
+
+**Upper bound — what the free-flow bins can physically hold.** Each of them
+admits at most `μ_free · Δt` before a queue would form:
+
+$$V_{\text{assign}} \ \leq\ \int_{t_0}^{t_3} q\,\mathrm{d}t \ +\ \sum_{\text{free-flow}} \mu_{\text{free}}\,\Delta t$$
+
+Above this, anchoring would push some free-flow λ past μ and manufacture a queue
+that the speed data does not show.
+
+So the feasible window is **specific to each link and period, computed from that
+link's own data** — not a global ±X%. Inside it, anchor. Outside it, report the
+conflict: it points at the network coding, the volume-delay calibration, or the
+OD on that movement, and forcing the number would erase the signal while still
+producing a plausible-looking speed profile.
+
 ### 6. Run the queue
 
 $$\text{out}(t) = \min\Big(\mu(t),\ \lambda(t) + \tfrac{Q(t)}{\Delta t}\Big)$$
@@ -235,21 +273,10 @@ Compare `v̂(t)` against `v(t)`. This is only a genuine test because of step 5:
 
 So the headline metric is the error in **v(T₂)**, not in P.
 
-**A feasibility condition that costs nothing to check.** Over a full episode with
-`Q(t₀) = Q(t₃) = 0`, conservation forces
-
-$$\int_{t_0}^{t_3}\lambda\,\mathrm{d}t = \int_{t_0}^{t_3}q\,\mathrm{d}t$$
-
-That part of the arrival total is **locked by the data and cannot be adjusted**.
-Since the period must also total `V_assign`, the free-flow bins get whatever is
-left:
-
-$$\sum_{\text{free-flow}}\lambda\,\Delta t = V_{\text{assign}} - \int_{t_0}^{t_3}q\,\mathrm{d}t$$
-
-**If that is negative the model has no solution** — the assignment would be
-claiming fewer vehicles used the link over the period than were observed
-discharging during the queue alone. That is the strict form of the volume
-conflict, and it should be reported rather than absorbed.
+Report alongside it whether `V_assign` fell inside the feasible window of step 5,
+and by how much if not. A link whose volume had to be pulled to the edge of the
+window can still produce a good-looking speed profile, so that has to be visible
+rather than inferred from the fit quality.
 
 ### 9. Sensitivity
 
