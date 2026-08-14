@@ -58,18 +58,36 @@ design choice that follows — `q` is trusted only below the cut-off.
 
 ### 2. Service rate μ(t)
 
-$$\mu(t) = q(t) \quad\text{while congested}, \qquad \mu(t) = \text{capacity} \quad\text{otherwise}$$
+μ is a **ceiling**, not a flow: the most the link can discharge per hour. The
+actual outflow is `min(μ, what wants to leave)`.
 
-**Read pointwise, not integrated.** During congestion the flow *is* throughput,
-and throughput *is* the discharge rate — so this is a measurement in the one
-regime where the inversion is sound.
+That is why it can only be measured under a queue. With nobody waiting, the
+observed flow says what arrived, not what the link could have handled — like
+counting three people strolling through a doorway and learning nothing about how
+many could fit. Under a queue the ceiling is being hit, so the observed flow *is*
+the ceiling.
 
-This replaces the current `μ = 1900 × lanes × (1 − drop)`, whose config file
-states plainly that *"mu is an assumption, not a measurement"*. Reading μ from
-the data removes **two** assumptions at once: the capacity level and the 10%
-capacity-drop fraction, since the drop is already present in the measured flow.
+$$\mu(t) = \begin{cases}
+q(t) & \text{queued — the queue-discharge rate}\\[4pt]
+q_{\max}\ \text{just before breakdown} & \text{free-flowing — the capacity}
+\end{cases}$$
 
-Outside congestion μ does not bind — with no queue, outflow equals inflow.
+Both are measured, and the **capacity drop falls out as their ratio** rather than
+being assumed at 10%. The pre-breakdown value is also the best-conditioned point
+on the whole fundamental diagram: `dq/dv ≈ 0` at the peak, so the flow there is
+well determined even where the speed is not.
+
+This replaces `μ = 1900 × lanes × (1 − drop)`, whose config file states plainly
+that *"mu is an assumption, not a measurement"*.
+
+**Where μ matters and where it does not.** Deep in free flow its exact value is
+irrelevant — with `λ < μ`, `min(μ, λ) = λ` whatever μ is. But near the onset it
+decides whether a queue forms at all, and when. Set it too low and congestion is
+manufactured; too high and real congestion is suppressed. So a value is always
+needed, and only its precision is negotiable.
+
+Links that never congest offer no measurement. They also never queue, so the HCM
+prior is a safe fallback there.
 
 ### 3. Speed-implied queue
 
@@ -131,9 +149,21 @@ Compare `v̂(t)` against `v(t)`. This is only a genuine test because of step 5:
 
 So the headline metric is the error in **v(T₂)**, not in P.
 
-A second free check: over a full episode with `Q(t₀) = Q(t₃) = 0`, conservation
-gives $\int_{t_0}^{t_3}\lambda\,dt = \int_{t_0}^{t_3}q\,dt$. If the episode
-volume from `q` disagrees with the assignment volume, μ or `V_assign` is wrong.
+**A feasibility condition that costs nothing to check.** Over a full episode with
+`Q(t₀) = Q(t₃) = 0`, conservation forces
+
+$$\int_{t_0}^{t_3}\lambda\,\mathrm{d}t = \int_{t_0}^{t_3}q\,\mathrm{d}t$$
+
+That part of the arrival total is **locked by the data and cannot be adjusted**.
+Since the period must also total `V_assign`, the free-flow bins get whatever is
+left:
+
+$$\sum_{\text{free-flow}}\lambda\,\Delta t = V_{\text{assign}} - \int_{t_0}^{t_3}q\,\mathrm{d}t$$
+
+**If that is negative the model has no solution** — the assignment would be
+claiming fewer vehicles used the link over the period than were observed
+discharging during the queue alone. That is the strict form of the volume
+conflict, and it should be reported rather than absorbed.
 
 ### 9. Sensitivity
 
