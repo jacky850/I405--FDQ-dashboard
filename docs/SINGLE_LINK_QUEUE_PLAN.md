@@ -128,22 +128,77 @@ This is the **fitting target**, not the queue itself.
 
 ### 4. Arrival rate λ(t)
 
-A smooth B-spline in time of day, 60-minute knot spacing, whose coefficients are
-fitted so the queue produced by the recurrence matches `Q_meas`.
+λ is the **demand** — how many vehicles per hour want through — as against μ,
+what the link can pass, and `out`, what actually got through. In free flow all
+three coincide; under a queue λ exceeds the other two and the difference
+accumulates.
 
-This is conservation, `λ = μ + dQ/dt`, solved with a smoothness prior rather than
-pointwise. That matters: a pointwise derivative over 5-minute bins is
-noise-dominated on a single link, while a spline with ~15 degrees of freedom
-cannot absorb that noise. **The smoothness prior is what makes a single link
-tractable.**
+**λ is never directly observable here.** In free flow it does equal the flow, but
+that is exactly where recovering flow from speed fails (84.6%). Under a queue the
+flow we can recover is the *discharge*, which is μ. Neither regime hands it over.
+
+#### The queue is the recorder
+
+What makes λ recoverable at all is that the queue accumulates the gap:
+
+$$Q(t+\Delta t) - Q(t) = \big[\lambda(t) - \text{out}(t)\big]\,\Delta t$$
+
+Concretely — if the queue stood at 0 at 07:00 and 500 vehicles at 08:00 while the
+link discharged at 2,000 veh/h, then 2,500 veh/h arrived. Nothing else is
+consistent with those numbers. **The height of the queue is a record of how far λ
+ran above μ**, which rearranges to `λ = μ + dQ/dt`.
+
+#### Why that equation is not used pointwise
+
+`Q` is itself derived from speed, so a wobble in `v` becomes a wobble in `Q`, and
+differencing over 5-minute bins multiplies it by twelve. With `Q ≈ 200` veh
+carrying ±10 veh of noise, `dQ/dt` inherits ±120 veh/h of pure noise against a
+signal that might be 300 — the derivative is dominated by the error.
+
+So λ is parameterised instead as a B-spline in time of day, 60-minute knots:
+**about 25 coefficients rather than 288 free values.** The coefficients are
+fitted by running the recurrence forward and comparing the resulting queue
+against `Q_meas`.
+
+The smoothness is a **physical prior, not a numerical convenience** — real demand
+builds and decays over tens of minutes, it does not jump every five. And a curve
+with 25 degrees of freedom cannot absorb five-minute noise, so the noise is
+filtered rather than amplified.
+
+**This is the same conservation equation, regularised.** Pointwise it is
+ill-posed; restricted to smooth solutions it is well-posed. That distinction is
+what makes a **single link** tractable rather than forcing a corridor aggregate.
+
+#### The queue is produced, not read
+
+`Q` comes out of the recurrence, never out of the data. So it carries `Q(t−1)` by
+construction, cannot jump between bins, and satisfies conservation automatically.
+`Q_meas` is only the target. The residual therefore measures something meaningful:
+**how much of the observed speed a physically smooth arrival process can account
+for.**
+
+#### Where λ cannot be recovered
+
+With no queue, `Q ≡ 0` for **any** λ below μ:
+
+| λ | out | Q |
+|---:|---:|---:|
+| 800 | 800 | 0 |
+| 1,500 | 1,500 | 0 |
+| 1,999 | 1,999 | 0 |
+
+Same queue, same speed, nothing to fit against. Those bins are handed to step 5.
 
 ### 5. Volume anchor
 
 $$\sum_t \lambda(t)\,\Delta t = V_{\text{assign}}(\text{period})$$
 
-as a **soft** constraint with a tolerance. The free-flow bins absorb the
-adjustment, which is correct: they are the bins where λ was never identifiable
-from speed in the first place.
+as a **soft** constraint with a tolerance. The congested bins are already pinned
+by the queue, so **the free-flow bins absorb the whole adjustment** — which is
+exactly right, since those are the bins step 4 could not identify.
+
+The two sources therefore never argue: speed fixes λ where a queue records it,
+the assignment fixes the total where it does not.
 
 Priority order when sources conflict:
 
