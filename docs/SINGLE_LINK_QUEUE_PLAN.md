@@ -67,10 +67,12 @@ counting three people strolling through a doorway and learning nothing about how
 many could fit. Under a queue the ceiling is being hit, so the observed flow *is*
 the ceiling.
 
-$$\mu(t) = \begin{cases}
-q(t) & \text{queued — the queue-discharge rate}\\[4pt]
-q_{\max}\ \text{just before breakdown} & \text{free-flowing — the capacity}
-\end{cases}$$
+So μ is read in two places, both of them measurements:
+
+| Regime | μ(t) | What it is |
+|---|---|---|
+| **Queued** | `q(t)` | the queue-discharge rate |
+| **Free-flowing** | peak `q` just before breakdown | the capacity |
 
 Both are measured, and the **capacity drop falls out as their ratio** rather than
 being assumed at 10%. The pre-breakdown value is also the best-conditioned point
