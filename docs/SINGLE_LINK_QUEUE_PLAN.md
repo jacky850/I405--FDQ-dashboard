@@ -67,29 +67,58 @@ counting three people strolling through a doorway and learning nothing about how
 many could fit. Under a queue the ceiling is being hit, so the observed flow *is*
 the ceiling.
 
-So μ is read in two places, both of them measurements:
+So μ takes **two regimes, both measured**:
 
-| Regime | μ(t) | What it is |
+| Regime | Applies | Estimator |
 |---|---|---|
-| **Queued** | `q(t)` | the queue-discharge rate |
-| **Free-flowing** | peak `q` just before breakdown | the capacity |
+| **Free-flowing** | before breakdown, and after the queue clears | peak `q` just before breakdown |
+| **Queued** | breakdown → dissipation | median `q` over the episode |
 
-Both are measured, and the **capacity drop falls out as their ratio** rather than
-being assumed at 10%. The pre-breakdown value is also the best-conditioned point
-on the whole fundamental diagram: `dq/dv ≈ 0` at the peak, so the flow there is
-well determined even where the speed is not.
+Two regimes is not two numbers. μ_free is one value for the day; **μ_queued is
+one value per episode**, so a link with an AM and a PM queue carries three.
 
-This replaces `μ = 1900 × lanes × (1 − drop)`, whose config file states plainly
-that *"mu is an assumption, not a measurement"*.
+The switch is on **queue state, not on the clock**. That is the same principle
+that keeps the queue itself continuous across period boundaries — a discharge
+rate that jumped at 09:00 would reintroduce exactly the artefact the continuous
+recurrence was built to remove.
 
-**Where μ matters and where it does not.** Deep in free flow its exact value is
-irrelevant — with `λ < μ`, `min(μ, λ) = λ` whatever μ is. But near the onset it
-decides whether a queue forms at all, and when. Set it too low and congestion is
-manufactured; too high and real congestion is suppressed. So a value is always
-needed, and only its precision is negotiable.
+Within an episode μ_queued is flat. It does not track the flow's own wiggles,
+because it should not: **capacity drop is hysteretic.** Once a queue forms the
+discharge stays down even if demand momentarily eases, and it recovers only when
+the queue clears. Reading μ pointwise off `q(t)` would contradict that and would
+also pour five-minute measurement noise into a quantity that is physically flat.
 
-Links that never congest offer no measurement. They also never queue, so the HCM
-prior is a safe fallback there.
+**The capacity drop then falls out as `1 − μ_queued / μ_free`** rather than being
+assumed at 10%.
+
+### Two estimation details that matter
+
+**Measure per day, then average — not the other way round.** Breakdown time
+varies between days, so averaging the profiles first smears the peak into a
+gradual decline and the measured capacity comes out low: `max(mean) ≤ mean(max)`.
+Estimate the pre-breakdown peak on each individual day, then take the median of
+those. The raw 5-minute RITIS data supports this; the average-weekday profile
+does not.
+
+**Whether AM and PM share a capacity is an empirical question.** Measure both. If
+they agree within noise, pool them for a more stable estimate; if they differ,
+keep them apart and report the difference, because it points at different
+bottleneck mechanisms or traffic composition rather than at noise.
+
+### Where μ matters, and where it does not
+
+Deep in free flow its exact value is irrelevant — with `λ < μ`, `min(μ, λ) = λ`
+whatever μ is. But near the onset it decides whether a queue forms at all, and
+when. Set it too low and congestion is manufactured; too high and real congestion
+is suppressed. So a value is always needed, and only its precision is negotiable.
+
+Episodes shorter than `MIN_EPISODE_H` give an unstable median. Fall back to
+another episode on the same link, or to the prior. Links that never congest offer
+no measurement at all — and never queue, so the HCM prior is safe there.
+
+This whole section replaces `μ = 1900 × lanes × (1 − drop)`, whose config file
+states plainly that *"mu is an assumption, not a measurement"*. Nothing above is
+assumed; every value is read from the data.
 
 ### 3. Speed-implied queue
 
