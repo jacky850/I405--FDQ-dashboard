@@ -308,19 +308,32 @@ Report as a band, not a point:
 
 ---
 
-## Three decisions needed before coding
+## One decision needed before coding
 
-**1. Which free speed?** It sets the cut-off at `0.70 × v_f`, so it decides which
-bins count as congested, and therefore μ, `Q_meas`, and the free-flow travel time.
-Measured effect on D: **median −22%, range −100% to +119%** — larger than any
-other factor, and far larger than the S3 exponent (±14%). Sources disagree:
-`config.py` says 70 for every NVTA freeway, `corridor_tmc_mapping.csv` assigns
-63 / 69 / 75 per TMC, and the observed 95th percentile runs 50–69 per TMC.
+**Which free speed?**
 
-**2. What exactly is the QVDF "average discharge rate"?** No explicit discharge
-column appears in the QVDF outputs. If it is simply capacity, it duplicates
-decision 1 and step 2.
+It sets the cut-off at `0.70 × v_f`, so it decides which bins count as congested
+— and therefore μ, `Q_meas`, the free-flow travel time, and where the volume
+window sits. Everything downstream moves with it.
 
-**3. Is the tolerance on `V_assign` a percentage, and what is it?** Step 5 needs
-a number, and the answer determines what counts as a reportable conflict rather
-than an adjustment.
+Measured effect on D: **median −22%, range −100% to +119%.** That is larger than
+any other choice in the pipeline, and far larger than the S3 exponent, which
+moves it ±14%.
+
+The three sources disagree:
+
+| Source | Value |
+|---|---|
+| `config.py` | 70 mph for every NVTA freeway |
+| `corridor_tmc_mapping.csv` | 63 / 69 / 75 per TMC |
+| Observed 95th percentile | 50–69 per TMC |
+
+### Two earlier questions that the design resolved
+
+**The QVDF average discharge rate is no longer needed.** Step 2 reads both
+service rates from the data, so nothing depends on locating a discharge column
+in the QVDF outputs.
+
+**The tolerance on `V_assign` does not need to be chosen.** Step 5 computes a
+feasible window per link and period from that link's own observed discharge and
+free-flow capacity, which is stricter and better founded than a global ±X%.
