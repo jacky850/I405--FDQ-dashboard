@@ -1,0 +1,68 @@
+{
+  "step": "2. Service rate mu(t)",
+  "free_speed_source": "model",
+  "mu_free": {
+    "source": "link_capacity / lane_capacity from the assignment, not estimated",
+    "median_vphpl": 2000.0,
+    "why_not_estimated": "peak q before breakdown returns the capacity fed in to four decimals, because S3 peaks at C where v = v_f/sqrt(2) = 0.707 v_f and breakdown is defined at 0.70 v_f",
+    "lane_count_disagreements": 0
+  },
+  "links": 252,
+  "links_with_an_episode": 91,
+  "episodes": 114,
+  "episodes_by_period": {
+    "PM": 52,
+    "AM": 44,
+    "MD": 9,
+    "NT": 9
+  },
+  "episodes_per_link": {
+    "max": 3,
+    "median": 1.0
+  },
+  "mu_queued_vphpl": {
+    "median": 1880.7,
+    "iqr": [
+      1749.9,
+      1936.7
+    ]
+  },
+  "capacity_drop": {
+    "median": 0.0448,
+    "iqr": [
+      0.0078,
+      0.087
+    ],
+    "config_assumed": 0.1,
+    "note": "Falls out of the two regimes rather than being assumed. Capacity-free: the same ratio at C = 1900 and C = 2200 agrees to 3e-16. It is still inferred through S3 rather than measured from counts, since both flows come from the same speed through the same map.",
+    "per_episode": "carried per episode, not pooled -- the spread is too wide for one number"
+  },
+  "do_am_and_pm_share_a_capacity": {
+    "unpaired": {
+      "AM": {
+        "n": 44,
+        "drop_median": 0.0466
+      },
+      "PM": {
+        "n": 52,
+        "drop_median": 0.077
+      },
+      "mannwhitney_p": 0.0052
+    },
+    "paired_on_links_with_both": {
+      "n_links": 8,
+      "median_PM_minus_AM": -0.0195
+    },
+    "verdict": "Do not pool, but not for the reason the unpaired test suggests. The unpaired difference is confounded by which links congest when, and the paired subset is both tiny and of the opposite sign. Carrying mu_queued per episode, as this step does, avoids having to answer the question."
+  },
+  "long_episodes": {
+    "P_max_h": 24.0,
+    "over_8h": 12,
+    "note": "An episode running most of the day is a link that never recovers above 0.75 v_f between the morning and evening peaks. mu_queued is then a whole-day median rather than one peak's discharge rate."
+  },
+  "regime_switch_caveat": {
+    "threshold_free_breakdown_v_over_vf_median": 0.8247,
+    "s3_capacity_speed_v_over_vf": 0.7071,
+    "note": "Breakdown located as the steepest single-bin decline, using no threshold, sits above the cut-off on 72% of links. The queued regime may therefore start late. Recorded for step 3; nothing here was changed for it."
+  }
+}
