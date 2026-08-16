@@ -1,0 +1,34 @@
+{
+  "step": "3. Speed-implied queue, the fitting target for step 4",
+  "formula": "Q_meas(t) = mu(t) * (L/v(t) - L/v_f), zero where not congested",
+  "links": 252,
+  "links_with_a_queue": 76,
+  "distinct_tmcs_behind_them": 44,
+  "queue_target_veh": {
+    "peak_median": 46.0,
+    "peak_iqr": [
+      29.4,
+      77.9
+    ],
+    "peak_max": 325.7
+  },
+  "queue_discarded_outside_episodes": {
+    "share_of_all_implied_queue": 0.5451,
+    "why_that_number_misleads": "It is a bin-count effect. Outside bins outnumber inside ones 16.7 to 1 while carrying 14x less each.",
+    "mean_veh_per_bin": {
+      "inside": 43.49,
+      "outside": 3.11
+    },
+    "outside_baseline_is_an_artefact": "v_f is a 95th percentile, so 95% of bins sit just below it and L/v - L/v_f is a small positive number almost everywhere. That floor is not queue.",
+    "on_links_with_no_episode_at_all": 0.6499,
+    "within_30_min_of_an_episode_edge": 0.1557,
+    "clipped_relative_to_captured": 0.0653,
+    "verdict": "The 0.70 cut-off is conservative against the threshold-free breakdown at 0.82 v_f found in step 2, but what the boundary clips amounts to about 6% of what it captures. Not worth moving the threshold for."
+  },
+  "storage": {
+    "jam_density_vehpmipl": 200.0,
+    "bins_over_storage": 0,
+    "links_over_storage": 0,
+    "peak_over_storage_ratio_max": 0.742
+  }
+}
