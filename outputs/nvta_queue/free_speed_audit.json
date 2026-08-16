@@ -1,0 +1,90 @@
+{
+  "step": "free-flow speed audit",
+  "weekdays": 23,
+  "routes": {
+    "p95": "95th percentile of that TMC's own weekday observations",
+    "corridor_p95": "95th percentile pooled over the whole corridor-direction",
+    "night_median": "median speed 00:00-05:00, when nothing is queueing",
+    "observed_max": "highest speed ever recorded -- a hard ceiling on any v_f",
+    "inrix_reference": "INRIX's own reference_speed field, an independent estimate",
+    "assignment_model": "free_speed_mph from the TAPLite link performance table"
+  },
+  "by_corridor": {
+    "I395_NB": {
+      "tmcs": 21.0,
+      "p95": 65.62,
+      "corridor_p95": 65.89,
+      "night_median": 61.92,
+      "observed_max": 69.59,
+      "inrix_reference": 59.0,
+      "assignment_model": 63.0
+    },
+    "I395_SB": {
+      "tmcs": 20.0,
+      "p95": 63.18,
+      "corridor_p95": 64.77,
+      "night_median": 59.57,
+      "observed_max": 68.5,
+      "inrix_reference": 59.5,
+      "assignment_model": 63.0
+    },
+    "I66_EB": {
+      "tmcs": 57.0,
+      "p95": 67.86,
+      "corridor_p95": 71.0,
+      "night_median": 63.6,
+      "observed_max": 71.48,
+      "inrix_reference": 64.0,
+      "assignment_model": 75.0
+    },
+    "I66_WB": {
+      "tmcs": 56.0,
+      "p95": 67.88,
+      "corridor_p95": 70.93,
+      "night_median": 64.52,
+      "observed_max": 72.0,
+      "inrix_reference": 64.0,
+      "assignment_model": 75.0
+    }
+  },
+  "impossible_values": {
+    "I395_NB": {
+      "assignment_above_observed_max": 3,
+      "p95_above_observed_max": 0
+    },
+    "I395_SB": {
+      "assignment_above_observed_max": 4,
+      "p95_above_observed_max": 0
+    },
+    "I66_EB": {
+      "assignment_above_observed_max": 33,
+      "p95_above_observed_max": 0
+    },
+    "I66_WB": {
+      "assignment_above_observed_max": 32,
+      "p95_above_observed_max": 0
+    }
+  },
+  "spread_within_corridor": {
+    "I395_NB": {
+      "p95_min": 52.1,
+      "p95_max": 68.1,
+      "p95_range_mph": 15.9
+    },
+    "I395_SB": {
+      "p95_min": 53.7,
+      "p95_max": 66.5,
+      "p95_range_mph": 12.8
+    },
+    "I66_EB": {
+      "p95_min": 54.3,
+      "p95_max": 74.0,
+      "p95_range_mph": 19.7
+    },
+    "I66_WB": {
+      "p95_min": 51.5,
+      "p95_max": 73.0,
+      "p95_range_mph": 21.5
+    }
+  }
+}
