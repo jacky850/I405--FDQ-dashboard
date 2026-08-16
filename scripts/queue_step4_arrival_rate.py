@@ -10,17 +10,26 @@ What makes it recoverable is that the queue accumulates the gap:
 
     Q(t+dt) - Q(t) = [lambda(t) - out(t)] dt        ->    lambda = mu + dQ/dt
 
-That is not used pointwise. Q is itself derived from speed, so a wobble in v
-becomes a wobble in Q and differencing multiplies it. lambda is carried instead
-by a cubic B-spline in time of day on 60-minute knots -- 27 coefficients against
-96 bins -- fitted by running the recurrence forward and comparing the queue it
-produces against the step 3 target.
+lambda is carried instead by a cubic B-spline in time of day on 60-minute knots
+-- 27 coefficients against 96 bins -- fitted by running the recurrence forward
+and comparing the queue it produces against the step 3 target.
 
-The smoothness is a physical prior rather than a numerical convenience: real
-demand builds over tens of minutes, it does not jump every quarter hour. This is
-the same conservation equation, regularised. Pointwise it is ill-posed;
-restricted to smooth solutions it is well-posed, and that is what makes a single
-link tractable instead of forcing a corridor aggregate.
+**The reason is not the one the plan gives.** The plan expects the pointwise
+formula to be swamped by noise, since Q comes from speed and differencing
+amplifies a wobble in v. That holds for the 5-minute single-day data it was
+written against. It does not hold here: measured on these links with a forward
+difference, pointwise lambda jitters by 23 vph between bins against the spline's
+17 -- 1.3x, not the order of magnitude expected -- and never once goes negative.
+15-minute bins cut the amplification threefold and a 23-weekday average cuts the
+input noise by another 2.1, so roughly six times less noise reaches dQ/dt than
+the plan assumed.
+
+What the spline is actually for is the third point below: it forces the queue to
+be **produced** by the recurrence. The pointwise formula returns a lambda but no
+queue that satisfies conservation -- it reads Q off the speed and then compares
+that same Q to itself. Smoothness is also a fair physical prior, since real
+demand builds over tens of minutes rather than jumping every quarter hour, but
+on this data that prior is doing much less work than the structure is.
 
 **The queue is produced, never read.** Q comes out of the recurrence, so it
 carries Q(t-1) by construction and satisfies conservation automatically. Q_meas
