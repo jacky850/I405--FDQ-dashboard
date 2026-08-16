@@ -1,37 +1,38 @@
 {
   "step": "2. Service rate mu(t)",
-  "free_speed_source": "model",
+  "free_speed_source": "observed",
   "mu_free": {
     "source": "link_capacity / lane_capacity from the assignment, not estimated",
-    "median_vphpl": 2000.0,
+    "median_vphpl": 1900.0,
     "why_not_estimated": "peak q before breakdown returns the capacity fed in to four decimals, because S3 peaks at C where v = v_f/sqrt(2) = 0.707 v_f and breakdown is defined at 0.70 v_f",
     "lane_count_disagreements": 0
   },
   "links": 252,
-  "links_with_an_episode": 91,
-  "episodes": 114,
+  "links_with_an_episode": 76,
+  "episodes": 87,
+  "shallow_episodes_rejected": 14,
+  "min_depth_ratio": 0.85,
   "episodes_by_period": {
-    "PM": 52,
-    "AM": 44,
-    "MD": 9,
-    "NT": 9
+    "PM": 47,
+    "AM": 34,
+    "MD": 6
   },
   "episodes_per_link": {
-    "max": 3,
+    "max": 2,
     "median": 1.0
   },
   "mu_queued_vphpl": {
-    "median": 1880.7,
+    "median": 1811.6,
     "iqr": [
-      1749.9,
-      1936.7
+      1703.2,
+      1898.0
     ]
   },
   "capacity_drop": {
-    "median": 0.0448,
+    "median": 0.0683,
     "iqr": [
-      0.0078,
-      0.087
+      0.0371,
+      0.109
     ],
     "config_assumed": 0.1,
     "note": "Falls out of the two regimes rather than being assumed. Capacity-free: the same ratio at C = 1900 and C = 2200 agrees to 3e-16. It is still inferred through S3 rather than measured from counts, since both flows come from the same speed through the same map.",
@@ -40,24 +41,24 @@
   "do_am_and_pm_share_a_capacity": {
     "unpaired": {
       "AM": {
-        "n": 44,
-        "drop_median": 0.0466
+        "n": 34,
+        "drop_median": 0.0399
       },
       "PM": {
-        "n": 52,
-        "drop_median": 0.077
+        "n": 47,
+        "drop_median": 0.0867
       },
-      "mannwhitney_p": 0.0052
+      "mannwhitney_p": 0.0301
     },
     "paired_on_links_with_both": {
-      "n_links": 8,
-      "median_PM_minus_AM": -0.0195
+      "n_links": 7,
+      "median_PM_minus_AM": -0.0213
     },
     "verdict": "Do not pool, but not for the reason the unpaired test suggests. The unpaired difference is confounded by which links congest when, and the paired subset is both tiny and of the opposite sign. Carrying mu_queued per episode, as this step does, avoids having to answer the question."
   },
   "long_episodes": {
-    "P_max_h": 24.0,
-    "over_8h": 12,
+    "P_max_h": 15.85,
+    "over_8h": 3,
     "note": "An episode running most of the day is a link that never recovers above 0.75 v_f between the morning and evening peaks. mu_queued is then a whole-day median rather than one peak's discharge rate."
   },
   "regime_switch_caveat": {

@@ -68,7 +68,18 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--flow-file", type=Path,
                         default=ROOT / "outputs/nvta_queue/step1_flow_average_weekday_15min.csv")
-    parser.add_argument("--free-speed-source", default="model", choices=["model", "observed"])
+    parser.add_argument("--free-speed-source", default="observed", choices=["model", "observed"],
+                        help="'observed' is each link's own 95th-percentile speed. The default "
+                             "is not the model value because the assignment gives every I-66 "
+                             "link a flat 75 mph, which is above the highest speed some of them "
+                             "reach all day -- link 26304 never exceeds 55. That puts the cut-off "
+                             "above the link's normal speed and reports it as congested around "
+                             "the clock. Switching source removes 9 of the 12 all-day episodes "
+                             "without any filtering rule.")
+    parser.add_argument("--min-depth-ratio", type=float, default=0.85,
+                        help="an episode must reach below this fraction of the cut-off. Grazing "
+                             "the cut-off for a couple of bins leaves mu_queued equal to mu_free "
+                             "and contributes nothing but a spurious queued regime.")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "outputs/nvta_queue")
     return parser.parse_args()
 
@@ -122,7 +133,7 @@ def main() -> None:
     implied = per_link["link_capacity"] / per_link["lane_capacity"]
     lanes_disagree = int((np.abs(implied - per_link["lanes"]) > 0.01).sum())
 
-    series_rows, episode_rows = [], []
+    series_rows, episode_rows, shallow_rejected = [], [], []
     for link_id, g in flow.groupby("link_id"):
         g = g.sort_values("t_min").reset_index(drop=True)
         free_speed = float(g["free_speed"].iloc[0])
@@ -136,9 +147,17 @@ def main() -> None:
         episode_id = np.full(len(g), "", dtype=object)
         mu_vphpl = np.full(len(g), mu_free_vphpl)
 
+        rejected = 0
         for _, episode in episodes.iterrows():
             inside = (t >= episode["t0_min"]) & (t <= episode["t3_min"])
             if not inside.any():
+                continue
+            # Depth, not duration, is what separates a real episode from an
+            # artefact: the two are almost uncorrelated (r = 0.22), and a long
+            # episode on I-395 NB with v(T2) = 9 mph is the most congested link
+            # in the network while a short one grazing the cut-off is nothing.
+            if episode["vT2_robust_mph"] > args.min_depth_ratio * free_speed * CUTOFF_RATIO:
+                rejected += 1
                 continue
             # Flat inside the episode: capacity drop is hysteretic, so the
             # discharge rate does not track the flow's own five-minute wiggles.
@@ -163,6 +182,7 @@ def main() -> None:
                 "capacity_drop": 1.0 - mu_queued_vphpl / mu_free_vphpl,
             })
 
+        shallow_rejected.append(rejected)
         series_rows.append(pd.DataFrame({
             "link_id": link_id, "corridor": g["corridor"].iloc[0], "t_min": t.astype(int),
             "period": g["period"].to_numpy(), "speed_mph": g["speed"].to_numpy(float),
@@ -226,6 +246,8 @@ def main() -> None:
         "links": int(series["link_id"].nunique()),
         "links_with_an_episode": int(with_episode.sum()),
         "episodes": int(len(episodes)),
+        "shallow_episodes_rejected": int(sum(shallow_rejected)),
+        "min_depth_ratio": args.min_depth_ratio,
         "episodes_by_period": episodes["period_by_T2"].value_counts().to_dict() if len(episodes) else {},
         "episodes_per_link": {
             "max": int(episodes.groupby("link_id").size().max()) if len(episodes) else 0,
