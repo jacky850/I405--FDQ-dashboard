@@ -1,0 +1,39 @@
+{
+  "step": "4. Arrival rate lambda(t)",
+  "parameterisation": {
+    "form": "cubic B-spline in time of day",
+    "knot_spacing_min": 60.0,
+    "basis_functions": 27,
+    "bins": 96,
+    "note": "The queue is produced only by the recurrence, so Q(t) always carries Q(t-1). The speed-implied queue is the fitting target, which makes the residual a measure of model adequacy rather than a tautology."
+  },
+  "links": 252,
+  "links_fitted": 76,
+  "links_without_a_queue": 176,
+  "distinct_tmcs_fitted": 44,
+  "restarts_needed": 2,
+  "identifiability": {
+    "identifiable_bins": 1363,
+    "unidentifiable_bins": 22829,
+    "share_identifiable": 0.0563,
+    "note": "With no queue, Q is identically zero for any lambda below mu. Those bins are handed to step 5 rather than reported as estimates."
+  },
+  "fit_quality": {
+    "residual_rmse_veh_median": 1.98,
+    "residual_rmse_over_peak_median": 0.0407,
+    "residual_rmse_over_peak_iqr": [
+      0.0329,
+      0.0548
+    ],
+    "peak_fitted_over_measured_median": 0.968
+  },
+  "lambda": {
+    "peak_vph_median": 6838.5,
+    "peak_over_mu_median": 1.015,
+    "note": "lambda above mu is what builds the queue; a peak ratio below 1 would mean the fit produced a queue without demand ever exceeding service."
+  },
+  "end_of_day_queue": {
+    "median_veh": 0.0,
+    "links_not_clearing": 0
+  }
+}
