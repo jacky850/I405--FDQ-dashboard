@@ -1,0 +1,101 @@
+{
+  "scope": "NVTA PM period on the assignment clock, 15:00-19:00, average weekday 2025-10-06 to 10-10, one row per network link",
+  "free_speed_source": "observed",
+  "links": 92,
+  "links_with_a_PM_episode": 49,
+  "construction": {
+    "tmc_to_link": "length-weighted harmonic mean of speed (total length / total travel time)",
+    "v_c_in_the_qvdf_denominator": "the congestion cut-off 0.70*v_f, not the S3 speed at capacity",
+    "episode_shape": "independent onset and recovery widths, tau=(t-T2)/(T2-t0) and (t-T2)/(t3-T2)",
+    "outside_the_episode": "the back-calculated speed is the free-flow speed, as in CBI",
+    "D": "sum of S3 flow over PM bins below the cut-off, veh per lane",
+    "C": "capacity, veh/h/lane; D/C therefore carries units of hours"
+  },
+  "by_corridor": {
+    "I-395 NB": {
+      "links": 19,
+      "with_PM_episode": 14,
+      "P_median_h": 4.22,
+      "vT2_median_mph": 27.12,
+      "recovery_over_onset_median": 0.63,
+      "D_median_veh_per_lane": 5726.0,
+      "D_over_C_median_h": 2.6,
+      "speed_mae_episode_mph": 1.23
+    },
+    "I-395 SB": {
+      "links": 19,
+      "with_PM_episode": 10,
+      "P_median_h": 3.31,
+      "vT2_median_mph": 27.86,
+      "recovery_over_onset_median": 2.8,
+      "D_median_veh_per_lane": 6376.0,
+      "D_over_C_median_h": 2.9,
+      "speed_mae_episode_mph": 2.59
+    },
+    "I-66 EB": {
+      "links": 31,
+      "with_PM_episode": 15,
+      "P_median_h": 3.88,
+      "vT2_median_mph": 24.39,
+      "recovery_over_onset_median": 1.12,
+      "D_median_veh_per_lane": 6008.0,
+      "D_over_C_median_h": 2.73,
+      "speed_mae_episode_mph": 2.18
+    },
+    "I-66 WB": {
+      "links": 23,
+      "with_PM_episode": 10,
+      "P_median_h": 5.55,
+      "vT2_median_mph": 26.23,
+      "recovery_over_onset_median": 0.5,
+      "D_median_veh_per_lane": 7277.0,
+      "D_over_C_median_h": 3.31,
+      "speed_mae_episode_mph": 2.69
+    }
+  },
+  "free_speed_check_against_cbi": {
+    "links_in_common": 48,
+    "ours_median_mph": 64.25,
+    "cbi_median_mph": 65.4,
+    "median_difference_mph": -1.2,
+    "mae_mph": 1.77,
+    "within_3_mph_pct": 83.3,
+    "correlation": 0.9607,
+    "note": "Two independent derivations -- ours the 95th percentile of each link's own observed profile, theirs a separate model estimate. Agreement to under 2 mph is what retires the 70 mph constant."
+  },
+  "episode_count_vs_the_delivered_table": {
+    "delivered_congested_links": 76,
+    "links_with_a_PM_episode_here": 49,
+    "why_they_differ": "The delivered table called a link congested if any PM bin fell below 0.70 * 70 mph = 49 mph. Here the cut-off is 0.70 times the link's own free-flow speed, which is 64.7 mph at the median and as low as 50, and an episode also has to last half an hour and be 3 mph deep. Links whose speed never drops below their own cut-off are no longer counted. This is a correction, not a loss: a link running 45 mph against a 50 mph free-flow speed is not congested."
+  },
+  "episode_extent": {
+    "P_median_h": 3.83,
+    "longer_than_the_4h_pm_window": 22,
+    "starting_before_noon": 3,
+    "links_affected": [
+      26469,
+      26830,
+      29007
+    ],
+    "note": "An episode is allowed to run past the PM window, and usually does: the queue builds before 15:00 and clears after 19:00. On the links flagged as starting before noon the morning and evening peaks were joined into one episode because the speed never recovered above 0.75 * v_f in between. Their P is an all-day figure and a single curve is a poor description of two peaks. D, C and the observed speed are unaffected."
+  },
+  "asymmetry": {
+    "recovery_over_onset_median": 0.7,
+    "recovery_over_onset_iqr": [
+      0.48,
+      1.57
+    ],
+    "note": "A symmetric curve would require this to be 1.0 on every link. The spread is why each shoulder is given its own width."
+  },
+  "speed_agreement": {
+    "episode_bins_only": {
+      "mae_mph": 2.176,
+      "rmse_mph": 2.775
+    },
+    "whole_pm_period": {
+      "mae_mph": 4.592,
+      "rmse_mph": 6.017
+    },
+    "note": "The curve is anchored on the observed t0, T2, t3 and v_T2, so depth and timing are exact by construction and only the shape between the anchors is being tested. A small residual here is expected and is not evidence that the parameters predict anything."
+  }
+}
