@@ -1,39 +1,54 @@
 {
   "step": "5. Volume anchor",
-  "period": "PM",
-  "V_assign_units": "period total vehicles over all lanes; verified via D = volume / (lanes * 4h * vdf_plf) on 100% of rows",
-  "links": 252,
-  "links_with_a_pm_queue": 53,
-  "bounds": {
-    "inside_window": 213,
-    "below_lower": 34,
-    "above_upper": 5,
-    "share_inside": 0.8452
-  },
-  "on_links_with_a_queue": {
-    "inside_window": 15,
-    "below_lower": 34,
-    "above_upper": 4,
-    "share_pinned_by_the_queue_median": 1.3225
-  },
-  "conflicts": {
-    "V_over_lower_median_where_below": 0.528,
-    "V_over_upper_median_where_above": 1.066,
-    "note": "Reported, not forced. A V_assign below the lower bound claims fewer vehicles over the whole period than were seen discharging during the queue alone; above the upper bound it needs free-flow arrivals past mu_free, which would manufacture a queue the speed does not show.",
-    "what_the_below_lower_links_look_like": {
-      "V_assign_vphpl_median": 903,
-      "share_of_lane_capacity": 0.45,
-      "hours_queued_median": 4.0,
-      "discharge_vphpl_during_the_queue": 1677,
-      "reading": "A link loaded to 45% of capacity should not queue for four hours. The speed is direct observation and the discharge rests on S3's congested branch, which carries roughly 20% error -- far too little to close a factor of two. So the two are genuinely inconsistent.",
-      "candidate_causes": [
-        "assignment volumes too low on these movements",
-        "spillback: the queue belongs to a downstream bottleneck, so this link is congested without its own demand exceeding its own capacity. A single-link point queue cannot represent that, which makes it a limitation of the method here rather than a defect in either input."
-      ]
+  "periods": [
+    "AM",
+    "MD",
+    "PM"
+  ],
+  "V_assign_units": "period total vehicles over all lanes; verified via D = volume / (lanes * period_hours * vdf_plf) on 100% of rows",
+  "by_period": {
+    "AM": {
+      "links": 252,
+      "inside_window": 226,
+      "below_lower": 22,
+      "above_upper": 4,
+      "links_with_a_queue": 37,
+      "of_those_inside": 13,
+      "of_those_below": 22,
+      "V_over_lower_median_where_below": 0.013,
+      "V_assign_vphpl_median": 749.0
+    },
+    "MD": {
+      "links": 252,
+      "inside_window": 239,
+      "below_lower": 12,
+      "above_upper": 1,
+      "links_with_a_queue": 49,
+      "of_those_inside": 36,
+      "of_those_below": 12,
+      "V_over_lower_median_where_below": 0.0,
+      "V_assign_vphpl_median": 841.0
+    },
+    "PM": {
+      "links": 252,
+      "inside_window": 213,
+      "below_lower": 34,
+      "above_upper": 5,
+      "links_with_a_queue": 53,
+      "of_those_inside": 15,
+      "of_those_below": 34,
+      "V_over_lower_median_where_below": 0.528,
+      "V_assign_vphpl_median": 890.0
     }
   },
   "anchoring": {
-    "bins_pushed_over_mu_free": 15,
-    "note": "Free-flow bins take the whole adjustment, shaped by q(t) from speed and levelled by V_assign -- speed supplies shape, the assignment the level."
+    "bins_clipped_at_mu_free": 60,
+    "links_clipped": 5,
+    "volume_not_placed_veh": 17826.0,
+    "clipping_note": "A free-flow bin is never pushed past mu_free. Unclipped, the four links affected produced queues up to 55x the link's storage, three of them where the measured queue is exactly zero -- which is the manufactured queue the upper bound predicts.",
+    "note": "Free-flow bins take the whole adjustment, shaped by phi -- q(t) from speed normalised over the free-flow bins only -- and levelled by V_assign. phi is not extended across the queued bins: there q is throughput rather than demand, so the flow is lowest exactly when demand is highest and the shape would come out inverted."
+  },
+  "conflict": {
+    "note": "Reported, not forced. Below the lower bound the assignment claims fewer vehicles over the whole period than were seen discharging during the queue alone. Two causes are plausible: the volumes are too low, or the queue spilled back from a downstream bottleneck, in which case the link is congested without its own demand exceeding its own capacity -- which a single-link point queue cannot represent."
   }
 }

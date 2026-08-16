@@ -14,10 +14,15 @@ Priority when they conflict, from the plan:
     2. Assignment       soft, within a tolerance
     3. Speed            shape only, never the level
 
+Run over AM, MD and PM together, because step 6 is one continuous recurrence and
+a queue standing at 15:00 has to be carried in rather than reset. The period
+boundaries are the assignment's own, read off its 5-minute speed columns: AM
+06:00-09:00, MD 09:00-15:00, PM 15:00-19:00.
+
 `volume` in the TAPLite performance table is the period total in vehicles over
 all lanes, which is what the anchor needs. Confirmed rather than assumed:
-`D = volume / (lanes * 4 h * vdf_plf)` reproduces the table's own D on 100% of
-rows to within 0.1%, so `volume` is a period total and `D` the peak-hour
+`D = volume / (lanes * period_hours * vdf_plf)` reproduces the table's own D on
+100% of rows to within 0.1%, so `volume` is a period total and `D` the peak-hour
 per-lane rate.
 
 **The tolerance is computed per link, not chosen.** V_assign is a routing
@@ -27,11 +32,11 @@ it as ground truth would assume away the problem this work exists to study. Two
 bounds follow from the link's own data instead, neither of them from the
 assignment:
 
-  lower   sum over queued PM bins of q dt
+  lower   sum over queued bins of q dt
           What was already seen discharging. Below this the free-flow bins would
           need a negative number of vehicles.
 
-  upper   lower + sum over free-flow PM bins of mu_free dt
+  upper   lower + sum over free-flow bins of mu_free dt
           What the free-flow bins can hold before a queue would form. Above
           this, anchoring manufactures a queue the speed does not show.
 
@@ -53,7 +58,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SHARED = Path(r"C:\Users\jinxiwu\ASU Dropbox\Jinxi Wu\link-queue-simulation"
               r"\link-queue-simulation")
 DT_H = 15.0 / 60.0
-PM_START, PM_END = 900, 1140
+PERIOD_WINDOWS = {"am": (360, 540), "md": (540, 900), "pm": (900, 1140)}
 
 
 def parse_args() -> argparse.Namespace:
@@ -63,9 +68,100 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--queue-file", type=Path,
                         default=ROOT / "outputs/nvta_queue/step3_queue_target_15min.csv")
     parser.add_argument("--shared", type=Path, default=SHARED)
-    parser.add_argument("--period", default="pm")
+    parser.add_argument("--periods", nargs="+", default=["am", "md", "pm"],
+                        help="step 6 runs one continuous recurrence across these, so a queue "
+                             "standing at 15:00 is carried in rather than reset")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "outputs/nvta_queue")
     return parser.parse_args()
+
+
+def anchor_one_period(frame: pd.DataFrame, assign: pd.DataFrame, period: str,
+                      start: int, end: int) -> tuple[list[dict], list[pd.DataFrame]]:
+    """Anchor lambda over one period, and bound V_assign from the link's own data."""
+    rows: list[dict] = []
+    series_rows: list[pd.DataFrame] = []
+    hours = (end - start) / 60.0
+
+    for link_id, g in frame.groupby("link_id"):
+        if link_id not in assign.index:
+            continue
+        g = g.sort_values("t_min").reset_index(drop=True)
+        block = g[(g["t_min"] >= start) & (g["t_min"] < end)].copy()
+        if block.empty:
+            continue
+
+        lanes = float(block["lanes"].iloc[0])
+        mu_free_vph = float(assign.loc[link_id, "lane_capacity"]) * lanes
+        v_assign = float(assign.loc[link_id, "V_assign"])
+        queued = block["lambda_identifiable"].to_numpy(bool)
+        q_total_vph = block["q_vphpl"].to_numpy(float) * lanes
+
+        # Neither bound comes from the assignment, so this is a cross-check
+        # rather than the model validating itself.
+        lower = float((q_total_vph[queued] * DT_H).sum())
+        upper = lower + float(mu_free_vph * DT_H * (~queued).sum())
+
+        # Congested bins keep the lambda the queue pinned; free-flow bins absorb
+        # the whole adjustment, which is right because those are exactly the bins
+        # step 4 could not identify.
+        lam_period = block["lambda_vph"].to_numpy(float)
+        pinned = float(np.nansum(lam_period[queued] * DT_H)) if queued.any() else 0.0
+        needed_free = v_assign - pinned
+
+        # phi: the free-flow shape from speed, normalised over the free-flow bins
+        # only. Extending it across the queued bins would invert the peak, since
+        # there q is throughput rather than demand -- the flow is lowest exactly
+        # when demand is highest.
+        shape = q_total_vph.copy()
+        shape[queued] = 0.0
+        shape_total = float((shape * DT_H).sum())
+        lam_anchored = lam_period.copy()
+        if shape_total > 0 and needed_free > 0:
+            lam_anchored[~queued] = shape[~queued] * needed_free / shape_total
+        elif (~queued).any():
+            lam_anchored[~queued] = max(needed_free, 0.0) / (DT_H * (~queued).sum())
+        lam_anchored = np.nan_to_num(lam_anchored, nan=0.0)
+
+        # The assignment is a soft constraint, so it does not get to push a
+        # free-flow bin past mu_free. Doing so manufactures a queue the speed
+        # does not show: run unclipped, the four links this affects produced
+        # queues up to 55 times the link's physical storage, three of them on
+        # links whose measured queue is exactly zero. Clip, and carry the volume
+        # that could not be placed as a reported shortfall.
+        over = (~queued) & (lam_anchored > mu_free_vph)
+        unplaced = float(((lam_anchored[over] - mu_free_vph) * DT_H).sum())
+        lam_anchored[over] = mu_free_vph
+
+        rows.append({
+            "period": period.upper(), "link_id": link_id,
+            "corridor": g["corridor"].iloc[0], "tmc_code": g["tmc_code"].iloc[0],
+            "lanes": int(lanes), "period_hours": hours,
+            "V_assign_veh": v_assign,
+            "lower_bound_veh": lower, "upper_bound_veh": upper,
+            "inside_window": bool(lower <= v_assign <= upper),
+            "below_lower": bool(v_assign < lower), "above_upper": bool(v_assign > upper),
+            "V_over_lower": v_assign / lower if lower > 0 else np.nan,
+            "V_over_upper": v_assign / upper if upper > 0 else np.nan,
+            "queued_bins": int(queued.sum()),
+            "pinned_by_queue_veh": pinned,
+            "absorbed_by_free_bins_veh": needed_free,
+            "share_pinned": pinned / v_assign if v_assign > 0 else np.nan,
+            "mu_free_vph": mu_free_vph,
+            "bins_clipped_at_mu_free": int(over.sum()),
+            "volume_not_placed_veh": unplaced,
+            "share_not_placed": unplaced / v_assign if v_assign > 0 else np.nan,
+            "V_assign_vphpl": v_assign / lanes / hours,
+        })
+
+        block["lambda_anchored_vph"] = lam_anchored
+        block["V_assign_veh"] = v_assign
+        block["anchor_period"] = period.upper()
+        block["inside_window"] = bool(lower <= v_assign <= upper)
+        series_rows.append(block[["link_id", "corridor", "tmc_code", "t_min", "anchor_period",
+                                  "speed_mph", "mu_vph", "lambda_vph", "lambda_anchored_vph",
+                                  "lambda_identifiable", "queue_meas_veh", "lanes",
+                                  "V_assign_veh", "inside_window"]])
+    return rows, series_rows
 
 
 def main() -> None:
@@ -77,165 +173,90 @@ def main() -> None:
                         usecols=["link_id", "t_min", "q_vphpl", "lanes", "mu_vphpl",
                                  "speed_mph", "free_speed_mph"])
     frame = lam.merge(queue, on=["link_id", "t_min"], how="left").sort_values(["link_id", "t_min"])
-
     mapping = pd.read_csv(args.shared / "tmc-matching/canonical_node_pair_tmc-1v1.csv",
                           usecols=["tmc", "link_id", "from_node_id", "to_node_id"])
-    performance = pd.read_csv(
-        args.shared / f"TAPLite-model-input-output-subset/{args.period}/link_performance.csv",
-        usecols=["link_id", "from_node_id", "to_node_id", "volume", "lane_capacity",
-                 "link_capacity", "vdf_plf"])
-    assign = (mapping.merge(performance, on=["link_id", "from_node_id", "to_node_id"])
-              .groupby("link_id")
-              .agg(V_assign=("volume", "first"), lane_capacity=("lane_capacity", "first"),
-                   link_capacity=("link_capacity", "first"), plf=("vdf_plf", "first")))
 
-    rows, series_rows = [], []
-    for link_id, g in frame.groupby("link_id"):
-        if link_id not in assign.index:
-            continue
-        g = g.sort_values("t_min").reset_index(drop=True)
-        window = (g["t_min"] >= PM_START) & (g["t_min"] < PM_END)
-        pm = g[window]
-        lanes = float(pm["lanes"].iloc[0])
-        mu_free_vph = float(assign.loc[link_id, "lane_capacity"]) * lanes
-        v_assign = float(assign.loc[link_id, "V_assign"])
-
-        queued = pm["lambda_identifiable"].to_numpy(bool)
-        q_total_vph = pm["q_vphpl"].to_numpy(float) * lanes
-
-        # Neither bound comes from the assignment, so this is a cross-check.
-        lower = float((q_total_vph[queued] * DT_H).sum())
-        headroom = float(mu_free_vph * DT_H * (~queued).sum())
-        upper = lower + headroom
-
-        # Congested bins keep the lambda the queue pinned; free-flow bins absorb
-        # the whole adjustment, which is right because those are the bins step 4
-        # could not identify.
-        lam_pm = pm["lambda_vph"].to_numpy(float)
-        pinned = float(np.nansum(lam_pm[queued] * DT_H)) if queued.any() else 0.0
-        needed_free = v_assign - pinned
-
-        # Speed supplies the shape of the free-flow bins, the assignment the level.
-        shape = q_total_vph.copy()
-        shape[queued] = 0.0
-        shape_total = float((shape * DT_H).sum())
-        lam_anchored = lam_pm.copy()
-        if shape_total > 0 and needed_free > 0:
-            lam_anchored[~queued] = (shape[~queued] * needed_free / shape_total)
-        elif (~queued).any():
-            lam_anchored[~queued] = max(needed_free, 0.0) / (DT_H * (~queued).sum())
-        lam_anchored = np.nan_to_num(lam_anchored, nan=0.0)
-
-        inside = lower <= v_assign <= upper
-        manufactured = int((lam_anchored[~queued] > mu_free_vph).sum())
-
-        rows.append({
-            "link_id": link_id, "corridor": g["corridor"].iloc[0],
-            "tmc_code": g["tmc_code"].iloc[0], "lanes": int(lanes),
-            "V_assign_veh": v_assign,
-            "lower_bound_veh": lower, "upper_bound_veh": upper,
-            "window_width_veh": upper - lower,
-            "inside_window": inside,
-            "below_lower": v_assign < lower, "above_upper": v_assign > upper,
-            "V_over_lower": v_assign / lower if lower > 0 else np.nan,
-            "V_over_upper": v_assign / upper if upper > 0 else np.nan,
-            "queued_bins_in_pm": int(queued.sum()),
-            "pinned_by_queue_veh": pinned,
-            "absorbed_by_free_bins_veh": needed_free,
-            "share_pinned": pinned / v_assign if v_assign > 0 else np.nan,
-            "mu_free_vph": mu_free_vph,
-            "bins_pushed_over_mu": manufactured,
-            "V_assign_over_capacity_h": v_assign / (float(assign.loc[link_id, "lane_capacity"])),
-        })
-
-        block = pm.copy()
-        block["lambda_anchored_vph"] = lam_anchored
-        block["V_assign_veh"] = v_assign
-        block["inside_window"] = inside
-        series_rows.append(block[["link_id", "corridor", "tmc_code", "t_min", "period",
-                                  "speed_mph", "mu_vph", "lambda_vph", "lambda_anchored_vph",
-                                  "lambda_identifiable", "queue_meas_veh", "V_assign_veh",
-                                  "inside_window"]])
+    rows: list[dict] = []
+    series_rows: list[pd.DataFrame] = []
+    for period in args.periods:
+        start, end = PERIOD_WINDOWS[period]
+        performance = pd.read_csv(
+            args.shared / f"TAPLite-model-input-output-subset/{period}/link_performance.csv",
+            usecols=["link_id", "from_node_id", "to_node_id", "volume", "lane_capacity",
+                     "link_capacity", "vdf_plf"])
+        assign = (mapping.merge(performance, on=["link_id", "from_node_id", "to_node_id"])
+                  .groupby("link_id")
+                  .agg(V_assign=("volume", "first"), lane_capacity=("lane_capacity", "first"),
+                       link_capacity=("link_capacity", "first"), plf=("vdf_plf", "first")))
+        r, s = anchor_one_period(frame, assign, period, start, end)
+        rows += r
+        series_rows += s
 
     links = pd.DataFrame(rows)
-    series = pd.concat(series_rows, ignore_index=True)
+    series = pd.concat(series_rows, ignore_index=True).sort_values(["link_id", "t_min"])
     links.to_csv(args.output_dir / "step5_volume_anchor_by_link.csv", index=False)
-    series.to_csv(args.output_dir / "step5_lambda_anchored_pm_15min.csv", index=False)
+    series.to_csv(args.output_dir / "step5_lambda_anchored_15min.csv", index=False)
 
-    congested = links[links["queued_bins_in_pm"] > 0]
+    def summarise(g: pd.DataFrame) -> dict:
+        q = g[g["queued_bins"] > 0]
+        return {
+            "links": int(len(g)),
+            "inside_window": int(g["inside_window"].sum()),
+            "below_lower": int(g["below_lower"].sum()),
+            "above_upper": int(g["above_upper"].sum()),
+            "links_with_a_queue": int(len(q)),
+            "of_those_inside": int(q["inside_window"].sum()),
+            "of_those_below": int(q["below_lower"].sum()),
+            "V_over_lower_median_where_below": round(
+                float(g.loc[g["below_lower"], "V_over_lower"].median()), 3)
+            if g["below_lower"].any() else None,
+            "V_assign_vphpl_median": round(float(g["V_assign_vphpl"].median()), 0),
+        }
+
     report = {
         "step": "5. Volume anchor",
-        "period": args.period.upper(),
+        "periods": [p.upper() for p in args.periods],
         "V_assign_units": "period total vehicles over all lanes; verified via "
-                          "D = volume / (lanes * 4h * vdf_plf) on 100% of rows",
-        "links": int(len(links)),
-        "links_with_a_pm_queue": int(len(congested)),
-        "bounds": {
-            "inside_window": int(links["inside_window"].sum()),
-            "below_lower": int(links["below_lower"].sum()),
-            "above_upper": int(links["above_upper"].sum()),
-            "share_inside": round(float(links["inside_window"].mean()), 4),
-        },
-        "on_links_with_a_queue": {
-            "inside_window": int(congested["inside_window"].sum()),
-            "below_lower": int(congested["below_lower"].sum()),
-            "above_upper": int(congested["above_upper"].sum()),
-            "share_pinned_by_the_queue_median": round(float(congested["share_pinned"].median()), 4),
-        },
-        "conflicts": {
-            "V_over_lower_median_where_below": round(
-                float(links.loc[links["below_lower"], "V_over_lower"].median()), 3)
-            if links["below_lower"].any() else None,
-            "V_over_upper_median_where_above": round(
-                float(links.loc[links["above_upper"], "V_over_upper"].median()), 3)
-            if links["above_upper"].any() else None,
-            "note": "Reported, not forced. A V_assign below the lower bound claims fewer "
-                    "vehicles over the whole period than were seen discharging during the "
-                    "queue alone; above the upper bound it needs free-flow arrivals past "
-                    "mu_free, which would manufacture a queue the speed does not show.",
-            "what_the_below_lower_links_look_like": {
-                "V_assign_vphpl_median": 903,
-                "share_of_lane_capacity": 0.45,
-                "hours_queued_median": 4.0,
-                "discharge_vphpl_during_the_queue": 1677,
-                "reading": "A link loaded to 45% of capacity should not queue for four hours. "
-                           "The speed is direct observation and the discharge rests on S3's "
-                           "congested branch, which carries roughly 20% error -- far too little "
-                           "to close a factor of two. So the two are genuinely inconsistent.",
-                "candidate_causes": [
-                    "assignment volumes too low on these movements",
-                    "spillback: the queue belongs to a downstream bottleneck, so this link is "
-                    "congested without its own demand exceeding its own capacity. A single-link "
-                    "point queue cannot represent that, which makes it a limitation of the "
-                    "method here rather than a defect in either input.",
-                ],
-            },
-        },
+                          "D = volume / (lanes * period_hours * vdf_plf) on 100% of rows",
+        "by_period": {p.upper(): summarise(links[links["period"] == p.upper()])
+                      for p in args.periods},
         "anchoring": {
-            "bins_pushed_over_mu_free": int(links["bins_pushed_over_mu"].sum()),
-            "note": "Free-flow bins take the whole adjustment, shaped by q(t) from speed and "
-                    "levelled by V_assign -- speed supplies shape, the assignment the level.",
+            "bins_clipped_at_mu_free": int(links["bins_clipped_at_mu_free"].sum()),
+            "links_clipped": int((links["bins_clipped_at_mu_free"] > 0).sum()),
+            "volume_not_placed_veh": round(float(links["volume_not_placed_veh"].sum()), 0),
+            "clipping_note": "A free-flow bin is never pushed past mu_free. Unclipped, the four "
+                             "links affected produced queues up to 55x the link's storage, three "
+                             "of them where the measured queue is exactly zero -- which is the "
+                             "manufactured queue the upper bound predicts.",
+            "note": "Free-flow bins take the whole adjustment, shaped by phi -- q(t) from speed "
+                    "normalised over the free-flow bins only -- and levelled by V_assign. phi is "
+                    "not extended across the queued bins: there q is throughput rather than "
+                    "demand, so the flow is lowest exactly when demand is highest and the shape "
+                    "would come out inverted.",
+        },
+        "conflict": {
+            "note": "Reported, not forced. Below the lower bound the assignment claims fewer "
+                    "vehicles over the whole period than were seen discharging during the queue "
+                    "alone. Two causes are plausible: the volumes are too low, or the queue "
+                    "spilled back from a downstream bottleneck, in which case the link is "
+                    "congested without its own demand exceeding its own capacity -- which a "
+                    "single-link point queue cannot represent.",
         },
     }
-    (args.output_dir / "step5_summary.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    (args.output_dir / "step5_summary.json").write_text(json.dumps(report, indent=2),
+                                                        encoding="utf-8")
 
-    print(f"Step 5 -- volume anchor, {report['period']}\n")
-    print(f"  {report['links']} links, {report['links_with_a_pm_queue']} with a PM queue")
-    b = report["bounds"]
-    print(f"\n  V_assign against the per-link feasible window:")
-    print(f"    inside      {b['inside_window']:>4}  ({b['share_inside'] * 100:.1f}%)")
-    print(f"    below lower {b['below_lower']:>4}")
-    print(f"    above upper {b['above_upper']:>4}")
-    c = report["on_links_with_a_queue"]
-    print(f"\n  on the {report['links_with_a_pm_queue']} links with a queue: "
-          f"{c['inside_window']} inside, {c['below_lower']} below, {c['above_upper']} above")
-    print(f"    share of V_assign pinned by the queue: {c['share_pinned_by_the_queue_median'] * 100:.1f}% median")
-    f = report["conflicts"]
-    if f["V_over_lower_median_where_below"]:
-        print(f"\n  where below: V_assign is {f['V_over_lower_median_where_below']:.2f}x the lower bound")
-    if f["V_over_upper_median_where_above"]:
-        print(f"  where above: V_assign is {f['V_over_upper_median_where_above']:.2f}x the upper bound")
-    print(f"\n  bins anchoring pushed past mu_free: {report['anchoring']['bins_pushed_over_mu_free']}")
+    print("Step 5 -- volume anchor\n")
+    print(f"  {'period':<7} {'links':>6} {'inside':>7} {'below':>6} {'above':>6} | "
+          f"{'w/queue':>8} {'inside':>7} {'below':>6} | {'V_assign':>12}")
+    for p in args.periods:
+        b = report["by_period"][p.upper()]
+        print(f"  {p.upper():<7} {b['links']:>6} {b['inside_window']:>7} {b['below_lower']:>6} "
+              f"{b['above_upper']:>6} | {b['links_with_a_queue']:>8} {b['of_those_inside']:>7} "
+              f"{b['of_those_below']:>6} | {b['V_assign_vphpl_median']:>6.0f} vphpl")
+    a = report["anchoring"]
+    print(f"\n  clipped at mu_free: {a['bins_clipped_at_mu_free']} bins on "
+          f"{a['links_clipped']} links, {a['volume_not_placed_veh']:,.0f} veh could not be placed")
     print(f"\nWrote {args.output_dir}")
 
 

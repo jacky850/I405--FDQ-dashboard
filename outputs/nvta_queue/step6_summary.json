@@ -1,0 +1,30 @@
+{
+  "step": "6. Run the queue",
+  "recurrence": "out = min(mu, lambda + Q/dt); Q(t+dt) = max(0, Q + (lambda - out) dt)",
+  "window": "06:00 to 19:00, one continuous run, Q(06:00) = 0",
+  "bins": 52,
+  "links": 252,
+  "links_with_a_queue": 76,
+  "continuity": {
+    "links_carrying_a_queue_into_PM": 23,
+    "median_carried_veh": 29.7,
+    "max_carried_veh": 150.8,
+    "note": "These are the vehicles a PM-only run starting from an empty link would have thrown away. Nothing resets at 09:00 or 15:00."
+  },
+  "queue_peaks": {
+    "model_median_veh": 43.2,
+    "measured_median_veh": 46.0,
+    "peak_ratio_median": 0.962
+  },
+  "residual_vs_target": {
+    "rmse_median_veh": 2.75,
+    "rmse_in_episode_median_veh": 5.25
+  },
+  "physical_checks": {
+    "bins_over_storage": 0,
+    "links_over_storage": 0,
+    "peak_over_storage_max": 0.709,
+    "links_not_clearing_by_19:00": 33,
+    "unmet_demand_total_veh": 5600.0
+  }
+}
