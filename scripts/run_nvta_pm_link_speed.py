@@ -333,8 +333,32 @@ def main() -> None:
                         "under 2 mph is what retires the 70 mph constant.",
             }
 
+    def clock(minutes: pd.Series) -> pd.Series:
+        return minutes.map(lambda m: "" if not np.isfinite(m)
+                           else f"{int(m) // 60 % 24:02d}:{int(m) % 60:02d}")
+
+    for source, target in [("t0_min", "t0_clock"), ("T2_min", "T2_clock"), ("t3_min", "t3_clock")]:
+        summary[target] = clock(summary[source])
+    summary["note"] = np.select(
+        [summary["episode_starts_before_noon"], summary["episode_longer_than_the_pm_window"]],
+        ["episode spans the morning peak too; P is an all-day figure",
+         "episode runs past the PM window, as most do"], default="")
+
     series.to_csv(args.output_dir / "nvta_pm_link_speed_15min.csv", index=False)
-    summary.to_csv(args.output_dir / "nvta_pm_link_summary.csv", index=False)
+    summary.to_csv(args.output_dir / "nvta_pm_link_summary_full.csv", index=False)
+
+    # What was asked for, plus what is needed to reproduce it, in that order. The
+    # full table keeps the free-speed evidence (the config-v_f and CBI columns)
+    # for the question of why 49 links carry an episode where 76 were called
+    # congested before.
+    delivered = ["corridor", "net_link_id", "lanes", "miles",
+                 "C_vphpl", "C_veh_per_h",
+                 "D_veh_per_lane", "D_veh_total", "D_over_C_h", "V_veh_total",
+                 "free_speed_mph", "cutoff_mph",
+                 "congested", "P_h", "t0_clock", "T2_clock", "t3_clock", "vT2_mph",
+                 "recovery_over_onset",
+                 "speed_mae_episode_mph", "speed_rmse_episode_mph", "note"]
+    summary[delivered].to_csv(args.output_dir / "nvta_pm_link_summary.csv", index=False)
 
     congested = summary[summary["congested"]]
     report = {

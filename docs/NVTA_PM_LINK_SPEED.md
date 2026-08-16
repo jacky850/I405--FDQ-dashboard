@@ -3,10 +3,11 @@
 Four corridors — I-395 NB/SB, I-66 EB/WB — **92 network links**, PM on the
 assignment clock (15:00–19:00), average weekday 2025-10-06 to 10-10.
 
-| File | What is in it |
-|---|---|
-| `outputs/nvta_pm_link_speed/nvta_pm_link_speed_15min.csv` | one row per link and 15-minute bin: `obs_speed_mph`, `obs_speed_smoothed_mph`, `backcalc_speed_mph`, `in_episode`, `in_pm_period` |
-| `outputs/nvta_pm_link_speed/nvta_pm_link_summary.csv` | one row per link: `D`, `C`, `D_over_C_h`, `P_h`, `t0`, `T2`, `t3`, `v_T2`, and the speed errors |
+| File | Rows × cols | What is in it |
+|---|---|---|
+| `outputs/nvta_pm_link_speed/nvta_pm_link_speed_15min.csv` | 8,832 × 12 | one row per link and 15-minute bin: `obs_speed_mph`, `obs_speed_smoothed_mph`, `backcalc_speed_mph`, `in_episode`, `in_pm_period` |
+| `outputs/nvta_pm_link_speed/nvta_pm_link_summary.csv` | 92 × 22 | one row per link: `D`, `C`, `D_over_C_h`, `P_h`, `t0`, `T2`, `t3`, `v_T2`, the speed errors, and a `note` on the links that need one |
+| `outputs/nvta_pm_link_speed/nvta_pm_link_summary_full.csv` | 92 × 42 | the same, plus the working columns behind the two changes below — the config-70 mph figures and the CBI parameters |
 
 The whole day is in the series file with PM flagged, because the PM queue
 normally builds before 15:00 and clears after 19:00 — clipping it to the window

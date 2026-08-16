@@ -58,7 +58,9 @@ def pick(summary: pd.DataFrame, panels: int) -> list[int]:
 def main() -> None:
     args = parse_args()
     series = pd.read_csv(args.output_dir / "nvta_pm_link_speed_15min.csv")
-    summary = pd.read_csv(args.output_dir / "nvta_pm_link_summary.csv").set_index("net_link_id")
+    # The full table, not the delivered one: the panels need the anchors as clock
+    # minutes, which the delivered table carries as HH:MM instead.
+    summary = pd.read_csv(args.output_dir / "nvta_pm_link_summary_full.csv").set_index("net_link_id")
 
     chosen = pick(summary.reset_index(), args.panels)
     rows = int(np.ceil(len(chosen) / 3))
