@@ -1,0 +1,39 @@
+{
+  "step": "5. Volume anchor",
+  "period": "PM",
+  "V_assign_units": "period total vehicles over all lanes; verified via D = volume / (lanes * 4h * vdf_plf) on 100% of rows",
+  "links": 252,
+  "links_with_a_pm_queue": 53,
+  "bounds": {
+    "inside_window": 213,
+    "below_lower": 34,
+    "above_upper": 5,
+    "share_inside": 0.8452
+  },
+  "on_links_with_a_queue": {
+    "inside_window": 15,
+    "below_lower": 34,
+    "above_upper": 4,
+    "share_pinned_by_the_queue_median": 1.3225
+  },
+  "conflicts": {
+    "V_over_lower_median_where_below": 0.528,
+    "V_over_upper_median_where_above": 1.066,
+    "note": "Reported, not forced. A V_assign below the lower bound claims fewer vehicles over the whole period than were seen discharging during the queue alone; above the upper bound it needs free-flow arrivals past mu_free, which would manufacture a queue the speed does not show.",
+    "what_the_below_lower_links_look_like": {
+      "V_assign_vphpl_median": 903,
+      "share_of_lane_capacity": 0.45,
+      "hours_queued_median": 4.0,
+      "discharge_vphpl_during_the_queue": 1677,
+      "reading": "A link loaded to 45% of capacity should not queue for four hours. The speed is direct observation and the discharge rests on S3's congested branch, which carries roughly 20% error -- far too little to close a factor of two. So the two are genuinely inconsistent.",
+      "candidate_causes": [
+        "assignment volumes too low on these movements",
+        "spillback: the queue belongs to a downstream bottleneck, so this link is congested without its own demand exceeding its own capacity. A single-link point queue cannot represent that, which makes it a limitation of the method here rather than a defect in either input."
+      ]
+    }
+  },
+  "anchoring": {
+    "bins_pushed_over_mu_free": 15,
+    "note": "Free-flow bins take the whole adjustment, shaped by q(t) from speed and levelled by V_assign -- speed supplies shape, the assignment the level."
+  }
+}
