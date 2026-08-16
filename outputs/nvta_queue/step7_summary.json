@@ -1,0 +1,32 @@
+{
+  "step": "7. Queue back to speed",
+  "formula": "TT = L/v_f + Q/mu;  v_hat = L/TT",
+  "nothing_is_fitted_here": true,
+  "links": 252,
+  "bins": 13104,
+  "model_speed": {
+    "bins_pinned_at_free_speed": 11877,
+    "share_pinned": 0.9064,
+    "note": "v_hat = v_f wherever Q = 0. A point queue with no queue produces no delay, so the model says nothing about free-flow speed variation and only the in-episode comparison carries information.",
+    "min_mph": 9.59,
+    "median_in_episode_mph": 32.36
+  },
+  "model_episodes": {
+    "links_with_a_model_episode": 73,
+    "episodes": 84,
+    "by_period": {
+      "PM": 46,
+      "AM": 33,
+      "MD": 5
+    },
+    "P_median_h": 3.04,
+    "vT2_median_mph": 28.73,
+    "note": "P, T2 and v(T2) are read off v_hat, so they are outputs of the queue rather than inputs used to shape it. That is the substantive difference from the earlier QVDF reconstruction and what makes step 8 a real comparison."
+  },
+  "speed_error_preview": {
+    "in_episode_mae_mph": 3.233,
+    "in_episode_bias_mph": 0.297,
+    "whole_run_mae_mph": 5.712,
+    "note": "Scored properly in step 8. The whole-run figure is dominated by the 94% of bins where the model is pinned at v_f by construction."
+  }
+}
