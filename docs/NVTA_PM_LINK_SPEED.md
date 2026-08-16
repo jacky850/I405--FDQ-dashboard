@@ -70,13 +70,33 @@ Speed agreement, median link: **2.18 mph MAE inside the episode**, 4.59 mph
 across the whole PM period. The gap between the two is the step at t0 and t3,
 where the model leaves the curve and jumps to free flow.
 
-**That 2.18 mph is not a measure of predictive skill.** t0, T2, t3 and v_T2 all
-come from the observation, so the depth and the timing of the trough are exact by
-construction and only the shape between the anchors is under test. A small
-residual here is what the construction guarantees, not evidence that the
-parameters forecast anything. The genuine test — taking z from the calibrated
-severity branch `z = f_p·P^s` instead of from the observed v_T2 — is the next
-step, and CBI already carries `f_p` and `s`.
+### What 2.18 mph does and does not establish
+
+t0, T2, t3 and v_T2 are all read off the observation, so the depth and the timing
+of the trough match by construction and only the shape between the anchors is
+under test. To see how much of the fit that shape is actually earning, the same
+four anchors were joined by two cruder things:
+
+| Drawn between the same anchors | Median MAE | Median RMSE |
+|---|---:|---:|
+| **QVDF bowl** (delivered) | **2.18 mph** | 2.78 mph |
+| straight lines, t0 → T2 → t3 | 3.16 mph | 4.04 mph |
+| held flat at v_T2 | 4.93 mph | 6.14 mph |
+
+So the shape is doing real work — QVDF beats the triangle on **35 of 49 links**,
+by 0.78 mph at the median. But note the split: using the anchors sensibly at all
+is worth 2.31 mph, and the shape family on top of that is worth 0.78. Most of the
+agreement comes from the anchors.
+
+Which is the limit of what this number establishes. It says the `(1−τ²)²` bowl
+resembles real congestion better than a straight line does. It says nothing about
+whether QVDF can produce P and v_T2 **from D/C**, because that chain was never
+run here — the two quantities were measured, not predicted. In assignment use
+there is no observed speed to read them from, so that chain is the one that has
+to hold. Its calibrated form is `P = f_d·(D/C)^n` and `z = f_p·P^s`, and CBI
+already carries all four parameters; its own speed-branch fit is a median
+`speed_r2` of 0.178, with 61% of links below 0.3. Running it forward on these
+links is the next step.
 
 ## Two things that changed
 
