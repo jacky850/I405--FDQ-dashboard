@@ -1,0 +1,83 @@
+{
+  "step": "8. Validation",
+  "period": "PM",
+  "speed": {
+    "free_flow": {
+      "links": 252,
+      "mae_period_mph": 6.7,
+      "links_with_episode": 53,
+      "mae_episode_mph": 31.722,
+      "bias_episode_mph": 33.23
+    },
+    "assignment": {
+      "links": 252,
+      "mae_period_mph": 6.7,
+      "links_with_episode": 53,
+      "mae_episode_mph": 31.722,
+      "bias_episode_mph": 31.117
+    },
+    "anchored": {
+      "links": 252,
+      "mae_period_mph": 4.843,
+      "links_with_episode": 53,
+      "mae_episode_mph": 2.06,
+      "bias_episode_mph": 0.172
+    }
+  },
+  "what_each_ingredient_earns": {
+    "assignment_over_null_mph": 0.0,
+    "speed_over_assignment_mph": 29.662,
+    "note": "The null is free flow everywhere. Beating it is the minimum bar; most bins are uncongested, so it scores well on its own."
+  },
+  "episode_detection": {
+    "observed_episodes": 47,
+    "model_episodes": 46,
+    "matched": 46,
+    "model_missed": 1,
+    "model_invented": 0
+  },
+  "episode_parameters": {
+    "P_h": {
+      "n": 15,
+      "median_error": -0.508,
+      "mae": 0.508,
+      "within_20pct": 0.217
+    },
+    "T2_min": {
+      "n": 46,
+      "median_error": 0.0,
+      "mae": 0.0,
+      "within_one_bin": 1.0
+    },
+    "vT2_mph": {
+      "n": 46,
+      "median_error": -0.088,
+      "mae": 0.349,
+      "within_20pct": 1.0
+    },
+    "t0_min": {
+      "n": 46,
+      "median_error": 20.61,
+      "mae": 20.61,
+      "within_one_bin": 0.196
+    },
+    "t3_min": {
+      "n": 15,
+      "median_error": -10.768,
+      "mae": 10.768,
+      "within_one_bin": 0.261
+    }
+  },
+  "by_anchor_status": {
+    "False": {
+      "links": 36,
+      "vT2_mae_mph": 0.26,
+      "P_mae_h": 0.54
+    },
+    "True": {
+      "links": 10,
+      "vT2_mae_mph": 1.37,
+      "P_mae_h": 0.49
+    }
+  }
+}

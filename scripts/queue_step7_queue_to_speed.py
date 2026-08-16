@@ -121,6 +121,11 @@ def main() -> None:
                 "T2_to_recovery_h": float(episode["T2_to_recovery_h"]),
                 "free_speed_mph": free_speed,
                 "cutoff_mph": free_speed * CUTOFF_RATIO,
+                # The run stops at 19:00, so an episode still active then never
+                # finds its recovery and is censored at midnight. Its P is a
+                # window artefact; T2 and v(T2) sit inside the window and are not.
+                "quality_flags": episode["quality_flags"],
+                "right_censored": "right_censored" in str(episode["quality_flags"]),
             })
         g["model_episode_id"] = model_id
         series_rows.append(g)
