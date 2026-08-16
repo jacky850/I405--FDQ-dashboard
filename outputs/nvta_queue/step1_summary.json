@@ -1,0 +1,47 @@
+{
+  "step": "1. Flow from speed, q(t) = S3(v(t)), m = 4",
+  "source": "shared link-queue-simulation package",
+  "period_table": "pm",
+  "resolution_min": 15,
+  "weekdays": 23,
+  "date_range": [
+    "2025-10-01",
+    "2025-10-31"
+  ],
+  "tmcs_with_speed": 154,
+  "links": 252,
+  "links_by_corridor": {
+    "I395_NB": 29,
+    "I395_SB": 32,
+    "I66_EB": 82,
+    "I66_WB": 109
+  },
+  "match_status": {
+    "matched": 206,
+    "review_low_confidence": 22,
+    "review_geometry": 10,
+    "review_length": 5,
+    "review_ambiguous_route": 5,
+    "review_od_distance": 4
+  },
+  "links_sharing_one_tmc": {
+    "max": 10,
+    "median": 2.0,
+    "links_not_uniquely_observed": 180
+  },
+  "free_speed_sources": {
+    "model_median_mph": 69.0,
+    "observed_p95_median_mph": 68.33,
+    "median_difference_mph": -2.47,
+    "mae_mph": 5.36,
+    "note": "Carried side by side. The plan records the free-speed source as the choice that dominates everything downstream, so it stays a column rather than a constant until step 9 measures what it is worth."
+  },
+  "capacity": {
+    "lane_capacity_median_vphpl": 2000.0,
+    "note": "From the assignment, replacing the 2200/1800 constants used earlier."
+  },
+  "model_t2_is_pinned": {
+    "fraction_at_the_period_midpoint": 0.8373,
+    "note": "The model puts T2 at 17:00, the midpoint of the 15:00-19:00 PM window, on most links. Observed T2 is what step 8 has to compare it against."
+  }
+}
