@@ -94,6 +94,46 @@ def figure_profiles(series: pd.DataFrame, summary: pd.DataFrame, panels: int) ->
     plt.close(fig)
 
 
+def figure_speed_scatter(series: pd.DataFrame, summary: pd.DataFrame) -> None:
+    """Every PM bin on the delivered links, model against observed.
+
+    Two panels on shared axes so the ablation is a shape difference rather than
+    a number: the delivered model tracks the diagonal into the congested range,
+    the assignment-only variant flattens into a band at free flow because its
+    demand never reaches mu.
+    """
+    keep = set(summary["net_link_id"])
+    g = series[series["link_id"].isin(keep) & series["in_pm_period"]].copy()
+    hi = max(g["obs_speed_mph"].max(), g["free_speed_mph"].max()) * 1.05
+
+    fig, axes = plt.subplots(1, 2, figsize=(9.6, 4.9), sharex=True, sharey=True)
+    for ax, (column, title) in zip(axes, [
+            ("model_speed_mph", "Queue model (delivered)"),
+            ("assignment_only_speed_mph", "Assignment only — no speed input")]):
+        ax.plot([0, hi], [0, hi], color=SLATE, lw=1.1, ls="--", zorder=4)
+        for flag, color, label in [(False, SLATE, "free-flow bin"),
+                                   (True, ORANGE, "inside an episode")]:
+            h = g[g["in_episode_obs"] == flag]
+            ax.scatter(h["obs_speed_mph"], h[column], s=5, alpha=0.30 if not flag else 0.45,
+                       color=color, linewidth=0, zorder=2 if not flag else 3, label=label)
+        err = (g[column] - g["obs_speed_mph"]).abs()
+        inside = g["in_episode_obs"].to_numpy(bool)
+        ax.set_title(f"{title}\nMAE {err[inside].mean():.2f} mph in episode, "
+                     f"{err.mean():.2f} mph over PM")
+        ax.set_xlabel("observed speed (mph)")
+        ax.set_xlim(0, hi)
+        ax.set_ylim(0, hi)
+    axes[0].set_ylabel("model speed (mph)")
+    handles, labels = axes[0].get_legend_handles_labels()
+    axes[0].legend(handles, labels, loc="upper left", fontsize=8, framealpha=0.95,
+                   markerscale=2.6)
+    fig.suptitle(f"Model speed against observed speed, every PM bin on the "
+                 f"{len(keep)} delivered links", y=1.01, fontsize=10.5, fontweight="bold")
+    fig.tight_layout()
+    fig.savefig(FIG / "nvta_queue_pm_speed_scatter.png", bbox_inches="tight")
+    plt.close(fig)
+
+
 def figure_episode(summary: pd.DataFrame) -> None:
     matched = summary.dropna(subset=["vT2_mph_model"]).copy()
     matched["T2_obs_h"] = [int(v[:2]) + int(v[3:]) / 60 for v in matched["T2_clock_obs"]]
@@ -170,11 +210,11 @@ def main() -> None:
     summary = pd.read_csv(args.output_dir / "nvta_queue_pm_link_summary.csv")
 
     figure_profiles(series, summary, args.panels)
+    figure_speed_scatter(series, summary)
     figure_episode(summary)
     figure_demand(summary)
-    print(f"Wrote {FIG}/nvta_queue_pm_profiles.png")
-    print(f"Wrote {FIG}/nvta_queue_pm_episode.png")
-    print(f"Wrote {FIG}/nvta_queue_pm_demand.png")
+    for name in ["profiles", "speed_scatter", "episode", "demand"]:
+        print(f"Wrote {FIG}/nvta_queue_pm_{name}.png")
 
 
 if __name__ == "__main__":

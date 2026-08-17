@@ -71,6 +71,24 @@ Three lines per panel. Black is observed, orange is the delivered model, and the
 dashed teal line is the same recurrence driven by `V_assign` alone with no speed
 information — that variant is the subject of the next section.
 
+Every PM bin on all 47 links, on 45-degree axes:
+
+![Model speed against observed speed](figures/nvta_queue_pm_speed_scatter.png)
+
+The left panel is the delivered model and follows the diagonal down into the
+congested range. The right panel is the same recurrence with the assignment's
+volumes as its only input: it collapses into a horizontal band at free flow,
+because that demand never reaches μ and so no queue forms — the observed speed
+drops from 50 mph to 10 while the model stays at 65. The scattering along the
+bottom is the opposite failure, the handful of links where `V_assign` exceeds
+what the free-flow bins can absorb.
+
+Two features of the left panel are structural rather than error. The points above
+the diagonal at 40–58 mph observed are bins where the model is pinned at `v_f`
+because its queue is empty — a point queue has nothing to say about free-flow
+speed variation. And the model can never exceed `v_f`, while the observation does
+on roughly one bin in twenty, since `v_f` is a 95th percentile.
+
 | Corridor | Links | D_assign | D_obs | D ratio | P observed | v(T2) observed | MAE in episode |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | I-395 NB | 9 | 1,144 | 1,422 | 0.68 | 5.79 h | 18.1 mph | 1.62 mph |
@@ -102,9 +120,10 @@ profiles:
 The assignment-only variant is indistinguishable from predicting free flow
 everywhere. The reason is in the demand: its λ sits at **0.448 × μ** at the
 median, and on **249 of 252 links** it never reaches μ at any bin, so no queue can
-form. That is the flat dashed line in the profile figure. (On one panel — I-395 SB
-link 26799 — the dashed line collapses instead: there `V_assign` exceeds what the
-free-flow bins can absorb, the other failure direction.)
+form. That is the flat dashed line in the profile figure and the horizontal band
+in the right-hand scatter above. (On one panel — I-395 SB link 26799 — the dashed
+line collapses to zero instead: there `V_assign` exceeds what the free-flow bins
+can absorb, the other failure direction.)
 
 **So the 2.05 mph is carried entirely by the speed data, which step 4 already
 fitted against.** The number measures how self-consistent the loop is, not how
