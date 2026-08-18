@@ -100,8 +100,7 @@ def main() -> None:
     a = anchors.copy()
     a = a.rename(columns={"lower_bound_veh": "V_throughput_obs_veh",
                           "pinned_by_queue_veh": "V_demand_obs_veh",
-                          "upper_bound_veh": "V_max_feasible_veh",
-                          "absorbed_by_free_bins_veh": "V_from_assignment_veh"})
+                          "upper_bound_veh": "V_max_feasible_veh"})
     a = a.join(base.drop(columns=["tmc_code", "corridor", "lanes"]), on="link_id")
     a = a.join(mu_by_period, on=["link_id", "period"])
 
@@ -128,7 +127,6 @@ def main() -> None:
     anchored = scores[scores["variant"] == "anchored"].set_index("link_id")
     a["speed_mae_episode_mph"] = a["link_id"].map(anchored["mae_episode_mph"]).round(2)
     a["speed_mae_period_mph"] = a["link_id"].map(anchored["mae_period_mph"]).round(2)
-    a["obs_volume_in_assignment"] = -1     # the assignment's sentinel: no counts anywhere
 
     order = [
         "link_id", "from_node_id", "to_node_id", "tmc_code", "corridor", "road",
@@ -139,7 +137,7 @@ def main() -> None:
         "cutoff_obs_mph", "cutoff_assign_mph",
         "lane_capacity_vphpl", "mu_free_vph", "mu_queued_vph", "capacity_drop",
         "V_assign_veh", "V_throughput_obs_veh", "V_demand_obs_veh",
-        "V_max_feasible_veh", "V_from_assignment_veh", "obs_volume_in_assignment",
+        "V_max_feasible_veh",
         "D_assign_vphpl", "D_obs_vphpl", "D_ratio",
         "queued_bins", "observation_weight", "inside_window", "below_lower", "above_upper",
         "t0_min_obs", "T2_min_obs", "t3_min_obs", "P_h_obs", "vT2_mph_obs",
@@ -181,7 +179,7 @@ def main() -> None:
     print(f"File B  {b.shape[0]:,} rows x {b.shape[1]} cols   odme_link_15min.csv")
     print(f"\n  rows carrying an observation : {len(informative)} / {len(a)} "
           f"({100 * len(informative) / len(a):.0f}%)")
-    print(f"  counts in the assignment      : {int((a['obs_volume_in_assignment'] != -1).sum())}")
+    print(f"  counts in the assignment      : 0 (obs_volume is -1 on every row)")
     print(f"\n  free speed, ours vs assignment: median diff "
           f"{a['free_speed_diff_mph'].median():+.2f} mph")
     print(f"  links where the assignment's free speed exceeds the observed maximum: "

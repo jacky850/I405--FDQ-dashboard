@@ -6,7 +6,7 @@ from 132 INRIX TMC segments.** Speeds are the average weekday over 23 October
 
 | File | Rows × cols | Content |
 |---|---|---|
-| `outputs/nvta_odme/odme_link_period.csv` | 756 × 51 | one row per link and period (AM/MD/PM). The ODME input |
+| `outputs/nvta_odme/odme_link_period.csv` | 756 × 49 | one row per link and period (AM/MD/PM). The ODME input |
 | `outputs/nvta_odme/odme_link_15min.csv` | 13,104 × 22 | one row per link and 15-minute bin, 06:00–19:00 |
 
 The assignment's link table carries `obs_volume = -1` on all 756 rows — there is
@@ -65,14 +65,14 @@ At 27 coefficients the median residual is 4.1% of peak queue, correlation 0.9842
 
 ---
 
-## File A — `odme_link_period.csv`, 756 rows
+## File A — `odme_link_period.csv`, 756 rows × 49 columns
 
 ### Identity and geometry
 
 | Column | Unit | Prov. | Definition |
 |---|---|---|---|
 | `link_id` | — | GEOM | Network link id |
-| `from_node_id`, `to_node_id` | — | GEOM | Endpoints, for network matching |
+| `from_node_id`, `to_node_id` | — | GEOM | The assignment's own network node ids. Joined in from `tmc-matching/canonical_node_pair_tmc-1v1.csv` in the shared package, then inner-joined against `link_performance.csv` on `(link_id, from_node_id, to_node_id)`. Carried so each row can be matched back onto the network |
 | `tmc_code` | — | GEOM | INRIX segment supplying the speed |
 | `corridor`, `road`, `direction` | — | GEOM | I395_NB / I395_SB / I66_EB / I66_WB |
 | `period` | — | GEOM | AM, MD or PM |
@@ -135,8 +135,6 @@ All are period totals in vehicles, summed over all lanes.
 | `V_throughput_obs_veh` | veh | **OBS** | `sum over queued bins of q(t) × 0.25`. Vehicles seen to discharge while queued. **Closest analogue to a detector count** |
 | `V_demand_obs_veh` | veh | **OBS** | `sum over queued bins of lambda(t) × 0.25`. Vehicles that had to arrive to reproduce the observed congestion. **Closest analogue to OD demand** |
 | `V_max_feasible_veh` | veh | **OBS** | `V_throughput_obs + mu_free × 0.25 × (free-flow bins)`. A ceiling — a free-flow bin cannot have carried more than `mu_free`, or a queue would have formed and it would not be free-flow |
-| `V_from_assignment_veh` | veh | **ASSIGN** | `V_assign − V_demand_obs`, the remainder spread over free-flow bins. **Listed only so it can be excluded** |
-| `obs_volume_in_assignment` | veh | ASSIGN | Always −1: the assignment's sentinel for "no count available" |
 
 `V_throughput_obs` and `V_demand_obs` land close to each other when a queue starts
 and ends empty inside the period, since what arrives must leave. Medians 24,676
@@ -168,15 +166,18 @@ vehicles.**
 
 ### Episode parameters — for validating the reconstruction, not for ODME
 
+**Times are minutes elapsed since 00:00** — 360 = 06:00, 900 = 15:00, 1140 =
+19:00 — so that durations can be differenced arithmetically.
+
 `_obs` comes from an episode detector run on the observed speed. `_model` comes
 from **the same detector** run on the reconstructed speed, so these are outputs of
 the queue rather than read-offs.
 
 | Column | Unit | Prov. | Definition |
 |---|---|---|---|
-| `t0_min_obs` / `_model` | min from midnight | OBS / MODEL | Onset of congestion |
-| `T2_min_obs` / `_model` | min from midnight | OBS / MODEL | Time of the speed trough |
-| `t3_min_obs` / `_model` | min from midnight | OBS / MODEL | Recovery |
+| `t0_min_obs` / `_model` | min from midnight | OBS / MODEL | Onset of congestion. Interpolated between bins, so fractional |
+| `T2_min_obs` / `_model` | min from midnight | OBS / MODEL | Time of the speed trough. Always a whole bin boundary |
+| `t3_min_obs` / `_model` | min from midnight | OBS / MODEL | Recovery. Interpolated between bins, so fractional |
 | `P_h_obs` / `_model` | h | OBS / MODEL | Duration, `t3 − t0` |
 | `vT2_mph_obs` / `_model` | mph | OBS / MODEL | Speed at the trough |
 | `right_censored` | bool | MODEL | The model episode was still open at 19:00, so its `P` is a window artefact. **`P_h_model` is blanked where true** |
@@ -239,8 +240,10 @@ observation_weight = 0     no target. Inequality only:
                              V_throughput_obs_veh <= V <= V_max_feasible_veh
 ```
 
-`V_assign_veh` and `V_from_assignment_veh` must not enter as observations under
-any weighting. They are the quantity being estimated, not evidence about it.
+`V_assign_veh` must not enter as an observation under any weighting. It is the
+quantity being estimated, not evidence about it. The share of it that was spread
+over free-flow bins, if you need it, is `V_assign_veh − V_demand_obs_veh`; it is
+not carried as its own column because it is exactly that difference.
 
 ---
 
