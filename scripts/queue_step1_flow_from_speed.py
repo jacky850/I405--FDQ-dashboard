@@ -32,14 +32,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-SHARED = Path(r"C:\Users\jinxiwu\ASU Dropbox\Jinxi Wu\link-queue-simulation"
-              r"\link-queue-simulation")
+sys.path.insert(0, str(ROOT / "src"))
+
+from fdqbench.paths import resolve_source  # noqa: E402
 CORRIDORS = ["I395_NB", "I395_SB", "I66_EB", "I66_WB"]
 
 S3_M = 4.0
@@ -50,7 +52,9 @@ PERIOD_WINDOWS = [("AM", 360, 540), ("MD", 540, 900), ("PM", 900, 1140), ("NT", 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--shared", type=Path, default=SHARED)
+    parser.add_argument("--shared", type=Path, default=None,
+                        help="path to the link-queue-simulation package; if omitted, "
+                             "resolved from configs/data_sources.json")
     parser.add_argument("--corridors", nargs="+", default=CORRIDORS)
     parser.add_argument("--period", default="pm", choices=["am", "md", "pm"])
     parser.add_argument("--output-dir", type=Path, default=ROOT / "outputs/nvta_queue")
@@ -94,6 +98,7 @@ def read_speed(shared: Path, corridors: list[str]) -> pd.DataFrame:
 
 def main() -> None:
     args = parse_args()
+    args.shared = resolve_source("link_queue_simulation", args.shared)
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
     speed = read_speed(args.shared, args.corridors)

@@ -1,5 +1,5 @@
 {
-  "input": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\I405--FDQ-dashboard-github\\data\\jinxi_i405_week_2025-06-16_to_22\\raw_observed_fdqbench.csv",
+  "input": "data/jinxi_i405_week_2025-06-16_to_22/raw_observed_fdqbench.csv",
   "links": [
     "L405S-001|1222782",
     "L405S-001|1223027",

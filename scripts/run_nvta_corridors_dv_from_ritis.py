@@ -67,6 +67,14 @@ def parse_args() -> argparse.Namespace:
                         default=NVTA / "data/ritis_selected_corridors_5min_week_2025-10-06_to_10.csv")
     parser.add_argument("--mapping-file", type=Path, default=NVTA / "data/corridor_tmc_mapping.csv")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "outputs/nvta_corridors_dv_ritis")
+    parser.add_argument("--free-speed-source", default="config",
+                        choices=["config", "network", "observed"],
+                        help="where v_f comes from, which sets the cut-off at 0.70*v_f and so "
+                             "sets D. 'config' uses the 70/65 mph constants in config.py, the "
+                             "values the QVDF parameters were calibrated against. 'network' uses "
+                             "net_free_speed_mph from corridor_tmc_mapping.csv. 'observed' uses "
+                             "the 95th-percentile speed of each TMC's own average-weekday "
+                             "profile, which needs no assumption at all.")
     return parser.parse_args()
 
 
@@ -133,12 +141,21 @@ def main() -> None:
     speed = speed[speed["tmc_code"].isin(set(mapping["tmc"]))]
     profile = average_weekday_profile(speed)
 
-    geometry = mapping.set_index("tmc")[["corridor", "facility", "miles", "net_lanes", "net_link_id"]]
+    geometry = mapping.set_index("tmc")[["corridor", "facility", "miles", "net_lanes",
+                                         "net_link_id", "net_free_speed_mph"]]
     profile = profile.join(geometry, on="tmc_code", how="inner")
     # HOV corridors run on their own reduced network with different constants.
     is_hov = profile["facility"].astype(str).str.upper().eq("HOV")
-    profile["free_speed"] = np.where(is_hov, HOV_FREE_SPEED, GP_FREE_SPEED)
     profile["capacity_vphpl"] = np.where(is_hov, HOV_CAPACITY, GP_CAPACITY)
+    if args.free_speed_source == "config":
+        profile["free_speed"] = np.where(is_hov, HOV_FREE_SPEED, GP_FREE_SPEED)
+    elif args.free_speed_source == "network":
+        profile["free_speed"] = profile["net_free_speed_mph"].astype(float)
+    else:
+        # Each TMC's own uncongested speed, so nothing is assumed. Floored just
+        # above the capacity speed so the S3 inversion stays defined.
+        observed = profile.groupby("tmc_code")["speed_smoothed"].transform(lambda s: s.quantile(0.95))
+        profile["free_speed"] = observed.clip(lower=30.0)
     profile["cutoff"] = profile["free_speed"] * CUTOFF_RATIO
     profile["q_vphpl"] = s3_flow(profile["speed_smoothed"].to_numpy(float),
                                  profile["free_speed"].to_numpy(float),

@@ -1,0 +1,10 @@
+# The working tree picked up CRLF across every tracked text file, which made 336
+# files show as modified with identical insertion and deletion counts and hid
+# real diffs. Normalise on the way into the index; leave the working tree alone.
+* text=auto eol=lf
+
+# Binary, never touched.
+*.png binary
+*.pdf binary
+*.xlsx binary
+*.gz binary

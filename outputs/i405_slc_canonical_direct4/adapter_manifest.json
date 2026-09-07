@@ -1,8 +1,8 @@
 {
   "adapter": "scripts/build_i405_slc_canonical_adapter.py",
-  "source_observations": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\I405--FDQ-dashboard-github\\data\\jinxi_i405_week_2025-06-16_to_22\\raw_observed_fdqbench.csv",
+  "source_observations": "data/jinxi_i405_week_2025-06-16_to_22/raw_observed_fdqbench.csv",
   "source_observations_sha256": "57708fb5336ff82dc842e5fb5474cbdc99923cd22ab43c2e6e51fbf5580594d3",
-  "corridor_root": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\I210E_corridor_data_package\\multicorridor_2026_pilot\\trafficflowbench_five_corridors\\data_public\\kaggle_release\\corridors\\D12_I405_S",
+  "corridor_root": "<external>/D12_I405_S",
   "keys": [
     "L405S-001|1222782",
     "L405S-001|1223027",

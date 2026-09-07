@@ -7,8 +7,8 @@
     "D_over_C_h": "period volume / hourly capacity, units of hours"
   },
   "source": {
-    "profile": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\I405--FDQ-dashboard-github\\data\\nvta_i395nb_handoff\\handoff_avgweekday_timedependent.csv",
-    "params": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\I405--FDQ-dashboard-github\\data\\nvta_i395nb_handoff\\handoff_link_qvdf_params.csv"
+    "profile": "data/nvta_i395nb_handoff/handoff_avgweekday_timedependent.csv",
+    "params": "data/nvta_i395nb_handoff/handoff_link_qvdf_params.csv"
   },
   "coverage": {
     "links": 23,

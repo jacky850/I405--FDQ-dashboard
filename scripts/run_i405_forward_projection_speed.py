@@ -49,6 +49,8 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from fdqbench.paths import as_repo_relative  # noqa: E402
+
 PERIODS = {"AM": (6.0, 9.0), "PM": (15.0, 19.0)}
 VARIANTS = ("forward", "shape_only", "free_flow_baseline")
 WINDOWS = ("model_window", "observed_episode", "period")
@@ -253,7 +255,9 @@ def main() -> None:
     bins["vc_mph"] = bins.set_index(["link_id", "period", "holdout_week"]).index.map(cutoff)
     bins.to_csv(args.output_dir / "forward_projection_speed_5min.csv", index=False)
     summary = {
-        "source": {"results": str(args.results_file), "profiles": str(args.profile_file)},
+        "schema_version": "0.3",
+        "source": {"results": as_repo_relative(args.results_file),
+                   "profiles": as_repo_relative(args.profile_file)},
         "what_is_predicted": (
             "The duration branch round-trips by construction: x_hat was inverted from the "
             "observed P, so forward-projecting it returns P exactly. The forward projection "

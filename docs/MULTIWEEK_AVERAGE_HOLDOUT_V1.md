@@ -27,8 +27,13 @@ open holdout-week average flow
 - The week beginning 2025-06-30 is excluded by a predeclared calendar rule
   because it contains Independence Day (2025-07-04).
 - Twelve ordinary complete weeks remain for each of seven direct links.
-- Both AM (06:00--10:00) and PM (15:00--19:00) are evaluated, producing 14
-  fixed link-period groups and 168 link-period-week cases.
+- Both AM (06:00--09:00) and PM (15:00--19:00) are evaluated, producing 14
+  fixed link-period groups and 168 link-period-week cases. The clock is the one
+  in [`docs/VARIABLE_CONTRACT.md`](VARIABLE_CONTRACT.md) section 4, which is what
+  `scripts/run_i405_multiweek_average_holdout.py` has always used
+  (`PERIODS = {"AM": (6.0, 9.0), "PM": (15.0, 19.0)}`). An earlier revision of
+  this document said AM ran to 10:00; that was a documentation defect, not a
+  different run, so no result changes with this correction.
 - Every weekly profile has 288 five-minute bins and five contributing weekdays.
 - PeMS clock values are interpreted as Los Angeles local wall time; the source
   builder's literal `Z` is not treated as a UTC conversion.

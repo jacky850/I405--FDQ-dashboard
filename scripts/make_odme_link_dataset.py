@@ -21,15 +21,17 @@ Two files:
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from fdqbench.paths import resolve_source  # noqa: E402
 QUEUE = ROOT / "outputs/nvta_queue"
-SHARED = Path(r"C:\Users\jinxiwu\ASU Dropbox\Jinxi Wu\link-queue-simulation"
-              r"\link-queue-simulation")
 DT_H = 0.25
 PERIOD_HOURS = {"AM": 3.0, "MD": 6.0, "PM": 4.0}
 BINS_IN_PERIOD = {"AM": 12, "MD": 24, "PM": 16}
@@ -38,7 +40,9 @@ BINS_IN_PERIOD = {"AM": 12, "MD": 24, "PM": 16}
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--queue-dir", type=Path, default=QUEUE)
-    parser.add_argument("--shared", type=Path, default=SHARED)
+    parser.add_argument("--shared", type=Path, default=None,
+                        help="path to the link-queue-simulation package; if omitted, "
+                             "resolved from configs/data_sources.json")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "outputs/nvta_odme")
     return parser.parse_args()
 
@@ -62,6 +66,7 @@ def episode_block(frame: pd.DataFrame, suffix: str) -> pd.DataFrame:
 
 def main() -> None:
     args = parse_args()
+    args.shared = resolve_source("link_queue_simulation", args.shared)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     q = args.queue_dir
 

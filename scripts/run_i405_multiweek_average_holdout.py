@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from fdqbench.episodes import EpisodeDetectionConfig, detect_speed_episodes  # noqa: E402
+from fdqbench.paths import as_repo_relative, resolve_source  # noqa: E402
 from fdqbench.time_utils import parse_pems_local_wall_clock  # noqa: E402
 
 
@@ -34,16 +35,13 @@ MAX_SPEED_ERROR_MPH = 10.0
 DURATION_EXTRAPOLATION_LIMIT = 1.25
 HOLIDAY_WEEKS = {"2025-06-30": "contains_2025-07-04"}
 ANCHOR = pd.Timestamp("2000-01-02", tz=LA)
-DEFAULT_RAW = Path(
-    r"C:\Users\jinxiwu\ASU Dropbox\Jinxi Wu\IEEE Big Data"
-    r"\I210E_corridor_data_package\multicorridor_2026_pilot"
-    r"\pems_downloads_d12\proceed\I405\S\train_detector_states.csv"
-)
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--raw-file", type=Path, default=DEFAULT_RAW)
+    parser.add_argument("--raw-file", type=Path, default=None,
+                        help="PeMS I-405 South detector states. If omitted, resolved "
+                             "from the pems_i405_raw entry in configs/data_sources.json.")
     parser.add_argument("--start", default="2025-06-02")
     parser.add_argument("--end", default="2025-08-29")
     parser.add_argument(
@@ -323,6 +321,7 @@ def metrics(result:pd.DataFrame)->pd.DataFrame:
 
 def main()->None:
     args=parse_args(); args.output_dir.mkdir(parents=True,exist_ok=True)
+    args.raw_file = resolve_source("pems_i405_raw", args.raw_file)
     observations=read_observations(args.raw_file,args.start,args.end)
     profile,completeness=build_week_profiles(observations)
     states=detect_week_states(profile)
