@@ -95,7 +95,10 @@ A DNL does not need any of that:
 | Symbols, units, evidence layers | `docs/VARIABLE_CONTRACT.md` |
 
 Corridors: I-395 NB (29 links), I-395 SB (32), I-66 EB (82), I-66 WB (109), from
-154 INRIX TMCs, average weekday over 23 October 2025 weekdays at 15 minutes.
+**132 INRIX TMCs**, average weekday over 23 October 2025 weekdays at 15 minutes.
+The four corridors carry 154 TMCs with speed data in total; 132 of them map onto
+these 252 links.
 
-**One TMC covers several links**, so 252 links carry only 154 independent speed
-observations. Sample sizes must be quoted in TMCs, not links.
+**One TMC covers several links**, so 252 links carry only 132 independent speed
+observations. Sample sizes must be quoted in TMCs, not links: the 76 links with a
+congestion episode sit on just 44 TMCs.
