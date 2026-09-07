@@ -34,6 +34,12 @@ jobs:
       - name: Unit and regression tests
         run: pytest -q
 
+      # Called out separately so a drift in the frozen v0.2 QVDF oracle is
+      # legible in the log rather than buried in the full run. The golden file
+      # exists to fail; regenerating it to make this pass defeats it.
+      - name: Legacy QVDF gold regression
+        run: pytest -q tests/test_legacy_equivalence.py
+
       # The published example: lambda, mu -> Q, travel time, speed on one I-395
       # and one I-66 link, checked against the committed output. Exits non-zero
       # on any difference above 1e-9.
