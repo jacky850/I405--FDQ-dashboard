@@ -36,12 +36,36 @@ DURATION_EXTRAPOLATION_LIMIT = 1.25
 HOLIDAY_WEEKS = {"2025-06-30": "contains_2025-07-04"}
 ANCHOR = pd.Timestamp("2000-01-02", tz=LA)
 
+# Which speed the QVDF severity equation z = v_ref/v(T2) - 1 measures against.
+# This used to be implicit: the runner stored the episode's *exit* threshold in a
+# field called `cutoff_speed_vc_mph` and the severity equation read it, so the
+# recovery threshold was silently acting as the reference speed. The three are
+# 0.75, 0.707 and 0.70 of free speed, and z is linear in the choice, so it has to
+# be named. Default is the historical behaviour, declared rather than assumed.
+REFERENCE_SPEED_FIELD = {
+    "episode_exit": "episode_exit_speed_mph",
+    "capacity_speed": "capacity_speed_mph",
+    "episode_entry": "episode_entry_speed_mph",
+}
+REFERENCE_SPEED_SOURCE = {
+    "episode_exit": "EPISODE_EXIT_THRESHOLD",
+    "capacity_speed": "CAPACITY_SPEED_S3",
+    "episode_entry": "EPISODE_ENTRY_THRESHOLD",
+}
+DEFAULT_REFERENCE_SPEED = "episode_exit"
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--raw-file", type=Path, default=None,
                         help="PeMS I-405 South detector states. If omitted, resolved "
                              "from the pems_i405_raw entry in configs/data_sources.json.")
+    parser.add_argument("--qvdf-reference-speed", default=DEFAULT_REFERENCE_SPEED,
+                        choices=sorted(REFERENCE_SPEED_FIELD),
+                        help="which speed the severity equation z = v_ref/v(T2) - 1 "
+                             "measures against. Recorded in every output row as "
+                             "qvdf_reference_speed_source. Default reproduces the "
+                             "historical numbers.")
     parser.add_argument("--start", default="2025-06-02")
     parser.add_argument("--end", default="2025-08-29")
     parser.add_argument(
@@ -131,7 +155,7 @@ def hour(timestamp: pd.Timestamp) -> float:
     return timestamp.hour + timestamp.minute/60 + timestamp.second/3600
 
 
-def detect_week_states(profile: pd.DataFrame) -> pd.DataFrame:
+def detect_week_states(profile: pd.DataFrame, reference_speed: str) -> pd.DataFrame:
     cfg=EpisodeDetectionConfig()
     rows=[]
     for (link_id,week), group in profile.groupby(["link_id","week_start"],sort=True):
@@ -162,10 +186,25 @@ def detect_week_states(profile: pd.DataFrame) -> pd.DataFrame:
             base["k_d_observed"] = base["observed_peak_1h_demand_veh_h"]/(base["observed_average_period_volume_veh"]/base["period_hours"])
             if len(candidates):
                 episode=candidates.loc[candidates["vT2_robust_mph"].idxmin()]
+                # Four distinct speeds, each named for what it is. The severity
+                # equation then picks one by name and records which, instead of
+                # reading a field called "vc" that happened to hold the exit
+                # threshold. See docs/VARIABLE_CONTRACT.md section 3.
+                speeds={
+                    "capacity_speed_mph":float(episode["capacity_speed_mph"]),
+                    "episode_entry_speed_mph":float(episode["enter_threshold_mph"]),
+                    "episode_exit_speed_mph":float(episode["exit_threshold_mph"]),
+                }
+                reference=speeds[REFERENCE_SPEED_FIELD[reference_speed]]
                 base.update({
                     "episode_identified":True,"P_h":float(episode["P_h"]),
                     "vT2_mph":float(episode["vT2_robust_mph"]),
-                    "cutoff_speed_vc_mph":float(episode["exit_threshold_mph"]),
+                    **speeds,
+                    "qvdf_reference_speed_mph":reference,
+                    "qvdf_reference_speed_source":REFERENCE_SPEED_SOURCE[reference_speed],
+                    # Retained for one release. Before this change the severity
+                    # equation read this field, and it held the exit threshold.
+                    "legacy_cutoff_speed_vc_mph":float(episode["exit_threshold_mph"]),
                     "t0_la":episode["t0_la"],"T2_la":episode["T2_la"],"t3_la":episode["t3_la"],
                     "quality_status":episode["quality_status"],
                 })
@@ -184,7 +223,7 @@ def calibrate(train_all: pd.DataFrame) -> dict[str,float]:
     if len(train_episode) < 2:
         return {"capacity_vph":C,"k_d":kd,"f_d_h":np.nan,"f_p":np.nan,"n":N_FROZEN,"s":S_FROZEN,"training_weeks":int(train_all["week_start"].nunique()),"training_episode_weeks":int(len(train_episode)),"training_max_observed_D_over_C":training_max_x}
     fd=float(np.median(train_episode["P_h"].to_numpy(float)/np.power(x,N_FROZEN)))
-    z=train_episode["cutoff_speed_vc_mph"].to_numpy(float)/train_episode["vT2_mph"].to_numpy(float)-1
+    z=train_episode["qvdf_reference_speed_mph"].to_numpy(float)/train_episode["vT2_mph"].to_numpy(float)-1
     fp=float(np.median(z/np.power(train_episode["P_h"].to_numpy(float),S_FROZEN)))
     return {"capacity_vph":C,"k_d":kd,"f_d_h":fd,"f_p":fp,"n":N_FROZEN,"s":S_FROZEN,"training_weeks":int(train_all["week_start"].nunique()),"training_episode_weeks":int(len(train_episode)),"training_max_observed_D_over_C":training_max_x}
 
@@ -207,7 +246,7 @@ def leave_one_week_out(states: pd.DataFrame) -> pd.DataFrame:
             Dhat=params["capacity_vph"]*xhat
             Vhat=float(test["period_hours"])*Dhat/params["k_d"]
             zhat=params["f_p"]*P**params["s"]
-            vc=float(test["cutoff_speed_vc_mph"])
+            vc=float(test["qvdf_reference_speed_mph"])
             vhat=vc/(1+zhat)
             vobs=float(test["vT2_mph"])
             zobs=vc/vobs-1
@@ -290,7 +329,8 @@ def plot_representative_episode(
     figures=output_dir/"figures"; figures.mkdir(parents=True,exist_ok=True)
     fig,ax=plt.subplots(figsize=(11,4.5),constrained_layout=True)
     ax.plot(curve["minute_of_day"]/60,curve["average_speed_mph"],color="#2563eb",lw=2,label="weekly average-weekday speed")
-    ax.axhline(row["cutoff_speed_vc_mph"],color="#059669",ls="--",label=r"episode cutoff $v_c$")
+    ax.axhline(row["qvdf_reference_speed_mph"],color="#059669",ls="--",
+               label=f"QVDF reference speed ({row['qvdf_reference_speed_source']})")
     ax.axvspan(t0/60,t3/60,color="#ef4444",alpha=.16,label=r"canonical episode $[t_0,t_3]$")
     ax.axvline(t2/60,color="#dc2626",lw=1.5,label=r"$T_2$ (minimum speed)")
     ax.scatter([t2/60],[row["vT2_mph"]],color="#dc2626",zorder=3)
@@ -324,7 +364,7 @@ def main()->None:
     args.raw_file = resolve_source("pems_i405_raw", args.raw_file)
     observations=read_observations(args.raw_file,args.start,args.end)
     profile,completeness=build_week_profiles(observations)
-    states=detect_week_states(profile)
+    states=detect_week_states(profile,args.qvdf_reference_speed)
     result=leave_one_week_out(states)
     metric=metrics(result)
     profile.to_csv(args.output_dir/"weekly_average_weekday_profiles_5min.csv",index=False)

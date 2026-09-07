@@ -1,6 +1,6 @@
 # P0 corrections: what changed, and what it changed
 
-Against the action plan's Issues 01, 03, 04 (partial) and 07. Scope-frozen: no
+Against the action plan's Issues 01, 03, 04 and 07. Scope-frozen: no
 new corridor, model layer, dashboard or sensitivity study.
 
 ---
@@ -154,7 +154,7 @@ checkout.
 
 **Fix.** `[tool.pytest.ini_options] pythonpath = ["src", "."]` and a
 `test` extra. `pip install -e ".[test]" && pytest -q` now works from a fresh
-clone: **74 passed**.
+clone: **82 passed** with the new contract tests.
 
 ---
 
@@ -166,30 +166,73 @@ reason in `.gitignore`. It belongs beside this repository, not inside it.
 
 ---
 
-## What this does not cover
+## 7. The severity equation used the exit threshold without saying so
+
+Issue 04: the QVDF severity equation may not silently use the episode exit
+threshold as the capacity speed. It did.
+`run_i405_multiweek_average_holdout.py` stored `episode["exit_threshold_mph"]`
+(`0.75 * v_f`) in a field called `cutoff_speed_vc_mph`, and the severity equation
+read that field as the reference in `z = v_ref / v(T2) - 1`. The S3 capacity
+speed is `v_f / sqrt(2)` = `0.707 * v_f`. The same substitution was in
+`run_i405_qvdf_speed_severity_gate.py:89`.
+
+**Fix.** Four speeds, each named for what it is, emitted on every episode row:
+
+```
+capacity_speed_mph          = v_f / sqrt(2)      0.7071 v_f
+episode_entry_speed_mph     = 0.70 * v_f
+episode_exit_speed_mph      = 0.75 * v_f
+qvdf_reference_speed_mph    the one the severity equation used
+qvdf_reference_speed_source which of the above that was
+```
+
+`--qvdf-reference-speed {episode_exit,capacity_speed,episode_entry}` selects it.
+The default is `episode_exit`, so **every published number is unchanged**:
+volume MAPE 16.8757%, coverage 168 / 31 / 21, 7 speed-gate and 3 duration-gate
+failures, all identical to the previous run.
+
+`legacy_cutoff_speed_vc_mph` is retained for one release and asserted equal to
+`episode_exit_speed_mph`, which records exactly what the old field held.
+
+The episode detector now also emits `capacity_speed_mph`. Hysteresis is
+untouched: entry stays 0.70, exit stays 0.75.
+
+### What the alternative would do
+
+Ran end to end with `--qvdf-reference-speed capacity_speed`, 31 episode cases:
+
+| | `episode_exit` (default) | `capacity_speed` |
+|---|---:|---:|
+| median `v_ref` | 51.96 mph | 48.99 mph |
+| median observed `z` | 0.4244 | 0.3429 |
+| median calibrated `f_p` | 0.09918 | **0.06962** |
+| speed-gate failures | 7 | 6 |
+| supported cases | 21 | 21 |
+| `v(T2)` MAE | 2.206 mph | 2.125 mph |
+| volume MAPE | 16.876% | 16.876% |
+
+**`f_p` moves 30%; the reported accuracy barely moves at all.** Volume MAPE is
+identical because the duration branch never touches `v_ref`. So the convention
+was never going to show up as a bad result — it would only have shown up as an
+`f_p` that could not be compared with anyone else's. That is the reason it had to
+be declared rather than left implicit.
+
+Switching the default is not part of this release. On these numbers the case for
+switching is real but weak, and it would move `f_p` in a report that already
+quotes it.
+
+---
+
+## 8. Not yet covered
 
 | Plan issue | Status |
 |---|---|
 | 01 variable contract | `docs/VARIABLE_CONTRACT.md` written; `pems-cbi-dv` side not started |
 | 02 PeMS canonical columns | not started |
 | 03 D/C and dashboard | **done** |
-| 04 speed-threshold contract | contract written and the current resolution declared; field migration in code not done |
+| 04 speed-threshold contract | **done**: four named speeds, declared source, legacy field retained |
 | 05 QVDF legacy / decomposed modes | not started |
 | 06 identifiability and physical gates | not started |
 | 07 reproducibility and CI | `REPRODUCE.md`, `ci.yml`, path config **done**; `experiments/` registry and `manifest.json` hashes not done |
 | 08 I-10 development, I-405 holdout | not started |
 | 09 report | not started |
-
-### One thing to raise rather than bury
-
-Issue 04 says the QVDF severity equation may not silently use the episode exit
-threshold as the capacity speed. It currently does:
-`run_i405_multiweek_average_holdout.py:170` takes `episode["exit_threshold_mph"]`
-(`0.75 * v_f`) into `cutoff_speed_vc_mph`, and line 189 uses it as the reference
-in `z = v_ref / v(T2) - 1`. The S3 capacity speed is `v_f / sqrt(2)`
-= `0.707 * v_f` — about 6% apart, and `z` is linear in that choice.
-
-This release **declares** that resolution (contract section 3.1,
-`EPISODE_EXIT_THRESHOLD`) rather than changing it, so the published numbers stay
-reproducible. Changing it moves every `z`, `f_p` and predicted `v(T2)`, and
-belongs in its own change with its own before/after table.

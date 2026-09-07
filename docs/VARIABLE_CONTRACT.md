@@ -117,11 +117,29 @@ exit threshold and treat it as the capacity speed — those differ by about 6%
 (0.750 vs 0.707 of free speed), and the severity ratio `z = v_ref/v(T2) − 1` is
 linear in that choice.
 
-**Current state, declared rather than corrected:** the I-405 multiweek holdout
-resolves its reference speed to `EPISODE_EXIT_THRESHOLD`. That is frozen legacy
-behaviour for v0.3 so the released numbers stay reproducible. It is recorded, not
-endorsed; changing it is a separate, numbered change with its own before/after
-table.
+**Current state, declared rather than changed.** The I-405 multiweek holdout
+resolves its reference speed to `EPISODE_EXIT_THRESHOLD`, and every episode row
+now says so in `qvdf_reference_speed_source`. That default is frozen legacy
+behaviour for v0.3 so the released numbers stay reproducible; it is recorded, not
+endorsed. `--qvdf-reference-speed` selects a different one.
+
+The choice matters to the severity branch and barely at all to the reported
+accuracy, which is exactly why it had to be named rather than left implicit
+(measured over 31 episode cases, 21 supported):
+
+| | `episode_exit` (default) | `capacity_speed` |
+|---|---:|---:|
+| median `v_ref` | 51.96 mph | 48.99 mph |
+| median observed `z` | 0.4244 | 0.3429 |
+| median calibrated `f_p` | 0.09918 | **0.06962** |
+| speed-gate failures | 7 | 6 |
+| supported cases | 21 | 21 |
+| `v(T2)` MAE | 2.206 mph | 2.125 mph |
+| volume MAPE | 16.876% | 16.876% |
+
+`f_p` moves 30% while volume MAPE does not move at all, because the duration
+branch never touches `v_ref`. Anyone quoting `f_p` across the two conventions
+without saying which one they used is quoting two different numbers.
 
 ---
 

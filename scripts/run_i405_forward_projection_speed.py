@@ -115,7 +115,7 @@ def main() -> None:
     profiles = pd.read_csv(args.profile_file)
 
     cases = results[results["episode_identified"].astype(bool)].copy()
-    cases = cases.dropna(subset=["z_predicted", "P_h", "T2_la", "cutoff_speed_vc_mph"])
+    cases = cases.dropna(subset=["z_predicted", "P_h", "T2_la", "qvdf_reference_speed_mph"])
 
     bin_rows: list[pd.DataFrame] = []
     metric_rows: list[dict] = []
@@ -132,7 +132,7 @@ def main() -> None:
 
         clock_h = profile["minute_of_day"].to_numpy(float) / 60.0
         observed = profile["average_speed_mph"].to_numpy(float)
-        vc = float(case["cutoff_speed_vc_mph"])
+        vc = float(case["qvdf_reference_speed_mph"])
         free_speed = float(case["free_speed_p95_mph"])
         P_h = float(case["P_h"])
         T2_h = minute_of_day(case["T2_la"]) / 60.0

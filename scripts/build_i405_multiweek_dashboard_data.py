@@ -48,7 +48,9 @@ def main() -> None:
 
     case_columns = [
         "link_id", "period", "week_start", "episode_identified", "P_h",
-        "vT2_mph", "cutoff_speed_vc_mph", "t0_la", "T2_la", "t3_la",
+        "vT2_mph", "qvdf_reference_speed_mph", "qvdf_reference_speed_source",
+        "capacity_speed_mph", "episode_entry_speed_mph", "episode_exit_speed_mph",
+        "t0_la", "T2_la", "t3_la",
         "observed_average_period_volume_veh", "V_hat_veh",
         "absolute_percentage_error_pct", "capacity_vph", "k_d", "f_d_h",
         "f_p", "n", "s", "training_episode_weeks",

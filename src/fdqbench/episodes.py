@@ -8,6 +8,7 @@ flow, demand, or queue fields.
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 
 import numpy as np
@@ -200,6 +201,13 @@ def detect_speed_episodes(
                     "free_speed_p95_mph": float(free_speed_mph),
                     "enter_threshold_mph": enter_threshold,
                     "exit_threshold_mph": exit_threshold,
+                    # The speed at which S3 with m = 4 carries capacity. Carried
+                    # alongside the two hysteresis thresholds so a consumer can
+                    # name the one it wants instead of reaching for whichever
+                    # field happens to be called "vc". These are three different
+                    # speeds: 0.707, 0.70 and 0.75 of free speed respectively.
+                    # See docs/VARIABLE_CONTRACT.md section 3.
+                    "capacity_speed_mph": float(free_speed_mph) / math.sqrt(2.0),
                     "period_by_T2": _period_of(t2),
                     "cross_period": _period_of(t0) != _period_of(t3 - pd.Timedelta(microseconds=1)),
                     "missing_bins_inside": missing_bins,
