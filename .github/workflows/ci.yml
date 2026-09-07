@@ -34,6 +34,17 @@ jobs:
       - name: Unit and regression tests
         run: pytest -q
 
+      # Called out separately so a drift in the frozen v0.2 QVDF oracle is
+      # legible in the log rather than buried in the full run. The golden file
+      # exists to fail; regenerating it to make this pass defeats it.
+      - name: Legacy QVDF gold regression
+        run: pytest -q tests/test_legacy_equivalence.py
+
+      # The gates that decide whether a case may be reported as physical, and
+      # the one that stops a conservation closure being called a prediction.
+      - name: Identifiability and physical gates
+        run: pytest -q tests/test_physical_gates.py tests/test_episode_workload_independence.py
+
       # The published example: lambda, mu -> Q, travel time, speed on one I-395
       # and one I-66 link, checked against the committed output. Exits non-zero
       # on any difference above 1e-9.

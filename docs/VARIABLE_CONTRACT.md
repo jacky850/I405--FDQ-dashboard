@@ -143,6 +143,111 @@ without saying which one they used is quoting two different numbers.
 
 ---
 
+## 3A. Duration modes, and the basis a ratio is taken on
+
+### The two modes
+
+`src/fdqbench/slc_qvdf.py` evaluates the duration branch in one of two modes,
+named on every call and recorded in every result:
+
+```
+LEGACY_NOMINAL_DC          P = f_d       * (D/C)^n
+DECOMPOSED_EFFECTIVE_DMU   P = f_d_tilde * (D/mu)^n
+```
+
+`LEGACY_NOMINAL_DC` is the default and reproduces the v0.2 oracle exactly. It is
+pinned by `tests/gold/slc_qvdf_legacy_v02.json`, frozen from the untouched module
+before the modes existed.
+
+In `DECOMPOSED_EFFECTIVE_DMU` the coefficient field carries `f_d_tilde`, a
+coefficient calibrated against `D/mu`. Nothing is converted on the fly: doing so
+would make Mode B algebraically identical to Mode A for every input, leaving
+nothing to calibrate and nothing to compare. To carry a Mode A calibration
+across, convert it once:
+
+```
+f_d_tilde = f_d * k_mu**n            fdqbench.slc_qvdf.decomposed_coefficient
+```
+
+which is exact for constant `k_mu`, because `D/mu = (D/C) / k_mu`.
+
+**`stress_basis` is not a migration mechanism.** It changes which ratio is used
+without changing the coefficient, so switching it rescales every duration by
+`k_mu**-n` — on the reference link, 0.85 retention and `n = 1.1` lengthens `P` by
+19%. It is retained so v0.2 callers behave identically, and Mode B ignores it.
+
+### What `k_mu` touches, decided rather than assumed
+
+`mu = k_mu * C` is computed on every call and feeds `queue_delay_vht` and the
+queue profile **whichever mode is running**, including a `D/C` run whose duration
+never saw `k_mu`. On the reference link that is a 15% difference in
+`queue_delay_vht` between `k_mu = 0.85` and `k_mu = 1.0`.
+
+**This is frozen legacy behaviour**, on the reasoning that `mu` is the physical
+discharge rate and a queue's delay depends on the rate it drains at, whatever
+ratio parameterised its duration. How the duration is parameterised and what the
+service rate is are two separate modelling choices; Mode B changes only the
+first. `tests/test_legacy_equivalence.py::test_kmu_still_reaches_queue_delay_on_a_dc_run`
+asserts it, so confining `k_mu` to Mode B later would fail a test rather than
+change results quietly.
+
+### The basis resolver
+
+A ratio is blind to whether its two sides are per-link or per-lane, provided both
+are. A mismatch is wrong by the lane count and still looks plausible.
+`src/fdqbench/basis.py` is the one place that decides:
+
+> **the basis follows the capacity, and the volume is converted to match it.**
+
+| volume | capacity | resolved `qavg` |
+|---|---|---|
+| per-link | per-link | `V / H` |
+| per-link | per-lane | `V / (lanes * H)` |
+| per-lane | per-lane | `V / H` |
+
+It returns `qavg_vph`, `peak_demand_rate_D_vph`, `nominal_capacity_C_vph`,
+`effective_discharge_mu_vph`, `demand_modifier_kd`, `capacity_retention_kmu`,
+`dc_nominal` and `dmu_effective`, and raises `BasisError` rather than guessing on:
+
+- a per-link/per-lane conversion with no lane count;
+- a **period-equivalent** capacity passed as a nominal hourly capacity, which is
+  wrong by a factor of `H`;
+- an **effective** capacity combined with `k_mu != 1`, which applies the drop twice;
+- `k_d` and `1/plf` that disagree;
+- `mu`, `C` and `k_mu` that disagree.
+
+---
+
+## 3B. Result status and physical gates
+
+No quantity in this contract may be reported as a physical result until its case
+passes the gates in [`docs/IDENTIFIABILITY_AND_GATES.md`](IDENTIFIABILITY_AND_GATES.md),
+implemented in `src/fdqbench/validation.py`.
+
+Every case ends in `PASS`, `REVIEW`, `FAIL` or `INSUFFICIENT_DATA` with a reason
+code from a controlled vocabulary. `INSUFFICIENT_DATA` outranks `FAIL`: a case
+that could not be evaluated is not a case that failed, and pooling them
+miscounts attrition.
+
+Two flags travel with every case and are part of this contract:
+
+| Field | Values | Meaning |
+|---|---|---|
+| `episode_workload_source` | `OBSERVED_UPSTREAM_ARRIVALS`, `QUEUE_CORRECTED_ARRIVALS`, `CONSERVATION_FROM_OBSERVED_P`, `MODEL_INFERRED` | where `D_Q` came from |
+| `discharge_source` | `MEASURED_DETECTOR`, `INFERRED_FROM_SPEED`, `ASSUMED_CAPACITY` | how `mu` was obtained; never pooled |
+
+The last two workload sources force
+`duration_validation_status = NOT_INDEPENDENT_DIAGNOSTIC_CLOSURE`, and such a
+result may not be reported as a held-out duration prediction. When `D_Q = mu_e*P`
+is built from an episode's own observed `P`, recovering `P` from it is a
+rearrangement of the definition, exact for any input.
+
+**`is_physical` is stricter than `PASS`.** A `REVIEW` case earned by a sub-linear
+duration exponent or a non-independent workload does not enter the physical
+discharge chain.
+
+---
+
 ## 4. Period clock
 
 One authoritative source. Any document, dashboard string or output metadata that
@@ -212,6 +317,12 @@ leave-one-week-out case. An assertion enforces that it did not use holdout flow.
 | Capacity/entry/exit/reference speeds are distinct and ordered | `tests/test_speed_threshold_contract.py` |
 | AM is 06:00–09:00 everywhere | `tests/test_period_clock.py` |
 | Queue kernel reproduces published output | `tests/test_nvta_kernel.py` |
+| Legacy QVDF mode reproduces the frozen oracle | `tests/test_legacy_equivalence.py` |
+| Mode A and Mode B agree under the coefficient identity | `tests/test_qvdf_mode_transform.py` |
+| Per-link and per-lane give the same normalised stress | `tests/test_basis_resolution.py` |
+| Ambiguous capacity inputs are refused | `tests/test_conflicting_inputs.py` |
+| Every case carries a status and a reason code | `tests/test_physical_gates.py` |
+| A conservation closure is not labelled a prediction | `tests/test_episode_workload_independence.py` |
 
 No row in this contract is "implemented" without a test and a committed evidence
 output.
