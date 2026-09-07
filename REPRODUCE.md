@@ -23,7 +23,7 @@ python -m pip install -e ".[test]"
 pytest -q
 ```
 
-Expected: **94 passed**. No `PYTHONPATH` is required; `pyproject.toml` puts `src`
+Expected: **92 passed** from a clean clone. (A working tree with extra uncommitted files under `docs/` collects a few more cases of the period-clock check, which globs that directory.) No `PYTHONPATH` is required; `pyproject.toml` puts `src`
 and the repository root on the path for the test run.
 
 ### The queue kernel, and the reproducible I-395 / I-66 example
@@ -88,8 +88,46 @@ python scripts/queue_step8_validation.py --period PM
 `--period AM` and `--period MD` score the other two periods; the run window is
 already the whole 06:00-19:00 day.
 
-Regenerated output matches what is committed to within floating-point noise:
-step 1 to 6.8e-13, step 5 to 1.8e-12.
+### What reruns bit-for-bit and what does not
+
+Steps 1, 2, 3 reproduce the committed output to floating-point noise:
+
+| Step | Worst difference vs committed |
+|---|---:|
+| 1, `step1_flow_average_weekday_15min.csv` | 6.8e-13 |
+| 2, `step2_mu_15min.csv` | 1.8e-12 |
+| 3, `step3_queue_target_15min.csv` | 1.8e-12 |
+
+**Step 4 does not, and cannot be expected to.** Individual `lambda_vph` values
+move by up to 4,024 veh/h between platforms, which propagates into steps 5-7.
+
+This is the non-identifiability the method already reports, showing up in the
+solver. `lambda` is fitted by `scipy.optimize.least_squares(method="lm")` against
+a residual that is non-smooth by construction — it contains `abs`, `maximum`, and
+the `min`/`max` of the queue recurrence — with 27 coefficients and only
+**5.6% of bins identifiable**. On the other 94.4% the queue is identically zero
+for any `lambda` below `mu`, so the residual is flat and a different MINPACK build
+stops at a different, equally good point.
+
+The fit is equally good, and every conclusion is unchanged. Regenerated on macOS
+against the committed run:
+
+| | Committed | Regenerated |
+|---|---:|---:|
+| links fitted / distinct TMCs | 76 / 44 | 76 / 44 |
+| identifiable bins | 1,363 | 1,363 |
+| residual RMSE, median | 1.98 veh | 1.98 veh |
+| residual / peak, median | 0.0407 | 0.0400 |
+| step 8 anchored episode MAE | 2.06 mph | 2.047 mph |
+| episodes observed / matched / invented | 47 / 46 / 0 | 47 / 46 / 0 |
+| P, T2, v(T2) MAE | 0.508 h, 0.0 min, 0.349 mph | identical |
+
+So: **quote the conclusions, not the per-bin `lambda`.** A `lambda` on an
+unidentifiable bin is one member of a set the data cannot distinguish between,
+and the committed file records one arbitrary member of that set.
+
+Pinning it exactly would need a deterministic solver — a convex reformulation, or
+a fixed-seed global search — which is a modelling change, not a packaging one.
 
 ---
 
@@ -146,7 +184,9 @@ likewise needs its raw detector states; pass `--raw-file`, or configure
 
 | | Status |
 |---|---|
-| Queue steps 1-8 | reproducible at level 1 |
+| Queue steps 1-3 | reproducible at level 1, to 1e-12 |
+| Queue steps 4-8 | runnable at level 1; conclusions reproduce, per-bin `lambda` does not — see above |
+| The queue kernel example | reproducible at level 1, to 5.7e-14 |
 | Multiweek holdout downstream of `leave_one_week_out_qvdf_results.csv` | reproducible at level 1 |
 | `run_i405_multiweek_average_holdout.py` itself | needs raw PeMS detector states |
 | A C++ build of the kernel | does not exist; see `PORTING_NOTES.md` section 0 |

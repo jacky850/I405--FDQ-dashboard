@@ -154,7 +154,7 @@ checkout.
 
 **Fix.** `[tool.pytest.ini_options] pythonpath = ["src", "."]` and a
 `test` extra. `pip install -e ".[test]" && pytest -q` now works from a fresh
-clone: **94 passed**, including the new contract, kernel and staged-input tests.
+clone: **92 passed**, including the new contract, kernel and staged-input tests.
 
 ---
 
@@ -261,6 +261,44 @@ on 5 links, 17,826 veh not placed.
 
 `--shared` still points at the full external package for corridors outside the
 staged four.
+
+### What running the whole chain from a clean clone exposed
+
+Cloning the branch fresh and running steps 1-8 with nothing configured works, and
+turned up something worth stating rather than glossing:
+
+**Steps 1-3 reproduce to 1e-12. Step 4 does not, by up to 4,024 veh/h on
+individual `lambda_vph` values, and that propagates into steps 5-7.**
+
+`lambda` is fitted with `scipy.optimize.least_squares(method="lm")` against a
+residual that is non-smooth by construction — `abs`, `maximum`, and the `min`/`max`
+inside the queue recurrence — over 27 coefficients, with only **5.6% of bins
+identifiable**. On the other 94.4% the queue is identically zero for any `lambda`
+below `mu`, so the residual surface is flat there and a different MINPACK build
+halts at a different, equally good point.
+
+The fit quality and every conclusion are unchanged:
+
+| | Committed (Windows) | Regenerated (macOS) |
+|---|---:|---:|
+| links fitted / distinct TMCs | 76 / 44 | 76 / 44 |
+| identifiable bins | 1,363 | 1,363 |
+| restarts needed | 2 | 2 |
+| residual RMSE, median | 1.98 veh | 1.98 veh |
+| residual / peak, median | 0.0407 | 0.0400 |
+| step 8 anchored episode MAE | 2.06 mph | **2.047 mph** |
+| episodes observed / matched / invented | 47 / 46 / 0 | 47 / 46 / 0 |
+| P / T2 / v(T2) MAE | 0.508 h / 0.0 min / 0.349 mph | identical |
+
+This is not a defect introduced here — it is the documented non-identifiability
+appearing in the solver. It does change what may be claimed: **the conclusions
+are reproducible, the per-bin `lambda` is not.** A `lambda` on an unidentifiable
+bin is one arbitrary member of a set the data cannot distinguish between, and the
+committed file records one such member.
+
+Pinning it would take a deterministic solver — a convex reformulation, or a
+fixed-seed global search. That is a modelling change and is out of scope here.
+Recorded in `REPRODUCE.md` so nobody reads a `lambda` diff as a regression.
 
 Redistribution of the INRIX readings inside this repository was authorised by the
 project owner; the provenance is recorded in the staging script's docstring and
