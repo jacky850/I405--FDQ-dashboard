@@ -218,6 +218,36 @@ It returns `qavg_vph`, `peak_demand_rate_D_vph`, `nominal_capacity_C_vph`,
 
 ---
 
+## 3B. Result status and physical gates
+
+No quantity in this contract may be reported as a physical result until its case
+passes the gates in [`docs/IDENTIFIABILITY_AND_GATES.md`](IDENTIFIABILITY_AND_GATES.md),
+implemented in `src/fdqbench/validation.py`.
+
+Every case ends in `PASS`, `REVIEW`, `FAIL` or `INSUFFICIENT_DATA` with a reason
+code from a controlled vocabulary. `INSUFFICIENT_DATA` outranks `FAIL`: a case
+that could not be evaluated is not a case that failed, and pooling them
+miscounts attrition.
+
+Two flags travel with every case and are part of this contract:
+
+| Field | Values | Meaning |
+|---|---|---|
+| `episode_workload_source` | `OBSERVED_UPSTREAM_ARRIVALS`, `QUEUE_CORRECTED_ARRIVALS`, `CONSERVATION_FROM_OBSERVED_P`, `MODEL_INFERRED` | where `D_Q` came from |
+| `discharge_source` | `MEASURED_DETECTOR`, `INFERRED_FROM_SPEED`, `ASSUMED_CAPACITY` | how `mu` was obtained; never pooled |
+
+The last two workload sources force
+`duration_validation_status = NOT_INDEPENDENT_DIAGNOSTIC_CLOSURE`, and such a
+result may not be reported as a held-out duration prediction. When `D_Q = mu_e*P`
+is built from an episode's own observed `P`, recovering `P` from it is a
+rearrangement of the definition, exact for any input.
+
+**`is_physical` is stricter than `PASS`.** A `REVIEW` case earned by a sub-linear
+duration exponent or a non-independent workload does not enter the physical
+discharge chain.
+
+---
+
 ## 4. Period clock
 
 One authoritative source. Any document, dashboard string or output metadata that
@@ -291,6 +321,8 @@ leave-one-week-out case. An assertion enforces that it did not use holdout flow.
 | Mode A and Mode B agree under the coefficient identity | `tests/test_qvdf_mode_transform.py` |
 | Per-link and per-lane give the same normalised stress | `tests/test_basis_resolution.py` |
 | Ambiguous capacity inputs are refused | `tests/test_conflicting_inputs.py` |
+| Every case carries a status and a reason code | `tests/test_physical_gates.py` |
+| A conservation closure is not labelled a prediction | `tests/test_episode_workload_independence.py` |
 
 No row in this contract is "implemented" without a test and a committed evidence
 output.

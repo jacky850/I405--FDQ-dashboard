@@ -1,0 +1,42 @@
+{
+  "schema_version": "0.3",
+  "source": "outputs/nvta_queue/step8_speed_variants_15min.csv",
+  "links": 252,
+  "status": {
+    "INSUFFICIENT_DATA": 176,
+    "REVIEW": 73,
+    "FAIL": 3
+  },
+  "binding_reason": {
+    "EVIDENCE_MISSING": 176,
+    "WORKLOAD_MODEL_INFERRED": 73,
+    "SPEED_MAE_ABOVE_LIMIT": 3
+  },
+  "physical": 0,
+  "duration_validation_status": [
+    "NOT_INDEPENDENT_DIAGNOSTIC_CLOSURE"
+  ],
+  "by_gate": {
+    "data_evidence": {
+      "PASS": 252
+    },
+    "capacity_basis": {
+      "PASS": 252
+    },
+    "capacity_plausibility": {
+      "PASS": 252
+    },
+    "queue_state": {
+      "PASS": 252
+    },
+    "speed_profile": {
+      "INSUFFICIENT_DATA": 176,
+      "PASS": 73,
+      "FAIL": 3
+    },
+    "episode_independence": {
+      "REVIEW": 252
+    }
+  },
+  "reading": "No link reaches is_physical. lambda is fitted so the recurrence reproduces the speed-implied queue and is then scored against that same speed, so episode_workload_source is MODEL_INFERRED and every duration result is a diagnostic closure. The 176 INSUFFICIENT_DATA links carry no queued bin, so there is no observed-bin MAE to score: an abstention, not a failure."
+}
