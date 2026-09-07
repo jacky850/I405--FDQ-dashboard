@@ -1,6 +1,6 @@
 # P0 corrections: what changed, and what it changed
 
-Against the action plan's Issues 01, 03, 04 and 07. Scope-frozen: no
+Against the action plan's Issues 01, 03, 04 and most of 07. Scope-frozen: no
 new corridor, model layer, dashboard or sensitivity study.
 
 ---
@@ -154,7 +154,7 @@ checkout.
 
 **Fix.** `[tool.pytest.ini_options] pythonpath = ["src", "."]` and a
 `test` extra. `pip install -e ".[test]" && pytest -q` now works from a fresh
-clone: **82 passed** with the new contract tests.
+clone: **94 passed**, including the new contract, kernel and staged-input tests.
 
 ---
 
@@ -223,7 +223,52 @@ quotes it.
 
 ---
 
-## 8. Not yet covered
+## 8. The NVTA inputs are now in the repository
+
+Queue steps 1 and 5 read an external `link-queue-simulation` package at a
+hard-coded Windows path. Everyone else could run steps 2-4 and 6-8 from committed
+outputs, but nobody could rerun the chain from observed speed.
+
+`scripts/stage_nvta_inputs.py` copies what those two steps read into
+`data/nvta_link_queue_inputs/`, mirroring the external layout so one code path
+reads either:
+
+| | Rows kept | Size |
+|---|---:|---:|
+| I-395 NB / SB readings | 46,365 / 44,157 | 0.3 / 0.3 MB |
+| I-66 EB / WB readings | 125,856 / 123,648 | 0.9 / 0.8 MB |
+| TMC-to-link matching | 285 of 5,578 | 0.03 MB |
+| Assignment link tables, AM/MD/PM | 285 of 5,578 each | 0.1 MB each |
+| **Total** | | **2.6 MB** |
+
+35 MB of source becomes 2.6 MB: the network tables are filtered to the links the
+four corridors map to, and everything is gzipped. `fdqbench.paths.table()`
+resolves `.csv` or `.csv.gz`, so no caller had to change. `manifest.json` records
+row counts and the SHA-256 of every source file.
+
+**Verified end to end with nothing configured** — no argument, no environment
+variable, no local config:
+
+| Step | Against committed output |
+|---|---:|
+| 1, `step1_flow_average_weekday_15min.csv` (24,192 rows) | worst difference **6.8e-13** |
+| 5, `step5_lambda_anchored_15min.csv` (13,104 rows) | worst difference **1.8e-12** |
+| 5, `step5_volume_anchor_by_link.csv` (756 rows) | worst difference **3.6e-12** |
+
+Step 5's reported counts are identical to the published ones: AM 226 inside /
+22 below / 4 above, MD 239 / 12 / 1, PM 213 / 34 / 5, 60 bins clipped at `mu_free`
+on 5 links, 17,826 veh not placed.
+
+`--shared` still points at the full external package for corridors outside the
+staged four.
+
+Redistribution of the INRIX readings inside this repository was authorised by the
+project owner; the provenance is recorded in the staging script's docstring and
+in the manifest.
+
+---
+
+## 9. Not yet covered
 
 | Plan issue | Status |
 |---|---|
@@ -233,6 +278,6 @@ quotes it.
 | 04 speed-threshold contract | **done**: four named speeds, declared source, legacy field retained |
 | 05 QVDF legacy / decomposed modes | not started |
 | 06 identifiability and physical gates | not started |
-| 07 reproducibility and CI | `REPRODUCE.md`, `ci.yml`, path config **done**; `experiments/` registry and `manifest.json` hashes not done |
+| 07 reproducibility and CI | **done** for the clean-install path: `REPRODUCE.md`, `ci.yml`, path config, and the NVTA inputs staged so steps 1-8 run unconfigured. `experiments/` registry and top-level `manifest.json` hashes not done |
 | 08 I-10 development, I-405 holdout | not started |
 | 09 report | not started |

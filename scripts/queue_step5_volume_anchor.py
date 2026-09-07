@@ -58,7 +58,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from fdqbench.paths import resolve_source  # noqa: E402
+from fdqbench.paths import resolve_source, table  # noqa: E402
 DT_H = 15.0 / 60.0
 PERIOD_WINDOWS = {"am": (360, 540), "md": (540, 900), "pm": (900, 1140)}
 
@@ -178,15 +178,14 @@ def main() -> None:
                         usecols=["link_id", "t_min", "q_vphpl", "lanes", "mu_vphpl",
                                  "speed_mph", "free_speed_mph"])
     frame = lam.merge(queue, on=["link_id", "t_min"], how="left").sort_values(["link_id", "t_min"])
-    mapping = pd.read_csv(args.shared / "tmc-matching/canonical_node_pair_tmc-1v1.csv",
+    mapping = pd.read_csv(table(args.shared / "tmc-matching/canonical_node_pair_tmc-1v1.csv"),
                           usecols=["tmc", "link_id", "from_node_id", "to_node_id"])
 
     rows: list[dict] = []
     series_rows: list[pd.DataFrame] = []
     for period in args.periods:
         start, end = PERIOD_WINDOWS[period]
-        performance = pd.read_csv(
-            args.shared / f"TAPLite-model-input-output-subset/{period}/link_performance.csv",
+        performance = pd.read_csv(table(args.shared / f"TAPLite-model-input-output-subset/{period}/link_performance.csv"),
             usecols=["link_id", "from_node_id", "to_node_id", "volume", "lane_capacity",
                      "link_capacity", "vdf_plf"])
         assign = (mapping.merge(performance, on=["link_id", "from_node_id", "to_node_id"])

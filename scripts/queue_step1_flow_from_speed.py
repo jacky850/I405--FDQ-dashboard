@@ -41,7 +41,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from fdqbench.paths import resolve_source  # noqa: E402
+from fdqbench.paths import resolve_source, table  # noqa: E402
 CORRIDORS = ["I395_NB", "I395_SB", "I66_EB", "I66_WB"]
 
 S3_M = 4.0
@@ -86,7 +86,7 @@ def read_speed(shared: Path, corridors: list[str]) -> pd.DataFrame:
     """Observed TMC speed, weekdays only, on a minute-of-day clock."""
     frames = []
     for name in corridors:
-        path = shared / "tmc-15min-speed" / name / "Readings.csv"
+        path = table(shared / "tmc-15min-speed" / name / "Readings.csv")
         chunk = pd.read_csv(path, usecols=["tmc_code", "measurement_tstamp", "speed"])
         stamp = pd.to_datetime(chunk["measurement_tstamp"])
         chunk = chunk.assign(corridor=name, date=stamp.dt.date,
@@ -103,11 +103,10 @@ def main() -> None:
 
     speed = read_speed(args.shared, args.corridors)
 
-    mapping = pd.read_csv(args.shared / "tmc-matching/canonical_node_pair_tmc-1v1.csv",
+    mapping = pd.read_csv(table(args.shared / "tmc-matching/canonical_node_pair_tmc-1v1.csv"),
                           usecols=["tmc", "road", "direction", "link_id", "from_node_id",
                                    "to_node_id", "length_mi", "lanes", "match_status"])
-    performance = pd.read_csv(
-        args.shared / f"TAPLite-model-input-output-subset/{args.period}/link_performance.csv",
+    performance = pd.read_csv(table(args.shared / f"TAPLite-model-input-output-subset/{args.period}/link_performance.csv"),
         usecols=["link_id", "from_node_id", "to_node_id", "volume", "lane_capacity",
                  "link_capacity", "free_speed_mph", "cutoff_speed_mph", "D", "doc",
                  "P", "t0", "t2", "t3", "vt2_mph", "mu", "qvdf_profile_status"])

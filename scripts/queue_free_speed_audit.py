@@ -32,7 +32,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from fdqbench.paths import resolve_source  # noqa: E402
+from fdqbench.paths import resolve_source, table  # noqa: E402
 CORRIDORS = ["I395_NB", "I395_SB", "I66_EB", "I66_WB"]
 NIGHT_START, NIGHT_END = 0, 300          # 00:00-05:00
 
@@ -54,7 +54,7 @@ def main() -> None:
 
     frames = []
     for name in args.corridors:
-        chunk = pd.read_csv(args.shared / "tmc-15min-speed" / name / "Readings.csv",
+        chunk = pd.read_csv(table(args.shared / "tmc-15min-speed" / name / "Readings.csv"),
                             usecols=["tmc_code", "measurement_tstamp", "speed",
                                      "reference_speed", "historical_average_speed"])
         stamp = pd.to_datetime(chunk["measurement_tstamp"])
@@ -80,9 +80,9 @@ def main() -> None:
     per_tmc = per_tmc.join(per_corridor, on="corridor")
 
     # What the assignment assigns, for comparison.
-    mapping = pd.read_csv(args.shared / "tmc-matching/canonical_node_pair_tmc-1v1.csv",
+    mapping = pd.read_csv(table(args.shared / "tmc-matching/canonical_node_pair_tmc-1v1.csv"),
                           usecols=["tmc", "link_id", "from_node_id", "to_node_id"])
-    performance = pd.read_csv(args.shared / "TAPLite-model-input-output-subset/pm/link_performance.csv",
+    performance = pd.read_csv(table(args.shared / "TAPLite-model-input-output-subset/pm/link_performance.csv"),
                               usecols=["link_id", "from_node_id", "to_node_id", "free_speed_mph"])
     assigned = (mapping.merge(performance, on=["link_id", "from_node_id", "to_node_id"])
                 .groupby("tmc")["free_speed_mph"].median().rename("assignment_model"))

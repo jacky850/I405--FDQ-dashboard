@@ -13,13 +13,13 @@
   ],
   "sources": {
     "link_queue_simulation": {
-      "description": "Shared NVTA package: INRIX 15-minute TMC speeds, the TMC-to-link matching table, and the TAPLite assignment link_performance tables. Needed by queue steps 1 and 5 only; steps 2-4 and 6-8 run from committed outputs.",
+      "description": "INRIX 15-minute TMC speeds, the TMC-to-link matching table, and the TAPLite assignment link_performance tables. Read by queue steps 1 and 5; steps 2-4 and 6-8 run from committed outputs. The four studied corridors are staged inside the repository, so the default below needs no configuration. Point it at the full external link-queue-simulation package to work on other corridors.",
       "expected_children": [
         "tmc-15min-speed",
         "tmc-matching/canonical_node_pair_tmc-1v1.csv",
         "TAPLite-model-input-output-subset/pm/link_performance.csv"
       ],
-      "path": null
+      "path": "data/nvta_link_queue_inputs"
     },
     "pems_i405_raw": {
       "description": "PeMS I-405 South detector states used by the multiweek average-weekday holdout.",

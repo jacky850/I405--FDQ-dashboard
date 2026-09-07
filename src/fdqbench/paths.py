@@ -106,3 +106,20 @@ def resolve_source(name: str, override: os.PathLike[str] | str | None = None) ->
             f"  Override it in configs/data_sources.local.json or with "
             f"FDQ_{name.upper()}.")
     return candidate
+
+
+def table(path: os.PathLike[str] | str) -> Path:
+    """Resolve a CSV that may be stored gzipped.
+
+    The staged copies of the NVTA inputs are compressed, while the external
+    package holds them plain. Callers name the plain path and this returns
+    whichever exists, so one code path reads either. pandas infers the codec from
+    the suffix, so the returned path can be handed straight to `read_csv`.
+    """
+    candidate = Path(path)
+    if candidate.exists():
+        return candidate
+    gzipped = candidate.with_suffix(candidate.suffix + ".gz")
+    if gzipped.exists():
+        return gzipped
+    raise FileNotFoundError(f"neither {candidate} nor {gzipped} exists")

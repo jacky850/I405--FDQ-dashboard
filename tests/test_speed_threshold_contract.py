@@ -75,13 +75,15 @@ def test_the_three_speeds_are_distinct_and_ordered(episodes):
     assert capacity != pytest.approx(exit_), "capacity speed must not equal the exit threshold"
 
 
-@pytest.mark.skipif(not RESULTS.exists(), reason="holdout results not generated")
-class TestPublishedResults:
-    @pytest.fixture(scope="class")
-    def results(self) -> pd.DataFrame:
-        frame = pd.read_csv(RESULTS)
-        return frame[frame["episode_identified"].astype(bool)]
+@pytest.fixture(scope="module")
+def results() -> pd.DataFrame:
+    if not RESULTS.exists():
+        pytest.skip("holdout results not generated")
+    frame = pd.read_csv(RESULTS)
+    return frame[frame["episode_identified"].astype(bool)]
 
+
+class TestPublishedResults:
     def test_reference_speed_declares_its_source(self, results):
         assert "qvdf_reference_speed_mph" in results
         assert "qvdf_reference_speed_source" in results

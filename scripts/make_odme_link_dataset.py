@@ -30,7 +30,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from fdqbench.paths import resolve_source  # noqa: E402
+from fdqbench.paths import resolve_source, table  # noqa: E402
 QUEUE = ROOT / "outputs/nvta_queue"
 DT_H = 0.25
 PERIOD_HOURS = {"AM": 3.0, "MD": 6.0, "PM": 4.0}
