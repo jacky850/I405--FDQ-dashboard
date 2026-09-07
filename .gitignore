@@ -1,3 +1,13 @@
 __pycache__/
 *.py[cod]
 .claude/
+
+# Machine-specific data locations. configs/data_sources.json is committed with
+# null paths and documents what each source is; the .local.json override is not.
+configs/data_sources.local.json
+
+# `pems-cbi-dv` is a separate repository (github.com/jacky850/pems-cbi-dv) that
+# is sometimes checked out inside this working tree. It has its own .git, so a
+# `git add -A` here would either fail or commit it as a broken gitlink. Ignoring
+# it makes that impossible. Clone it beside this repository, not inside it.
+/pems-cbi-dv/

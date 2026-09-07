@@ -24,12 +24,10 @@
   </header>
 
   <main>
-    <section class="metrics" aria-label="Overall metrics">
-      <article><span>Eligible cases</span><strong>168</strong><small>7 links × 2 periods × 12 weeks</small></article>
-      <article><span>Final coverage</span><strong class="teal">12.50%</strong><small>21 supported cases</small></article>
-      <article><span>Supported MAPE</span><strong class="orange">16.51%</strong><small>conditional on both gates</small></article>
-      <article><span>Median APE</span><strong>14.71%</strong><small>supported cases only</small></article>
-    </section>
+    <!-- Rendered from window.QVDF_MULTI by renderHeadline(). Nothing here is
+         hard-coded: every headline number is read from the generated payload,
+         and tests/test_dashboard_metrics.py fails if the two ever diverge. -->
+    <section class="metrics" id="headlineMetrics" aria-label="Overall metrics"></section>
 
     <section class="metrics" id="dvMetrics" aria-label="Demand and volume comparison"></section>
 
@@ -102,7 +100,7 @@
     </section>
   </main>
   <footer><span>I-405 South · PeMS ground-truth validation</span><span>Average weekday · Los Angeles local time</span></footer>
-  <script src="qvdf_multiweek_data.js?v=bce9acf9"></script>
-  <script src="qvdf_multiweek.js?v=b553d1e1"></script>
+  <script src="qvdf_multiweek_data.js?v=7fd36140"></script>
+  <script src="qvdf_multiweek.js?v=c4f5a634"></script>
 </body>
 </html>

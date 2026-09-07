@@ -1,7 +1,8 @@
 {
+  "schema_version": "0.3",
   "source": {
-    "results": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\I405--FDQ-dashboard-github\\outputs\\i405_multiweek_average_holdout\\leave_one_week_out_qvdf_results.csv",
-    "profiles": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\I405--FDQ-dashboard-github\\outputs\\i405_multiweek_average_holdout\\weekly_average_weekday_profiles_5min.csv"
+    "results": "outputs/i405_multiweek_average_holdout/leave_one_week_out_qvdf_results.csv",
+    "profiles": "outputs/i405_multiweek_average_holdout/weekly_average_weekday_profiles_5min.csv"
   },
   "what_is_predicted": "The duration branch round-trips by construction: x_hat was inverted from the observed P, so forward-projecting it returns P exactly. The forward projection tests the frozen severity branch z = f_p * P^s and the QVDF episode shape v(t) = vc / (1 + z (1 - tau^2)^2). P, T2 and vc are read from the holdout speed profile and handed to the model.",
   "variants": {
@@ -23,9 +24,9 @@
       "forward": {
         "cases": 21,
         "mean_bins_per_case": 27.476190476190474,
-        "mae_mph": 4.738364231137747,
+        "mae_mph": 4.738364231137748,
         "rmse_mph": 6.6365566609043585,
-        "bias_mph": -0.6920899797905152,
+        "bias_mph": -0.6920899797905159,
         "max_abs_error_mph": 27.602823973843506,
         "mape_pct": 12.835484458030217,
         "skill_vs_free_flow": 0.9606598717871755
@@ -34,10 +35,10 @@
         "cases": 21,
         "mean_bins_per_case": 27.476190476190474,
         "mae_mph": 4.328348113078582,
-        "rmse_mph": 6.590213979405783,
-        "bias_mph": -1.0657446041554501,
+        "rmse_mph": 6.5902139794057835,
+        "bias_mph": -1.0657446041554508,
         "max_abs_error_mph": 32.35842323472768,
-        "mape_pct": 11.235388662170278,
+        "mape_pct": 11.235388662170276,
         "skill_vs_free_flow": 0.9627486569749202
       },
       "free_flow_baseline": {
@@ -57,8 +58,8 @@
         "mean_bins_per_case": 25.285714285714285,
         "mae_mph": 5.166955087351296,
         "rmse_mph": 7.621766784829508,
-        "bias_mph": 1.8010233769501862,
-        "max_abs_error_mph": 29.252999999999993,
+        "bias_mph": 1.801023376950185,
+        "max_abs_error_mph": 29.253,
         "mape_pct": 14.853851914291603,
         "skill_vs_free_flow": 0.9250899398997549
       },
@@ -67,8 +68,8 @@
         "mean_bins_per_case": 25.285714285714285,
         "mae_mph": 4.71907679876665,
         "rmse_mph": 7.456821027781001,
-        "bias_mph": 1.3873468803841196,
-        "max_abs_error_mph": 29.252999999999993,
+        "bias_mph": 1.387346880384119,
+        "max_abs_error_mph": 29.253,
         "mape_pct": 13.134079943307777,
         "skill_vs_free_flow": 0.9279947413536918
       },
@@ -89,17 +90,17 @@
         "mean_bins_per_case": 37.714285714285715,
         "mae_mph": 6.916670020376438,
         "rmse_mph": 9.33018137745871,
-        "bias_mph": 2.3481541224120024,
-        "max_abs_error_mph": 29.252999999999993,
-        "mape_pct": 16.516003161837773,
-        "skill_vs_free_flow": 0.8473833141632697
+        "bias_mph": 2.348154122412002,
+        "max_abs_error_mph": 29.253,
+        "mape_pct": 16.516003161837766,
+        "skill_vs_free_flow": 0.8473833141632696
       },
       "shape_only": {
         "cases": 21,
         "mean_bins_per_case": 37.714285714285715,
         "mae_mph": 6.633765010407013,
         "rmse_mph": 9.340371865100883,
-        "bias_mph": 2.0260780582693245,
+        "bias_mph": 2.026078058269324,
         "max_abs_error_mph": 32.35842323472768,
         "mape_pct": 15.316857384511428,
         "skill_vs_free_flow": 0.8492553756948186
@@ -121,19 +122,19 @@
       "forward": {
         "cases": 31,
         "mean_bins_per_case": 27.258064516129032,
-        "mae_mph": 5.314362242880341,
+        "mae_mph": 5.314362242880342,
         "rmse_mph": 7.42308251576995,
-        "bias_mph": -1.1500736230735462,
+        "bias_mph": -1.150073623073547,
         "max_abs_error_mph": 34.36117310485202,
-        "mape_pct": 13.931048995272182,
+        "mape_pct": 13.931048995272183,
         "skill_vs_free_flow": 0.9363030999293368
       },
       "shape_only": {
         "cases": 31,
         "mean_bins_per_case": 27.258064516129032,
-        "mae_mph": 4.069124126855795,
+        "mae_mph": 4.069124126855796,
         "rmse_mph": 6.319641773777253,
-        "bias_mph": -1.3208680355485634,
+        "bias_mph": -1.320868035548564,
         "max_abs_error_mph": 32.35842323472768,
         "mape_pct": 10.212043588307617,
         "skill_vs_free_flow": 0.9590806306565887
@@ -141,9 +142,9 @@
       "free_flow_baseline": {
         "cases": 31,
         "mean_bins_per_case": 27.258064516129032,
-        "mae_mph": 28.218275207164798,
+        "mae_mph": 28.2182752071648,
         "rmse_mph": 30.24410423794468,
-        "bias_mph": 28.218275207164798,
+        "bias_mph": 28.2182752071648,
         "max_abs_error_mph": 57.92599999999999,
         "mape_pct": 85.46390028940117,
         "skill_vs_free_flow": 0.0
@@ -155,17 +156,17 @@
         "mean_bins_per_case": 25.64516129032258,
         "mae_mph": 5.697204134243332,
         "rmse_mph": 8.100975624635087,
-        "bias_mph": 1.4711164214110535,
+        "bias_mph": 1.4711164214110528,
         "max_abs_error_mph": 33.49299999999999,
-        "mape_pct": 15.88013092088462,
+        "mape_pct": 15.880130920884623,
         "skill_vs_free_flow": 0.914946612167386
       },
       "shape_only": {
         "cases": 31,
         "mean_bins_per_case": 25.64516129032258,
-        "mae_mph": 4.480710533216711,
+        "mae_mph": 4.480710533216712,
         "rmse_mph": 7.35325765551769,
-        "bias_mph": 1.0919308279147868,
+        "bias_mph": 1.0919308279147861,
         "max_abs_error_mph": 33.49299999999999,
         "mape_pct": 12.098209732946621,
         "skill_vs_free_flow": 0.9299566414794621
@@ -185,11 +186,11 @@
       "forward": {
         "cases": 31,
         "mean_bins_per_case": 38.32258064516129,
-        "mae_mph": 7.675382734719656,
+        "mae_mph": 7.675382734719657,
         "rmse_mph": 10.11388351067587,
-        "bias_mph": 2.217728148746624,
+        "bias_mph": 2.2177281487466236,
         "max_abs_error_mph": 34.36117310485202,
-        "mape_pct": 17.999468956302024,
+        "mape_pct": 17.99946895630202,
         "skill_vs_free_flow": 0.8055702071896987
       },
       "shape_only": {
@@ -197,16 +198,16 @@
         "mean_bins_per_case": 38.32258064516129,
         "mae_mph": 6.738825809394325,
         "rmse_mph": 9.533590020664455,
-        "bias_mph": 2.2978444511584426,
+        "bias_mph": 2.297844451158442,
         "max_abs_error_mph": 33.49299999999999,
-        "mape_pct": 15.117372250253151,
+        "mape_pct": 15.11737225025315,
         "skill_vs_free_flow": 0.8233765211524744
       },
       "free_flow_baseline": {
         "cases": 31,
         "mean_bins_per_case": 38.32258064516129,
         "mae_mph": 24.564084229390673,
-        "rmse_mph": 27.811283904676586,
+        "rmse_mph": 27.81128390467659,
         "bias_mph": 24.563139784946227,
         "max_abs_error_mph": 57.92599999999999,
         "mape_pct": 73.50385157613792,
@@ -218,9 +219,9 @@
     "inside_model_window": {
       "bins": 577,
       "bin_share_pct": 72.85353535353535,
-      "sse_share_pct": 42.418392654609704,
+      "sse_share_pct": 42.41839265460971,
       "mae_mph": 5.149938981110084,
-      "bias_mph": -1.0229809804315937
+      "bias_mph": -1.0229809804315941
     },
     "outside_model_window": {
       "bins": 215,

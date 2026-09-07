@@ -1,0 +1,61 @@
+{
+  "staged_on": "2026-09-06",
+  "source_package": "link-queue-simulation (external, not committed)",
+  "corridors": [
+    "I395_NB",
+    "I395_SB",
+    "I66_EB",
+    "I66_WB"
+  ],
+  "files": {
+    "tmc-15min-speed/I395_NB/Readings.csv.gz": {
+      "rows": 46365,
+      "bytes": 327374,
+      "source_sha256": "ccb0a802ca75c597a6382aa2238a9bcc2242a0a14c39ea645d7859e51df4c043"
+    },
+    "tmc-15min-speed/I395_SB/Readings.csv.gz": {
+      "rows": 44157,
+      "bytes": 295055,
+      "source_sha256": "aa00736615262bef0309bbf47f2f69d564ecf2eba65e989244af327c392866e1"
+    },
+    "tmc-15min-speed/I66_EB/Readings.csv.gz": {
+      "rows": 125856,
+      "bytes": 855155,
+      "source_sha256": "018d5dfab09ebc3ec25c7ad5bd8e7e848952484bce6b28c738409c7709525e2d"
+    },
+    "tmc-15min-speed/I66_WB/Readings.csv.gz": {
+      "rows": 123648,
+      "bytes": 821321,
+      "source_sha256": "810de060d9f756ea9fd1229d0fc91c6a0763709adb0bf780915b5cfad029d2d7"
+    },
+    "tmc-matching/canonical_node_pair_tmc-1v1.csv.gz": {
+      "rows": 285,
+      "rows_in_source": 5578,
+      "bytes": 21556,
+      "source_sha256": "f439e13343b3b49b7c201cd63dbf30a3886e9451d20a7d69cabcc2a3f2dc50bb",
+      "filter": "tmc in the four corridors' readings"
+    },
+    "TAPLite-model-input-output-subset/am/link_performance.csv.gz": {
+      "rows": 285,
+      "rows_in_source": 5578,
+      "bytes": 77381,
+      "source_sha256": "ab8282794d26da880006d1ee2dfbb10e320f2db02ca9400195a54a89898f166b",
+      "filter": "link_id present in the filtered matching table"
+    },
+    "TAPLite-model-input-output-subset/md/link_performance.csv.gz": {
+      "rows": 285,
+      "rows_in_source": 5578,
+      "bytes": 99090,
+      "source_sha256": "d8445a3b1f6625219c19c5301cbdd5abcef3cf564fef9d913d63c67fa8347764",
+      "filter": "link_id present in the filtered matching table"
+    },
+    "TAPLite-model-input-output-subset/pm/link_performance.csv.gz": {
+      "rows": 285,
+      "rows_in_source": 5578,
+      "bytes": 88119,
+      "source_sha256": "aba00f9fda079d87013733a8096bf0cb68951ecde9db592d3f5fec7936ea67a9",
+      "filter": "link_id present in the filtered matching table"
+    }
+  },
+  "total_bytes": 2585051
+}

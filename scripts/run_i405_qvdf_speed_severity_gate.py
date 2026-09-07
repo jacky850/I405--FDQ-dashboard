@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -74,6 +75,10 @@ def evaluate_holdout(daily: pd.DataFrame, volume: pd.DataFrame) -> pd.DataFrame:
         test_row = test.iloc[0]
         fp = calibrate_fp(train)
         P = float(test_row["P_h"])
+        # The episode exit (recovery) threshold, 0.75 v_f, used as the QVDF
+        # reference speed. Named rather than assumed: the S3 capacity speed is
+        # v_f/sqrt(2) = 0.707 v_f, and z = v_ref/v(T2) - 1 is linear in the
+        # choice. See docs/VARIABLE_CONTRACT.md section 3.
         vc = float(test_row["exit_threshold_mph"])
         z_obs = float(observed_severity(test).iloc[0])
         z_hat = fp * P ** S_FROZEN
@@ -86,7 +91,12 @@ def evaluate_holdout(daily: pd.DataFrame, volume: pd.DataFrame) -> pd.DataFrame:
         supported = bool(ratio_pass and speed_pass)
         rows.append({
             **volume_row.to_dict(),
-            "cutoff_speed_vc_mph": vc,
+            "qvdf_reference_speed_mph": vc,
+            "qvdf_reference_speed_source": "EPISODE_EXIT_THRESHOLD",
+            "capacity_speed_mph": float(test_row["free_speed_p95_mph"]) / math.sqrt(2.0),
+            "episode_entry_speed_mph": float(test_row["enter_threshold_mph"]),
+            "episode_exit_speed_mph": float(test_row["exit_threshold_mph"]),
+            "legacy_cutoff_speed_vc_mph": vc,
             "s_frozen": S_FROZEN,
             "f_p_calibrated": fp,
             "z_observed_from_holdout_speed": z_obs,

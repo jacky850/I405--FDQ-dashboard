@@ -12,5 +12,16 @@ dependencies = ["numpy>=1.26", "pandas>=2.0", "scipy>=1.11", "matplotlib>=3.8"]
 [project.scripts]
 fdqbench = "fdqbench.cli:main"
 
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+# `src` so the tests import fdqbench from a plain checkout, without the caller
+# having to export PYTHONPATH. An editable install also works and takes
+# precedence; this is the fallback that makes `pytest -q` work from a fresh
+# clone. `.` so tests can reach nvta_queue_kernel/ and scripts/.
+pythonpath = ["src", "."]
+testpaths = ["tests"]

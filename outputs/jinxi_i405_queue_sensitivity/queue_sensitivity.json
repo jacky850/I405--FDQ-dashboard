@@ -1,5 +1,5 @@
 {
-  "input": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\fdq_single_link_benchmark_v0_2\\fdq_single_link_benchmark_v0_2\\outputs\\jinxi_i405_all_links_constant_mu\\reference_all_links.csv",
+  "input": "<external>/reference_all_links.csv",
   "sameMu": true,
   "dtMinutes": 5,
   "initialQueueVeh": 0,

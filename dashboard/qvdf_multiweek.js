@@ -8,6 +8,27 @@
   const apeClass=v=>v<15?'ape-low':v<30?'ape-mid':'ape-high';
   const pct=v=>`${v.toFixed(2)}%`;
 
+  // Headline metrics. Every value comes from the generated payload; none is
+  // written into the HTML. Volume accuracy and speed-profile accuracy are
+  // labelled separately and carry their units, because they were previously
+  // shown as one "Supported MAPE" that was in fact the speed number.
+  (function renderHeadline(){
+    const c=data.comparison, p=data.projection; if(!c) return;
+    const cov=c.coverage, vol=c.supported_cases.volume_V;
+    const speedMape=p&&p.supported_cases&&p.supported_cases.period&&p.supported_cases.period.forward
+      ? p.supported_cases.period.forward.mape_pct : null;
+    const tiles=[
+      ['Eligible cases',fmt.format(cov.total_cases),`${data.links.length} links × 2 periods × ${data.weeks.length} weeks`,''],
+      ['Final coverage',pct(cov.supported_pct),`${cov.supported_both_gates} supported cases`,'teal'],
+      ['Volume MAPE',pct(vol.mape_pct),`period volume V · ${cov.supported_both_gates} supported cases`,'orange'],
+      ['Volume median APE',pct(vol.median_ape_pct),`period volume V · supported cases only`,'']
+    ];
+    if(speedMape!=null) tiles.push(
+      ['Speed-profile MAPE',pct(speedMape),`5-min speed over the whole period · ${cov.supported_both_gates} supported cases`,'orange']);
+    $('headlineMetrics').innerHTML=tiles
+      .map(m=>`<article><span>${m[0]}</span><strong class="${m[3]}">${m[1]}</strong><small>${m[2]}</small></article>`).join('');
+  })();
+
   // Peak demand D and period volume V are the same estimate in two units:
   // V_inferred = D_inferred / PLF with a per-link peak-load factor calibrated on
   // the training weeks. Both are shown because the advisor asked for the D
@@ -18,7 +39,7 @@
     $('dvMetrics').innerHTML=[
       ['Peak demand D',pct(s1.demand_D.mape_pct),`MAE ${fmt.format(s1.demand_D.mae)} veh/h · bias ${fmt.format(s1.demand_D.bias)}`,'orange'],
       ['Period volume V',pct(s1.volume_V.mape_pct),`MAE ${fmt.format(s1.volume_V.mae)} veh · bias ${fmt.format(s1.volume_V.bias)}`,'orange'],
-      ['Inferred D/C',pct(s1.d_over_c.mape_pct),`MAE ${s1.d_over_c.mae.toFixed(2)} · bias ${s1.d_over_c.bias.toFixed(2)}`,''],
+      ['D/C rate',pct(s1.dc_rate.mape_pct),`MAE ${s1.dc_rate.mae.toFixed(2)} · bias ${s1.dc_rate.bias.toFixed(2)}`,''],
       ['Minimum speed v(T2)',`${s1.vT2_mae_mph.toFixed(2)} mph`,'MAE on supported cases','teal']
     ].map(m=>`<article><span>${m[0]}</span><strong class="${m[3]}">${m[1]}</strong><small>${m[2]}</small></article>`).join('');
     $('comparisonNote').textContent=
@@ -29,6 +50,13 @@
       + `${pct(all.demand_D.mape_pct)} and volume MAPE ${pct(all.volume_V.mape_pct)}. `
       + `V and D are one estimate in two units: V = D / PLF with a per-link peak-load `
       + `factor from the training weeks, so they are not independent checks. `
+      + `D/C divides both sides by the same training capacity, so its MAPE equals the `
+      + `demand MAPE exactly and is a restatement, not a third check. `
+      + `The peak-load factor k_d = D/(V/H) is a different quantity, reported on its own `
+      + `(median ${c.peak_load_factor_kd_observed.median.toFixed(3)}, `
+      + `range ${c.peak_load_factor_kd_observed.min.toFixed(3)}–`
+      + `${c.peak_load_factor_kd_observed.max.toFixed(3)}); it was previously mislabelled `
+      + `as the observed D/C. `
       + `P is observed and is an input to the inversion, not a prediction.`;
   })();
 
@@ -197,7 +225,7 @@
     let episode='';
     if(d.episode_identified){
       const t0=minuteFromIso(d.t0_la),t2=minuteFromIso(d.T2_la),t3=minuteFromIso(d.t3_la);
-      episode=`<rect class="episode-area" x="${x(t0)}" y="${m.t}" width="${Math.max(1,x(t3)-x(t0))}" height="${h-m.t-m.b}"/><line class="cutoff-line" x1="${m.l}" x2="${w-m.r}" y1="${y(d.cutoff_speed_vc_mph)}" y2="${y(d.cutoff_speed_vc_mph)}"/><line class="t2-line" x1="${x(t2)}" x2="${x(t2)}" y1="${m.t}" y2="${h-m.b}"/><circle cx="${x(t2)}" cy="${y(d.vT2_mph)}" r="4" fill="#df4b42"/><text class="axis-label" x="${x(t2)+7}" y="${y(d.vT2_mph)-8}">T₂ · ${d.vT2_mph.toFixed(1)} mph</text>`;
+      episode=`<rect class="episode-area" x="${x(t0)}" y="${m.t}" width="${Math.max(1,x(t3)-x(t0))}" height="${h-m.t-m.b}"/><line class="cutoff-line" x1="${m.l}" x2="${w-m.r}" y1="${y(d.qvdf_reference_speed_mph)}" y2="${y(d.qvdf_reference_speed_mph)}"/><line class="t2-line" x1="${x(t2)}" x2="${x(t2)}" y1="${m.t}" y2="${h-m.b}"/><circle cx="${x(t2)}" cy="${y(d.vT2_mph)}" r="4" fill="#df4b42"/><text class="axis-label" x="${x(t2)+7}" y="${y(d.vT2_mph)-8}">T₂ · ${d.vT2_mph.toFixed(1)} mph</text>`;
     }
     el.innerHTML=`<svg viewBox="0 0 ${w} ${h}">${axes(w,h,m,[0,360,720,1080,1440],yt,x,y,v=>time(v),v=>Math.round(v))}${episode}<path class="speed-line" d="${linePath(pts,x,y)}"/></svg><div class="chart-legend"><span><i style="background:#256fd2"></i>speed</span>${d.episode_identified?'<span><i style="background:#ee783f"></i>episode</span><span><i style="background:#0f8b7f"></i>v₍c₎</span>':'<span>no canonical episode</span>'}</div>`;
   }

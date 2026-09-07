@@ -1,5 +1,5 @@
 {
-  "mentor_script": "C:\\Users\\jinxiwu\\ASU Dropbox\\Jinxi Wu\\IEEE Big Data\\fdq_single_link_benchmark_v0_2\\SLC_I10_Jinxin_Student_Package\\SLC_I10_Jinxin_Package\\scripts\\run_slc_i10.py",
+  "mentor_script": "<external>/run_slc_i10.py",
   "our_module": "src/fdqbench/slc_qvdf.py",
   "synthetic_random_cases": 1000,
   "i405_interface_cases": 100,

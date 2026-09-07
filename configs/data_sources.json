@@ -1,0 +1,30 @@
+{
+  "_comment": [
+    "Where the inputs that are too large or too restricted to commit actually live.",
+    "",
+    "Scripts resolve a source through fdqbench.paths.resolve_source(name), which",
+    "checks, in order: the --<name> command-line argument, the FDQ_<NAME>",
+    "environment variable, then this file. No script may carry a personal",
+    "absolute path as a default.",
+    "",
+    "Paths may be absolute or relative to the repository root, and may use ~.",
+    "Copy this file to data_sources.local.json to override it without a diff;",
+    "the local file is gitignored and takes precedence."
+  ],
+  "sources": {
+    "link_queue_simulation": {
+      "description": "INRIX 15-minute TMC speeds, the TMC-to-link matching table, and the TAPLite assignment link_performance tables. Read by queue steps 1 and 5; steps 2-4 and 6-8 run from committed outputs. The four studied corridors are staged inside the repository, so the default below needs no configuration. Point it at the full external link-queue-simulation package to work on other corridors.",
+      "expected_children": [
+        "tmc-15min-speed",
+        "tmc-matching/canonical_node_pair_tmc-1v1.csv",
+        "TAPLite-model-input-output-subset/pm/link_performance.csv"
+      ],
+      "path": "data/nvta_link_queue_inputs"
+    },
+    "pems_i405_raw": {
+      "description": "PeMS I-405 South detector states used by the multiweek average-weekday holdout.",
+      "expected_children": [],
+      "path": null
+    }
+  }
+}

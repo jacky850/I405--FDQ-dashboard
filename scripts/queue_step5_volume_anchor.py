@@ -49,14 +49,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-SHARED = Path(r"C:\Users\jinxiwu\ASU Dropbox\Jinxi Wu\link-queue-simulation"
-              r"\link-queue-simulation")
+sys.path.insert(0, str(ROOT / "src"))
+
+from fdqbench.paths import resolve_source, table  # noqa: E402
 DT_H = 15.0 / 60.0
 PERIOD_WINDOWS = {"am": (360, 540), "md": (540, 900), "pm": (900, 1140)}
 
@@ -67,7 +69,9 @@ def parse_args() -> argparse.Namespace:
                         default=ROOT / "outputs/nvta_queue/step4_lambda_15min.csv")
     parser.add_argument("--queue-file", type=Path,
                         default=ROOT / "outputs/nvta_queue/step3_queue_target_15min.csv")
-    parser.add_argument("--shared", type=Path, default=SHARED)
+    parser.add_argument("--shared", type=Path, default=None,
+                        help="path to the link-queue-simulation package; if omitted, "
+                             "resolved from configs/data_sources.json")
     parser.add_argument("--periods", nargs="+", default=["am", "md", "pm"],
                         help="step 6 runs one continuous recurrence across these, so a queue "
                              "standing at 15:00 is carried in rather than reset")
@@ -166,6 +170,7 @@ def anchor_one_period(frame: pd.DataFrame, assign: pd.DataFrame, period: str,
 
 def main() -> None:
     args = parse_args()
+    args.shared = resolve_source("link_queue_simulation", args.shared)
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
     lam = pd.read_csv(args.lambda_file)
@@ -173,15 +178,14 @@ def main() -> None:
                         usecols=["link_id", "t_min", "q_vphpl", "lanes", "mu_vphpl",
                                  "speed_mph", "free_speed_mph"])
     frame = lam.merge(queue, on=["link_id", "t_min"], how="left").sort_values(["link_id", "t_min"])
-    mapping = pd.read_csv(args.shared / "tmc-matching/canonical_node_pair_tmc-1v1.csv",
+    mapping = pd.read_csv(table(args.shared / "tmc-matching/canonical_node_pair_tmc-1v1.csv"),
                           usecols=["tmc", "link_id", "from_node_id", "to_node_id"])
 
     rows: list[dict] = []
     series_rows: list[pd.DataFrame] = []
     for period in args.periods:
         start, end = PERIOD_WINDOWS[period]
-        performance = pd.read_csv(
-            args.shared / f"TAPLite-model-input-output-subset/{period}/link_performance.csv",
+        performance = pd.read_csv(table(args.shared / f"TAPLite-model-input-output-subset/{period}/link_performance.csv"),
             usecols=["link_id", "from_node_id", "to_node_id", "volume", "lane_capacity",
                      "link_capacity", "vdf_plf"])
         assign = (mapping.merge(performance, on=["link_id", "from_node_id", "to_node_id"])
